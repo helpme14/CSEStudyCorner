@@ -1,2 +1,2 @@
-backend/myMain/.env.dev
-backend/myMain/.env.prod
+myMain/.env.dev
+myMain/.env.prod
