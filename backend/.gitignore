@@ -1,2 +1,12 @@
-backend/myMain/.env.dev
-backend/myMain/.env.prod
+# Ignore environment files in the myMain directory
+myMain/.env.dev
+myMain/.env.prod
+
+# Ignore Python bytecode files
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignore database files
+*.sqlite3
+*.db
