@@ -1,10 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Landing from './Pages/Landing';
 import Pricing from './Pages/Pricing/Pricing';
-Tabs
-
+import Registration from './Pages/RegisterLogin/Registration';
 import './index.css';
-import { Tabs } from '../@/components/ui/tabs';
 
 function App() {
   return (
@@ -13,6 +11,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/registration" element={<Registration />} />
         </Routes>
       </div>
     </Router>
