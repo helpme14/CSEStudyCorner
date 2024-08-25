@@ -2,9 +2,12 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Landing from './Pages/Landing';
 import Pricing from './Pages/Pricing/Pricing';
 import Registration from './Pages/RegisterLogin/Registration';
+import Home from './Pages/Learning/Home';
 import './index.css';
 
 function App() {
+
+  
   return (
     <Router>
       <div className='container mx-auto px-6'>
@@ -14,6 +17,9 @@ function App() {
           <Route path="/registration" element={<Registration />} />
         </Routes>
       </div>
+      <Routes>
+        <Route path="/home" element={<Home />} />
+      </Routes>
     </Router>
   );
 }

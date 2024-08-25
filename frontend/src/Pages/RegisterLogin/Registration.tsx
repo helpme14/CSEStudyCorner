@@ -91,7 +91,7 @@ const Registration = () => {
                     <Label htmlFor="age">Age Bracket</Label>
                       <Select>
                         <SelectTrigger>
-                          <SelectValue placeholder="Theme" />
+                          <SelectValue placeholder="Select your Age" />
                         </SelectTrigger>
                         <SelectContent className="w-full">
                           <SelectItem value="1">18-20 years old</SelectItem>
