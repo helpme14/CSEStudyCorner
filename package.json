@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "@react-spring/web": "^9.7.4",
-    "gsap": "^3.12.5",
-    "react-text-loop": "^2.3.0",
-    "react-typical": "^0.1.3"
-  }
-}
