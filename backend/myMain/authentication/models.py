@@ -7,6 +7,8 @@ from django.db.models.signals import post_save
 from django.conf import settings
 from django.core.validators import MinValueValidator
 from decimal import Decimal
+from django.dispatch import receiver
+# from django.contrib.auth.models import User
 
 
 class User(AbstractUser):
@@ -20,23 +22,32 @@ class User(AbstractUser):
         return self.username
     
 class Profile(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    AGE_BRACKET_CHOICES = [
+        ('U18', 'Under 18'),
+        ('18-24', '18-24'),
+        ('25-34', '25-34'),
+        ('35-44', '35-44'),
+        ('45-59', '45-59'),
+        ('60+', '60+'),
+    ]
+    
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=300)
+    bio = models.CharField(max_length=300, blank=True)
+    image = models.ImageField(default="default.jpg", upload_to="user_images", blank=True)
+    verified = models.BooleanField(default=False)
+    age_bracket = models.CharField(max_length=5, choices=AGE_BRACKET_CHOICES, default='U18')
 
-    full_name=models.CharField(max_length=300)
-    bio=models.CharField(max_length=300)
-    image = models.ImageField(default="default.jpg", upload_to="user_images")
-    verified = models.BooleanField(default = False)
+    def save(self, *args, **kwargs):
+        # Automatically set the full_name field by combining first_name and last_name from the User model
+        self.full_name = f"{self.user.first_name} {self.user.last_name}".strip()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.full_name
 
-
-def create_user_profile(sender,instance,created, **kwargs):
+# Signals to automatically create or update the Profile when User is created or updated
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-
-def save_user_profile(sender,instance,**kwargs):
-    instance.profile.save()
-
-post_save.connect(create_user_profile,sender=User)
-post_save.connect(save_user_profile,sender=User)

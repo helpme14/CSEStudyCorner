@@ -14,11 +14,20 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 class RegisterView(generics.CreateAPIView):
-    queryset= User.objects.all()
+    queryset = User.objects.all()
     permission_classes = (AllowAny,)
-    serializer_class  = RegisterSerializer
+    serializer_class = RegisterSerializer
 
-
+    def post(self, request, *args, **kwargs):
+        # Retrieve the username from the request data
+        username = request.data.get('username')
+        
+        # Check if the username already exists
+        if User.objects.filter(username=username).exists():
+            return Response({'error': 'Username already taken'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # If username is unique, proceed with user creation
+        return super().post(request, *args, **kwargs)
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -29,14 +38,14 @@ def getRoutes(request):
     ]
     return Response(routes)
 
-@api_view(['GET','POST'])
+@api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def testEndPoint(request):
     if request.method == 'GET':
         data = f"Congrats {request.user}, your API just responded to GET request"
-        return Response({'response':data}, status = status.HTTP_200_OK)
+        return Response({'response': data}, status=status.HTTP_200_OK)
     
     elif request.method == 'POST':
         text = request.POST.get('text')
         data = f'Congrats your API just responded to POST request with text:{text}'
-        return Response({'response':data},status = status.HTTP_200_OK)
+        return Response({'response': data}, status=status.HTTP_200_OK)
