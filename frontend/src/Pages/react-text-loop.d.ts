@@ -11,3 +11,8 @@ declare module 'react-text-loop' {
     export default TextLoop;
   }
   
+  declare module '@heroicons/react/outline' {
+    export const HomeIcon: React.FC<React.SVGProps<SVGSVGElement>>;
+    export const StarIcon: React.FC<React.SVGProps<SVGSVGElement>>;
+    export const LocationMarkerIcon: React.FC<React.SVGProps<SVGSVGElement>>;
+  }

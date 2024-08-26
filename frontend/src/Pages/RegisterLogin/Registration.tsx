@@ -105,6 +105,10 @@ const Registration = () => {
                     <Label htmlFor="password">Password</Label>
                     <Input type="password" id="password" placeholder="Enter your Password" />
                   </div>
+                  <div className="grid items-center gap-1.5 mt-1">
+                    <Label htmlFor="cpassword">Confirm Password</Label>
+                    <Input type="password" id="cpassword" placeholder="Confirm your Password" />
+                  </div>
                   <div className=" flex space-x-2">
                       <Checkbox id="terms1" className='rounded-sm'/>
                       <div className="grid gap-1.5 leading-none">

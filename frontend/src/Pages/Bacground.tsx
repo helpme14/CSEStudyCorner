@@ -39,3 +39,4 @@ const DynamicBackground: React.FC<DynamicBackgroundProps> = ({ gradient1, gradie
 };
 
 export default DynamicBackground;
+
