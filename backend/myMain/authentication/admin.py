@@ -6,11 +6,12 @@ from authentication.models import User, Profile
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['username','email']
+    list_display = ['username','email','verified']
+    list_editable = ['verified']
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_editable = ['verified']
-    list_display = ['user','full_name','verified']
+    
+    list_display = ['user','full_name']
 
 admin.site.register(User,UserAdmin)
 admin.site.register(Profile,ProfileAdmin)

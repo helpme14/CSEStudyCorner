@@ -9,6 +9,7 @@ urlpatterns = [
     path("register/",views.RegisterView.as_view()),
     path('test/', views.testEndPoint, name='test'),
     path('', views.getRoutes),
+    path('verify-otp/', views.verify_otp, name='verify-otp'),
 
 
 ]

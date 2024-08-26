@@ -1,13 +1,16 @@
 from django.shortcuts import render
-
-# Create your views here.
-from authentication.serializer import UserSerializer,MyTokenObtainPairSerializer, RegisterSerializer
-from rest_framework.decorators import api_view,permission_classes
+from django.conf import settings
+from authentication.serializer import UserSerializer, MyTokenObtainPairSerializer, RegisterSerializer, VerifyOTPSerializer
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from authentication.models import User
+import sib_api_v3_sdk
+from sib_api_v3_sdk.rest import ApiException
+import requests
+
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -47,5 +50,24 @@ def testEndPoint(request):
     
     elif request.method == 'POST':
         text = request.POST.get('text')
-        data = f'Congrats your API just responded to POST request with text:{text}'
+        data = f'Congrats your API just responded to POST request with text: {text}'
         return Response({'response': data}, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@permission_classes([AllowAny])  # Allow access without authentication
+def verify_otp(request):
+    serializer = VerifyOTPSerializer(data=request.data)
+    if serializer.is_valid():
+        email = serializer.validated_data['email']
+        otp = serializer.validated_data['otp']
+        
+        # Validate OTP
+        user = User.objects.filter(email=email).first()
+        if user and user.otp == otp:
+            user.otp_verified = True
+            user.save()
+            return Response({'message': 'OTP verified successfully!'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Invalid OTP or email'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

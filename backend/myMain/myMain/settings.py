@@ -6,6 +6,7 @@ from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR_2 = Path(__file__).resolve().parent.parent
 
 # Determine the environment (default to development if not set)
 ENVIRONMENT = os.getenv('DJANGO_ENVIRONMENT', 'development')
@@ -14,6 +15,11 @@ ENVIRONMENT = os.getenv('DJANGO_ENVIRONMENT', 'development')
 env_file = '.env.dev' if ENVIRONMENT == 'development' else '.env.prod'
 env_config = RepositoryEnv(BASE_DIR / env_file)
 config = Config(env_config)
+
+# Specify the path for .env.local file
+env_file_3 = RepositoryEnv(BASE_DIR_2 / '.env.local')
+config2 = Config(env_file_3)
+
 
 # Read secrets from .env fileg
 SECRET_KEY = config('SECRET_KEY', default='your-default-secret-key')
@@ -137,3 +143,18 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+# settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mailgun.org'  # Replace with your SMTP server
+EMAIL_PORT = 587  # Port for TLS
+EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = config2('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = config2('EMAIL_HOST_PASSWORD')
+# DEFAULT_FROM_EMAIL = config2('DEFAULT_FROM_EMAIL')
+EMAIL_HOST_USER = config2('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config2('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = config2('DEFAULT_FROM_EMAIL')
+MAILGUN_API_KEY = config2('MAILGUN_API_KEY')
