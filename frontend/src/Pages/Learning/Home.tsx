@@ -1,18 +1,18 @@
 
 import Navbar from "../Navbar";
 import Sidebar from "../Sidebar";
-import girl from "../../assets/girl.png"
-import { Button } from "@/components/ui/button";
+
 
 
 const Home = () => {
   return (
   
-    <div className="w-full flex bg-[#f5f5f5] h-full">
+    <div className="w-full flex  h-full">
         <Sidebar />
         <div className="flex flex-col w-full">
              <Navbar />
             <section className="py-0">
+                {/* 
                 <div className="container mx-auto sm:py-12 py-0">
                     <div className="w-full  bg-gradient-to-r from-white via-blue-200 to-blue-200 mt-20 relative rounded-md p-6">
                         <div className="sm:w-full md:w-full w-full xl:w-1/2">
@@ -24,10 +24,10 @@ const Home = () => {
                         </div>
                         <img src={girl} alt="" className="absolute w-[500px] h-[350px] -top-[10.5rem] mt-12 right-5 hidden lg:block"/>
                     </div>
-                    <div className="w-full  grid grid-cols-1 sm:grid-cols-2 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-
+                    <div className="w-full  grid grid-cols-1 sm:grid-cols-2 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 mt-5">
+        
                     </div>
-                </div>
+                </div> */}
             </section>
         </div>
     </div>

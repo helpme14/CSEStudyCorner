@@ -38,7 +38,7 @@ const Registration = () => {
     <section className='h-screen'>
       <Nav />
       <DynamicBackground gradient1="#ff80b5" gradient2="#9089fc" />
-      <Box sx={{ width: '100%', typography: 'body1' }} className="flex flex-col items-center justify-center mt-20">
+      <Box sx={{ width: '100%', typography: 'body1' }} className="flex flex-col items-center justify-center mt-[6rem] z-20" >
         <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }} className="flex justify-center">
             <TabList onChange={handleChange} aria-label="lab API tabs example" sx={{ width: '100%', maxWidth: 'md' }}>
@@ -48,7 +48,7 @@ const Registration = () => {
           </Box>
           <TabPanel value="1" className='w-full'>
             <div className='w-full flex justify-center items-center'>
-            <Card className='sm:w-1/3 w-full flex flex-col items-center'>
+            <Card className='sm:w-1/2 lg:w-1/3 xl:w-1/3 md:w-1/2 w-full flex flex-col items-center'>
               <CardHeader className='text-center'>
                 <CardTitle>Login</CardTitle>
                 <CardDescription>Enter your username and password to access your account.</CardDescription>
@@ -72,7 +72,7 @@ const Registration = () => {
             </div>
           </TabPanel>
           <TabPanel value="2" className='w-full flex justify-center items-center mt-0'>
-            <Card className='sm:w-1/3 w-full flex flex-col items-center'>
+            <Card className='sm:w-1/2 lg:w-1/3  xl:w-1/3 md:w-1/2  w-full  flex flex-col items-center'>
               <CardHeader className='text-center'>
                 <CardTitle>Register</CardTitle>
                 <CardDescription>Create an account by filling in the details below.</CardDescription>

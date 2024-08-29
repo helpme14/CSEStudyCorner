@@ -7,7 +7,7 @@ const Sidebar = () => {
     <div className="relative">
       {/* Sidebar */}
       <aside
-        className={`sm:flex hidden flex-col items-center w-16 h-screen py-8 overflow-y-auto bg-white border-r rtl:border-l rtl:border-r-0 dark:bg-gray-900 dark:border-gray-700`}
+        className={`sm:flex hidden flex-col items-center w-16 h-screen py-8 overflow-y-auto bg-[#f5f5f5] border-r rtl:border-l rtl:border-r-0 dark:bg-gray-900 dark:border-gray-700`}
       >
         <nav className="flex flex-col flex-1 space-y-6">
           <a href="#">
