@@ -2,6 +2,7 @@ import React from 'react';
 import Secondlogo from '../assets/SecondLogo.png';
 import { FaSearch } from "react-icons/fa"; 
 
+
 interface NavbarProps {
   className?: string;
 }

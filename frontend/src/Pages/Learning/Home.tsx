@@ -13,6 +13,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -107,11 +108,12 @@ const Home = () => {
                                 Do you want to study offline? Download our Civil Service Reviewer!
                             </span>
                             <div className="flex flex-col sm:flex-row gap-2 mt-4 sm:mt-0">
-                                <Button variant="outline">Download now</Button>
+                                <Link to="/pricing">
+                                    <Button variant="outline">Download now</Button>
+                                </Link>
                                 <Button className="bg-none border">Dismiss</Button>
                             </div>
                             </div>
-
                     </div>
                 </div>
             </section>
