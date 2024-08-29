@@ -1,15 +1,18 @@
 import logo from '../assets/StudyCorner-logo.png';
+interface SidebarProps {
+  className?: string; 
+}
 
-const Sidebar = () => {
+const Sidebar: React.FC<SidebarProps> = ({ className }) => {
 
 
   return (
-    <div className="relative">
+    <div className={`relative ${className}`}>
       {/* Sidebar */}
       <aside
-        className={`sm:flex hidden flex-col items-center w-16 h-screen py-8 overflow-y-auto bg-[#f5f5f5] border-r rtl:border-l rtl:border-r-0 dark:bg-gray-900 dark:border-gray-700`}
+        className={`sm:hidden md:hidden lg:hidden xl:flex  hidden flex-col items-center w-16 h-screen py-8 overflow-y-auto bg-[#f5f5f5] border-r rtl:border-l rtl:border-r-0 dark:bg-gray-900 dark:border-gray-700`}
       >
-        <nav className="flex flex-col flex-1 space-y-4">
+        <nav className="flex flex-col flex-1 space-y-6">
           <a href="#">
             <img className="w-10 h-10" src={logo} alt="Logo" />
           </a>
@@ -58,7 +61,7 @@ const Sidebar = () => {
 
       {/* Bottom Navigation */}
     
-        <nav className="sm:hidden fixed bottom-0 left-0 w-full bg-white border-t rtl:border-l rtl:border-r-0 dark:bg-gray-900 dark:border-gray-700 flex justify-around p-4">
+        <nav className="sm:flex md:flex lg:flex xl:hidden z-20 fixed bottom-0 left-0 w-full bg-white border-t rtl:border-l rtl:border-r-0 dark:bg-gray-900 dark:border-gray-700 flex justify-around p-4">
           <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
