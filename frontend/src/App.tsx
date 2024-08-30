@@ -14,7 +14,7 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <div className="container px-6 mx-auto">
+        <div className="container px-6 mx-auto font-sans">
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/pricing" element={<Pricing />} />

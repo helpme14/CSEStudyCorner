@@ -162,7 +162,7 @@ const Registration = () => {
       <DynamicBackground gradient1="#ff80b5" gradient2="#9089fc" />
       <Box
         sx={{ width: "100%", typography: "body1" }}
-        className="flex flex-col items-center justify-center mt-20"
+        className="flex flex-col items-center justify-center mt-[6rem] z-20"
       >
         <TabContext value={value}>
           <Box
@@ -182,7 +182,7 @@ const Registration = () => {
           {/* Login Tab */}
           <TabPanel value="1" className="w-full">
             <div className="flex items-center justify-center w-full">
-              <Card className="flex flex-col items-center w-full sm:w-1/3">
+              <Card className="flex flex-col items-center w-full sm:w-1/2 lg:w-1/3 xl:w-1/3 md:w-1/2">
                 <form onSubmit={handleLogin} className="w-full">
                   <CardHeader className="text-center">
                     <CardTitle>Login</CardTitle>
@@ -236,7 +236,7 @@ const Registration = () => {
             value="2"
             className="flex items-center justify-center w-full mt-0"
           >
-            <Card className="flex flex-col items-center w-full sm:w-1/3">
+            <Card className="flex flex-col items-center w-full sm:w-1/2 lg:w-1/3 xl:w-1/3 md:w-1/2">
               <form onSubmit={handleRegistration}>
                 <CardHeader className="text-center">
                   <CardTitle>Register</CardTitle>

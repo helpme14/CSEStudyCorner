@@ -27,7 +27,7 @@ const Nav = () => {
             </button>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
-            <a href="#" className="text-sm font-semibold leading-6 text-gray-900">Home</a>
+            <Link  to="/home" className="text-sm font-semibold leading-6 text-gray-900">Home</Link>
             <a href="#" className="text-sm font-semibold leading-6 text-gray-900">Review Materials</a>
             <a href="#" className="text-sm font-semibold leading-6 text-gray-900">Practice Tests</a>
             <a href="#" className="text-sm font-semibold leading-6 text-gray-900">About Us</a>
