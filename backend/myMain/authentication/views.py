@@ -10,11 +10,18 @@ from authentication.models import User
 import sib_api_v3_sdk
 from sib_api_v3_sdk.rest import ApiException
 import requests
+import logging
+from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 
-
-
+logger = logging.getLogger(__name__)
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
+    
+    def post(self, request, *args, **kwargs):
+        logger.info(f"Request data: {request.data}")
+        return super().post(request, *args, **kwargs)
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -22,15 +29,36 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
     def post(self, request, *args, **kwargs):
-        # Retrieve the username from the request data
-        username = request.data.get('username')
-        
-        # Check if the username already exists
-        if User.objects.filter(username=username).exists():
-            return Response({'error': 'Username already taken'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        # If username is unique, proceed with user creation
-        return super().post(request, *args, **kwargs)
+        try:
+            email = request.data.get('email')
+            username = request.data.get('username')
+
+            if User.objects.filter(username=username).exists():
+                return Response({'error': 'Username already taken'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            # Check if the email is already taken
+            if User.objects.filter(email=email).exists():
+                return Response({'email': 'A user with this email already exists.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Check if the username is already taken
+            if User.objects.filter(username=username).exists():
+                return Response({'username': 'Username already taken'}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Proceed with the standard creation process
+            return super().post(request, *args, **kwargs)
+
+       
+        except IntegrityError as e:
+            logger.error(f'Database integrity error occurred: {e}')
+            return Response({'error': 'Database error occurred'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        except ValidationError as e:
+            logger.error(f'Validation error: {e}')
+            return Response({'error': e.detail}, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            logger.error(f'Unexpected error occurred: {e}')
+            return Response({'error': 'An unexpected error occurred'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -64,8 +92,8 @@ def verify_otp(request):
         # Validate OTP
         user = User.objects.filter(email=email).first()
         if user and user.otp == otp:
-            user.otp_verified = True
-            user.save()
+            user.verified = True
+            serializer.save()
             return Response({'message': 'OTP verified successfully!'}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Invalid OTP or email'}, status=status.HTTP_400_BAD_REQUEST)

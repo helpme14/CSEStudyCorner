@@ -34,9 +34,8 @@ class Profile(models.Model):
         ('U18', 'Under 18'),
         ('18-24', '18-24'),
         ('25-34', '25-34'),
-        ('35-44', '35-44'),
-        ('45-59', '45-59'),
-        ('60+', '60+'),
+        ('35 above', '35 and above'),
+    
     ]
     
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -44,7 +43,7 @@ class Profile(models.Model):
     bio = models.CharField(max_length=300, blank=True)
     image = models.ImageField(default="default.jpg", upload_to="user_images", blank=True)
     # verified = models.BooleanField(default=False)
-    age_bracket = models.CharField(max_length=5, choices=AGE_BRACKET_CHOICES, default='U18')
+    age_bracket = models.CharField(max_length=8, choices=AGE_BRACKET_CHOICES, default='U18')
 
     def save(self, *args, **kwargs):
         # Automatically set the full_name field by combining first_name and last_name from the User model

@@ -7,7 +7,10 @@ from rest_framework import serializers
 from django.core.mail import send_mail
 from django.utils import timezone
 from datetime import timedelta
+import logging
 
+
+logger = logging.getLogger(__name__)
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,7 +25,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls,user):
         token = super().get_token(user)
-
+        logger.info(f"Token obtained for user: {user.email}")
         # Add custom claims
         token['full_name'] = user.profile.full_name
         token['username'] = user.username
@@ -39,7 +42,7 @@ User = get_user_model()
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['bio', 'image', 'age_bracket']
+        fields = [ 'age_bracket']
 
 class RegisterSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True, required=True)
@@ -56,9 +59,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
+        print("Validated Data:", validated_data)  #for debugging
         profile_data = validated_data.pop('profile', {})
-        
-        
+
+     
         # Create the User instance
         user = User.objects.create_user(
             username=validated_data['username'],
@@ -67,6 +71,8 @@ class RegisterSerializer(serializers.ModelSerializer):
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
         )
+
+
         # Generate and send OTP
         user.generate_otp()
         send_mail(
@@ -99,13 +105,13 @@ class RegisterSerializer(serializers.ModelSerializer):
             profile = instance.profile
             # Add Profile fields to the representation
             rep['bio'] = profile.bio
-            rep['image'] = profile.image.url if profile.image else ''
+            # rep['image'] = profile.image.url if profile.image else ''
             # rep['verified'] = profile.verified
             rep['age_bracket'] = profile.age_bracket
         except Profile.DoesNotExist:
             # Handle the case where the profile does not exist
             rep['bio'] = ''
-            rep['image'] = ''
+            # rep['image'] = ''
             # rep['verified'] = False
             rep['age_bracket'] = ''
 

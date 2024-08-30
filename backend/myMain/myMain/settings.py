@@ -2,7 +2,7 @@ from pathlib import Path
 from decouple import Config, RepositoryEnv
 import os
 from datetime import timedelta
-
+import logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -74,18 +74,23 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authentication',
+    'exam',
+    'cart',
     'rest_framework',
     'rest_framework_simplejwt',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+   
 ]
 
 ROOT_URLCONF = 'myMain.urls'
@@ -134,7 +139,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Singapore'
+
 USE_I18N = True
 USE_TZ = True
 
@@ -158,3 +164,23 @@ EMAIL_HOST_USER = config2('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config2('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = config2('DEFAULT_FROM_EMAIL')
 MAILGUN_API_KEY = config2('MAILGUN_API_KEY')
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#     },
+# }
