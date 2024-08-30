@@ -10,7 +10,7 @@ function App() {
   
   return (
     <Router>
-      <div className='container mx-auto px-6'>
+      <div className='container mx-auto px-6 font-sans'>
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/pricing" element={<Pricing />} />
