@@ -5,6 +5,13 @@ export interface Course {
   imageUrl: string;
 }
 
+export interface Categories {
+  id:number;
+  title: string;
+  total_course:number;
+  imageUrl:string;
+}
+
 
 export const courses: Course[] = [
     {
@@ -38,4 +45,38 @@ export const courses: Course[] = [
       imageUrl: "https://via.placeholder.com/150",
     },
   ];
+
+  export const categories: Categories[] = [
+    {
+      id: 1,
+      title: "Numerical Ability",
+      imageUrl: "https://via.placeholder.com/150", 
+      total_course: 18,
+    },
+    {
+      id: 2,
+      title: "Analytical Ability",
+      imageUrl: "https://via.placeholder.com/150",
+      total_course: 5,
+    },
+    {
+      id: 3,
+      title: "Verbal Ability",
+      imageUrl: "https://via.placeholder.com/150",
+      total_course: 8,
+    },
+    {
+      id: 4,
+      title: "Time Management for Exams",
+      imageUrl: "https://via.placeholder.com/150",
+      total_course: 22,
+    },
+    {
+      id: 5,
+      title: "General Information",
+      imageUrl: "https://via.placeholder.com/150",
+      total_course: 9,
+    },
+  ];
+  
   

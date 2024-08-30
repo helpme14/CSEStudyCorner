@@ -10,9 +10,9 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
     <div className={`relative ${className}`}>
       {/* Sidebar */}
       <aside
-        className={`sm:hidden md:hidden lg:hidden xl:flex  hidden flex-col items-center w-16 h-screen py-8 overflow-y-auto bg-[#f5f5f5] border-r rtl:border-l rtl:border-r-0 dark:bg-gray-900 dark:border-gray-700`}
+        className={`sm:hidden md:hidden lg:hidden xl:flex top-0 left-0  hidden flex-col items-center w-16 h-full py-8 overflow-y-auto bg-[#f5f5f5] border-r rtl:border-l rtl:border-r-0 dark:bg-gray-900 dark:border-gray-700`}
       >
-        <nav className="flex flex-col flex-1 space-y-6">
+        <nav className="flex flex-col flex-1 space-y-6 fixed">
           <a href="#">
             <img className="w-10 h-10" src={logo} alt="Logo" />
           </a>
@@ -49,13 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
           </a>
         </nav>
 
-        <div className="flex flex-col space-y-6">
-          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75a5.25 5.25 0 015.25 5.25m-5.25-5.25a5.25 5.25 0 00-5.25 5.25m5.25-5.25v15m0-15L9.75 12M12 21v-6m0 0l3.75-3.75" />
-            </svg>
-          </a>
-        </div>
+
       </aside>
 
 
