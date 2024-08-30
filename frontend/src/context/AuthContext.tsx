@@ -4,6 +4,8 @@ import React, {
   useEffect,
   useCallback,
   ReactNode,
+  Dispatch,
+  SetStateAction,
 } from "react";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -13,6 +15,7 @@ import swal from "sweetalert2";
 interface AuthContextType {
   user: CustomJwtPayload | null;
   authTokens: AuthTokens | null;
+  setAuthTokens: Dispatch<SetStateAction<AuthTokens | null>>;
   loginUser: (email: string, password: string) => Promise<void>;
   logoutUser: () => void;
   registerUser: (
@@ -69,8 +72,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
-    console.log("Making request to:", apiUrl);
-    console.log("Payload:", JSON.stringify({ email, password }));
+    // console.log("Making request to:", apiUrl);
+    // console.log("Payload:", JSON.stringify({ email, password }));
 
     try {
       const response = await fetch(apiUrl, {
@@ -111,7 +114,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
 
       const data: AuthTokens = await response.json();
-      console.log("Response Data:", data);
+   
 
       setAuthTokens(data);
       setUser(jwtDecode<CustomJwtPayload>(data.access));
@@ -338,6 +341,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const contextData: AuthContextType = {
     user,
     authTokens,
+    setAuthTokens,
     loginUser,
     logoutUser,
     registerUser,

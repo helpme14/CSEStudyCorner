@@ -1,9 +1,22 @@
 import logo from '../assets/StudyCorner-logo.png';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+
+import React, { useState, useContext } from "react";
+import AuthContext from "../context/AuthContext";
 interface SidebarProps {
   className?: string; 
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ className }) => {
+  const [value, setValue] = useState("1");
+  const authContext = useContext(AuthContext);
+
+  if (!authContext) {
+    throw new Error("AuthContext must be used within an AuthProvider");
+  }
+  const {user, logoutUser, authTokens, refreshToken, setAuthTokens } = authContext;
+
 
 
   return (
@@ -48,20 +61,23 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             </svg>
           </a>
         </nav>
-
-        <div className="flex flex-col space-y-6">
-          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75a5.25 5.25 0 015.25 5.25m-5.25-5.25a5.25 5.25 0 00-5.25 5.25m5.25-5.25v15m0-15L9.75 12M12 21v-6m0 0l3.75-3.75" />
-            </svg>
-          </a>
+        
+        <div className="flex mb-8">
+          <button onClick={logoutUser}>
+          <LogoutOutlinedIcon/>
+          </button>
         </div>
+        
+        <div className="flex flex-col space-y-6">
+        <SettingsOutlinedIcon/>
+        </div>
+      
       </aside>
 
 
       {/* Bottom Navigation */}
     
-        <nav className="sm:flex md:flex lg:flex xl:hidden z-20 fixed bottom-0 left-0 w-full bg-white border-t rtl:border-l rtl:border-r-0 dark:bg-gray-900 dark:border-gray-700 flex justify-around p-4">
+        <nav className="fixed bottom-0 left-0 z-20 flex justify-around w-full p-4 bg-white border-t sm:flex md:flex lg:flex xl:hidden rtl:border-l rtl:border-r-0 dark:bg-gray-900 dark:border-gray-700">
           <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
