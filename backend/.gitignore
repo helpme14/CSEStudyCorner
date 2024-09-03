@@ -12,8 +12,9 @@ __pycache__/
 *.db
 
 # Ignore specific environment files
-# myMain/.env.dev
-# myMain/.env.prod
+myMain/.env.dev
+myMain/.env.prod
+myMain/.env.local
 
 # Optionally, ignore other files that may be in different directories
 *.pyc

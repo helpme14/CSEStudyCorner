@@ -30,8 +30,8 @@ const Home = () => {
         <div className="flex flex-col w-full">
              <Navbar />
             <section className="py-0">
-                <div className="container sm:py-8 py-20">
-                    <div className="w-full bg-[#F0F7FF] mt-20 relative rounded-md p-6 sm:p-12">
+                <div className="container sm:py-8 py-0">
+                    <div className="w-full bg-[#F0F7FF] mt-20 relative rounded-md p-6 sm:p-10">
                             <div className="sm:w-full md:w-full w-full xl:w-1/2">
                                     <div className="flex flex-col text-left">
                                             <h4 className="font-roboto font-semibold text-xl md:text-4xl sm:text-3xl lg:text-5xl font-sans">
@@ -45,7 +45,7 @@ const Home = () => {
                                     Learn More
                                     </Button>
                             </div>
-                            <img src={girl} alt="" className="absolute lg:w-[30vw] xl:w-[30vw] h-[40vh] bottom-0 mt-12 right-5 hidden lg:hidden xl:block"/>
+                            <img src={girl} alt="" className="hidden xl:block w-[32rem] absolute right-0 bottom-0"/>
                         </div>
                     </div>
             </section>

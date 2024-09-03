@@ -10,8 +10,8 @@ interface NavbarProps {
 
 const Navbar: React.FC <NavbarProps> = ({ className }) => {
   return (
-    <nav className={`relative bg-white shadow dark:bg-gray-800 w-full h-16 ${className}`}>
-      <div className=" px-6 py-4 mx-auto">
+    <nav className={`sticky top-0 z-50 block w-full h-16 ${className}`}>
+      <div className=" px-6 py-4 w-full  bg-white shadow dark:bg-gray-800">
         <div className="flex items-center justify-between">
           <a href="#">
             <img className="w-36 h-6 sm:h-10" src={Secondlogo} alt="Logo" />
