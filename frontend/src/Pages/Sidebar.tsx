@@ -1,31 +1,18 @@
 import logo from '../assets/StudyCorner-logo.png';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-
-import React, { useState, useContext } from "react";
-import AuthContext from "../context/AuthContext";
 interface SidebarProps {
   className?: string; 
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ className }) => {
-  const [value, setValue] = useState("1");
-  const authContext = useContext(AuthContext);
-
-  if (!authContext) {
-    throw new Error("AuthContext must be used within an AuthProvider");
-  }
-  const {user, logoutUser, authTokens, refreshToken, setAuthTokens } = authContext;
-
 
 
   return (
     <div className={`relative ${className}`}>
       {/* Sidebar */}
       <aside
-        className={`sm:hidden md:hidden lg:hidden xl:flex  hidden flex-col items-center w-16 h-screen  overflow-y-auto bg-[#f5f5f5] border-r rtl:border-l rtl:border-r-0 dark:bg-gray-900 dark:border-gray-700`}
+        className={`sm:hidden md:hidden lg:hidden xl:flex top-0 left-0  hidden flex-col items-center w-16 h-full py-8 overflow-y-auto bg-[#f5f5f5] border-r rtl:border-l rtl:border-r-0 dark:bg-gray-900 dark:border-gray-700`}
       >
-        <nav className="flex flex-col flex-1 space-y-6">
+        <nav className="fixed flex flex-col flex-1 space-y-6">
           <a href="#">
             <img className="w-10 h-10" src={logo} alt="Logo" />
           </a>
@@ -68,7 +55,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
           </button>
         </div>
         
-        <div className="flex flex-col ">
+        <div className="flex flex-col space-y-6">
         <SettingsOutlinedIcon/>
         </div>
       
