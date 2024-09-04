@@ -23,7 +23,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
     <div className={`relative ${className}`}>
       {/* Sidebar */}
       <aside
-        className={`sm:hidden md:hidden lg:hidden xl:flex  hidden flex-col items-center w-16 h-screen py-8 overflow-y-auto bg-[#f5f5f5] border-r rtl:border-l rtl:border-r-0 dark:bg-gray-900 dark:border-gray-700`}
+        className={`sm:hidden md:hidden lg:hidden xl:flex  hidden flex-col items-center w-16 h-screen  overflow-y-auto bg-[#f5f5f5] border-r rtl:border-l rtl:border-r-0 dark:bg-gray-900 dark:border-gray-700`}
       >
         <nav className="flex flex-col flex-1 space-y-6">
           <a href="#">
@@ -68,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
           </button>
         </div>
         
-        <div className="flex flex-col space-y-6">
+        <div className="flex flex-col ">
         <SettingsOutlinedIcon/>
         </div>
       
