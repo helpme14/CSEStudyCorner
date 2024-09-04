@@ -71,12 +71,9 @@ const Home = () => {
                                                         >
                                                         </div>
                                                         <div className="flex flex-col w-2/3 p-4">
-                                                            <h4 className="text-sm font-semibold md:text-base lg:text-lg">
-                                                        <div className="flex flex-col w-2/3 p-4">
                                                             <h4 className="text-sm font-semibold md:text-base lg:text-lg md:truncate">
                                                                 {course.title}
                                                             </h4>
-                                                            <p className="text-xs text-gray-600 md:text-sm lg:text-base">
                                                             <p className="text-xs text-gray-600 md:text-sm lg:text-base truncate-multiline">
                                                                 {course.description}
                                                             </p>
