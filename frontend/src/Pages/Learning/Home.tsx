@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import Navbar from "../Navbar";
 import Sidebar from "../Sidebar";
 import { courses, Course, categories, Categories } from "../modules/courseData.ts";
-import { AccessTime, ListAlt } from '@mui/icons-material';
+import { GoClock, GoFileDirectory } from "react-icons/go";
 import girl from '../../assets/girl.png';
 import Rating from '@mui/material/Rating';
 
@@ -188,12 +188,12 @@ const Home = () => {
                                                         </div>
                                                         <div className="mt-2 flex items-center gap-4 text-sm text-gray-600">
                                                             <div className="flex items-center gap-1">
-                                                                <AccessTime className="text-gray-500 iconLesson" />
+                                                                <GoClock className="text-gray-500 iconLesson" />
                                                                 <span>{course.duration}</span> {/* Example: "2 hours 30 minutes" */}
                                                             </div>
                                                             <div className="flex items-center gap-1">
-                                                                <ListAlt className="text-gray-500 iconLesson" />
-                                                                <span>{course.lessons} lessons</span>
+                                                                <GoFileDirectory className="text-gray-500 iconLesson" />
+                                                                <span className=" text-sm">{course.lessons} lessons</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -255,11 +255,11 @@ const Home = () => {
                                                         </div>
                                                         <div className="mt-2 flex items-center gap-4 text-sm text-gray-600">
                                                             <div className="flex items-center gap-1">
-                                                                <AccessTime className="text-gray-500 iconLesson" />
+                                                                <GoClock className="text-gray-500 iconLesson" />
                                                                 <span>{course.duration}</span> {/* Example: "2 hours 30 minutes" */}
                                                             </div>
                                                             <div className="flex items-center gap-1">
-                                                                <ListAlt className="text-gray-500 iconLesson" />
+                                                                <GoFileDirectory className="text-gray-500 iconLesson" />
                                                                 <span>{course.lessons} lessons</span>
                                                             </div>
                                                         </div>
@@ -322,11 +322,11 @@ const Home = () => {
                                                         </div>
                                                         <div className="mt-2 flex items-center gap-4 text-sm text-gray-600">
                                                             <div className="flex items-center gap-1">
-                                                                <AccessTime className="text-gray-500 iconLesson" />
+                                                                <GoClock className="text-gray-500 iconLesson" />
                                                                 <span>{course.duration}</span> {/* Example: "2 hours 30 minutes" */}
                                                             </div>
                                                             <div className="flex items-center gap-1">
-                                                                <ListAlt className="text-gray-500 iconLesson" />
+                                                                <GoFileDirectory className="text-gray-500 iconLesson" />
                                                                 <span>{course.lessons} lessons</span>
                                                             </div>
                                                         </div>
@@ -389,11 +389,11 @@ const Home = () => {
                                                         </div>
                                                         <div className="mt-2 flex items-center gap-4 text-sm text-gray-600">
                                                             <div className="flex items-center gap-1">
-                                                                <AccessTime className="text-gray-500 iconLesson" />
+                                                                <GoClock className="text-gray-500 iconLesson" />
                                                                 <span>{course.duration}</span> {/* Example: "2 hours 30 minutes" */}
                                                             </div>
                                                             <div className="flex items-center gap-1">
-                                                                <ListAlt className="text-gray-500 iconLesson" />
+                                                                <GoFileDirectory className="text-gray-500 iconLesson" />
                                                                 <span>{course.lessons} lessons</span>
                                                             </div>
                                                         </div>
