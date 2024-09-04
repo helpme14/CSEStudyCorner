@@ -49,15 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
           </a>
         </nav>
         
-        <div className="flex mb-8">
-          <button onClick={logoutUser}>
-          <LogoutOutlinedIcon/>
-          </button>
-        </div>
-        
-        <div className="flex flex-col space-y-6">
-        <SettingsOutlinedIcon/>
-        </div>
+   
       
       </aside>
 

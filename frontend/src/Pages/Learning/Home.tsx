@@ -25,23 +25,23 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
   
-    <div className="w-full flex  h-full">
+    <div className="flex w-full h-full">
         <Sidebar />
         <div className="flex flex-col w-full">
              <Navbar />
             <section className="py-0">
-                <div className="container sm:py-8 py-0">
+                <div className="container py-0 sm:py-8">
                     <div className="w-full bg-[#F0F7FF] mt-20 relative rounded-md p-6 sm:p-10">
-                            <div className="sm:w-full md:w-full w-full xl:w-1/2">
+                            <div className="w-full sm:w-full md:w-full xl:w-1/2">
                                     <div className="flex flex-col text-left">
-                                            <h4 className="font-roboto font-semibold text-xl md:text-4xl sm:text-3xl lg:text-5xl font-sans">
+                                            <h4 className="font-sans text-xl font-semibold font-roboto md:text-4xl sm:text-3xl lg:text-5xl">
                                             Prepare for Your <br />Civil Service Exams
                                             </h4>
-                                            <p className="text-sm md:text-base font-roboto opacity-75 mt-2 md:mt-4">
+                                            <p className="mt-2 text-sm opacity-75 md:text-base font-roboto md:mt-4">
                                             Use our Civil Service Reviewer to get ready for your exams. Practice with easy-to-follow modules, answer practice questions, and get clear explanations to help you pass the exam.
                                             </p>
                                     </div>
-                                    <Button className="bg-blue-500 hover:bg-blue-600 mt-4 rounded-full py-2 px-4 text-sm md:text-base lg:text-lg">
+                                    <Button className="px-4 py-2 mt-4 text-sm bg-blue-500 rounded-full hover:bg-blue-600 md:text-base lg:text-lg">
                                     Learn More
                                     </Button>
                             </div>
@@ -51,7 +51,7 @@ const Home = () => {
             </section>
 
             <section>
-                <div className="container mx-auto py-20 sm:py-10">
+                <div className="container py-20 mx-auto sm:py-10">
                     <div className="flex flex-col gap-5">
                         <div className="flex gap-5 overflow-x-auto">
                             <Button className="rounded-full">Home</Button>
@@ -62,11 +62,11 @@ const Home = () => {
                         </div>
                         <div className="w-full mt-5">
                             <span className="text-3xl font-semibold">Let's start Learning</span>
-                            <Carousel className="w-full mt-5 relative">
+                            <Carousel className="relative w-full mt-5">
                                 <CarouselContent className="-ml-1">
                                     {courses.map((course: Course) => (
                                         <CarouselItem key={course.id} className="pl-1 md:basis-1/2 lg:basis-1/3">
-                                            <div className="p-1 relative">
+                                            <div className="relative p-1">
                                                 <Card className="h-[8rem] sm:h-full flex">
                                                     {/* Left Side: Image */}
                                                     <div className="w-1/3 h-full">
@@ -77,11 +77,11 @@ const Home = () => {
                                                         />
                                                     </div>
                                                     {/* Right Side: Course Details */}
-                                                    <div className="w-2/3 flex flex-col p-4">
-                                                        <h4 className="text-sm md:text-base lg:text-lg font-semibold">
+                                                    <div className="flex flex-col w-2/3 p-4">
+                                                        <h4 className="text-sm font-semibold md:text-base lg:text-lg">
                                                             {course.title}
                                                         </h4>
-                                                        <p className="text-xs md:text-sm lg:text-base text-gray-600">
+                                                        <p className="text-xs text-gray-600 md:text-sm lg:text-base">
                                                             {course.description}
                                                         </p>
                                                     </div>
@@ -94,7 +94,7 @@ const Home = () => {
                                                         viewBox="0 0 24 24" 
                                                         strokeWidth="1.5" 
                                                         stroke="currentColor" 
-                                                        className="w-6 h-6  text-gray-300 cursor-pointer">
+                                                        className="w-6 h-6 text-gray-300 cursor-pointer">
                                                         <path 
                                                             strokeLinecap="round" 
                                                             strokeLinejoin="round" 
@@ -106,20 +106,20 @@ const Home = () => {
                                         </CarouselItem>
                                     ))}
                                 </CarouselContent>
-                                <CarouselPrevious className="absolute -left-6 top-1/2 transform -translate-y-1/2 z-10 sm:-left-5 md:-left-5 xl:-left-8 lg:-left-6" />
-                                <CarouselNext className="absolute -right-6 top-1/2 transform -translate-y-1/2 z-10 sm:-right-5 md:-right-5 xl:-right-8 lg:-right-6" />
+                                <CarouselPrevious className="absolute z-10 transform -translate-y-1/2 -left-6 top-1/2 sm:-left-5 md:-left-5 xl:-left-8 lg:-left-6" />
+                                <CarouselNext className="absolute z-10 transform -translate-y-1/2 -right-6 top-1/2 sm:-right-5 md:-right-5 xl:-right-8 lg:-right-6" />
                             </Carousel>
 
                         </div>
-                        <div className="w-full flex flex-col sm:flex-row justify-between bg-gray-800 p-6 mt-5 items-center">
-                            <span className="text-white font-semibold text-center sm:text-left">
+                        <div className="flex flex-col items-center justify-between w-full p-6 mt-5 bg-gray-800 sm:flex-row">
+                            <span className="font-semibold text-center text-white sm:text-left">
                                 Do you want to study offline? Download our Civil Service Reviewer!
                             </span>
-                            <div className="flex flex-col sm:flex-row gap-2 mt-4 sm:mt-0">
+                            <div className="flex flex-col gap-2 mt-4 sm:flex-row sm:mt-0">
                                 <Link to="/pricing">
                                     <Button variant="outline">Download now</Button>
                                 </Link>
-                                <Button className="bg-none border">Dismiss</Button>
+                                <Button className="border bg-none">Dismiss</Button>
                             </div>
                             </div>
                     </div>
@@ -127,18 +127,18 @@ const Home = () => {
             </section>
 
             <section>
-                <div className="container mx-auto py-20 sm:py-2">
+                <div className="container py-20 mx-auto sm:py-2">
                     <span className="text-3xl font-semibold">Civil Service Categories</span>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 py-8">
+                    <div className="grid grid-cols-1 gap-4 py-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
                     {categories.map((category: Categories) => (
-                       <Card key={category.id} className="p-3 relative">
+                       <Card key={category.id} className="relative p-3">
                        <div className="flex gap-5">
                          <img
                            src={category.imageUrl}
                            alt={category.title}
-                           className="h-14 object-cover w-14 rounded-md"
+                           className="object-cover rounded-md h-14 w-14"
                          />
-                         <div className="col-span-2 flex flex-col">
+                         <div className="flex flex-col col-span-2">
                            <h3 className="text-lg font-semibold">{category.title}</h3>
                            <p className="text-sm text-gray-600">{category.total_course} Courses</p>
                          </div>
@@ -150,7 +150,7 @@ const Home = () => {
                                 viewBox="0 0 24 24" 
                                 strokeWidth="1.5" 
                                 stroke="currentColor" 
-                                className="w-6 h-6  text-gray-300 cursor-pointer">
+                                className="w-6 h-6 text-gray-300 cursor-pointer">
                                 <path 
                                     strokeLinecap="round" 
                                     strokeLinejoin="round" 
@@ -165,21 +165,21 @@ const Home = () => {
             </section>
 
             <section>
-            <div className="container mx-auto py-20 sm:py-2">
+            <div className="container py-20 mx-auto sm:py-2">
                 <span className="text-3xl font-semibold">Available Courses</span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-8">
+                <div className="grid grid-cols-1 gap-4 py-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {courses.map((course: Course) => (
                      <HoverCard>
                         <HoverCardTrigger>
-                            <Card key={course.id} className="relative h-80 flex flex-col">
+                            <Card key={course.id} className="relative flex flex-col h-80">
                                 <img
                                 src={course.imageUrl}
                                 alt={course.title}
-                                className="h-40 w-full object-cover"
+                                className="object-cover w-full h-40"
                                 />
-                                <div className="p-4 flex flex-col flex-grow">
-                                <h3 className="text-lg font-semibold mb-2">{course.title}</h3>
-                                <p className="text-sm text-gray-600 flex-grow">{course.description}</p>
+                                <div className="flex flex-col flex-grow p-4">
+                                <h3 className="mb-2 text-lg font-semibold">{course.title}</h3>
+                                <p className="flex-grow text-sm text-gray-600">{course.description}</p>
                                 </div>
                                 <div className="absolute top-4 right-4">
                                     <svg 
@@ -188,7 +188,7 @@ const Home = () => {
                                         viewBox="0 0 24 24" 
                                         strokeWidth="1.5" 
                                         stroke="currentColor" 
-                                        className="w-6 h-6  text-gray-500 cursor-pointer">
+                                        className="w-6 h-6 text-gray-500 cursor-pointer">
                                         <path 
                                             strokeLinecap="round" 
                                             strokeLinejoin="round" 
