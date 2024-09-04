@@ -8,7 +8,7 @@
     // other options...
     "baseUrl": "./",
     "paths": {
-      "@/*": ["*"],
+      "@/*": ["src/*"],
       "@components/*": ["components/*"],
       "@modules/*": ["src/Pages/modules/*"] 
     }

@@ -1,6 +1,7 @@
 import React from 'react';
 import Secondlogo from '../assets/SecondLogo.png';
 import { FaSearch } from "react-icons/fa"; 
+import { Link } from "react-router-dom";
 
 import {
   Cloud,
@@ -41,7 +42,7 @@ interface NavbarProps {
 
 const Navbar: React.FC <NavbarProps> = ({ className }) => {
   return (
-    <nav className={`sticky top-0 z-50 block w-full h-16 ${className}`}>
+    <nav className={`sticky top-0 z-50 block w-full h-15 ${className}`}>
       <div className=" px-6 py-2 w-full  bg-white shadow dark:bg-gray-800">
         <div className="flex items-center justify-between">
           <a href="#">
@@ -104,12 +105,14 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
                     <CreditCard className="mr-2 h-4 w-4" />
                     <span>Billing</span>
                     <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
-                    <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                  </DropdownMenuItem>
+                    </DropdownMenuItem>
+                    <Link  to="/settings">
+                      <DropdownMenuItem>
+                        <Settings className="mr-2 h-4 w-4" />
+                        <span>Settings</span>
+                        <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                      </DropdownMenuItem>
+                    </Link>
                   <DropdownMenuItem>
                     <Keyboard className="mr-2 h-4 w-4" />
                     <span>Keyboard shortcuts</span>
