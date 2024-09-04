@@ -2,6 +2,37 @@ import React from 'react';
 import Secondlogo from '../assets/SecondLogo.png';
 import { FaSearch } from "react-icons/fa"; 
 
+import {
+  Cloud,
+  CreditCard,
+  Github,
+  Keyboard,
+  LifeBuoy,
+  LogOut,
+  Mail,
+  MessageSquare,
+  Plus,
+  PlusCircle,
+  Settings,
+  User,
+  UserPlus,
+  Users,
+} from "lucide-react"
+ 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 interface NavbarProps {
   className?: string;
@@ -11,7 +42,7 @@ interface NavbarProps {
 const Navbar: React.FC <NavbarProps> = ({ className }) => {
   return (
     <nav className={`sticky top-0 z-50 block w-full h-16 ${className}`}>
-      <div className=" px-6 py-4 w-full  bg-white shadow dark:bg-gray-800">
+      <div className=" px-6 py-2 w-full  bg-white shadow dark:bg-gray-800">
         <div className="flex items-center justify-between">
           <a href="#">
             <img className="w-36 h-6 sm:h-10" src={Secondlogo} alt="Logo" />
@@ -48,17 +79,99 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
                 />
               </svg>
             </button>
-
-            {/* Avatar */}
-            <button type="button" className="flex items-center focus:outline-none" aria-label="toggle profile dropdown">
-              <div className="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full">
-                <img
-                  src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
-                  className="object-cover w-full h-full"
-                  alt="avatar"
-                />
-              </div>
-            </button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild >
+                <button type="button" className="flex items-center focus:outline-none" aria-label="toggle profile dropdown">
+                  <div className="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full">
+                    <img
+                      src='https://i.pinimg.com/originals/a9/da/3d/a9da3df52d836a48a091afb99134cfd6.jpg'
+                      className="object-cover w-full h-full"
+                      alt="Profile"
+                    />
+                  </div>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 mr-10"  >
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem>
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                    <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <CreditCard className="mr-2 h-4 w-4" />
+                    <span>Billing</span>
+                    <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                    <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Keyboard className="mr-2 h-4 w-4" />
+                    <span>Keyboard shortcuts</span>
+                    <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem>
+                    <Users className="mr-2 h-4 w-4" />
+                    <span>Team</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <UserPlus className="mr-2 h-4 w-4" />
+                      <span>Invite users</span>
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent>
+                        <DropdownMenuItem>
+                          <Mail className="mr-2 h-4 w-4" />
+                          <span>Email</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <MessageSquare className="mr-2 h-4 w-4" />
+                          <span>Message</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                          <PlusCircle className="mr-2 h-4 w-4" />
+                          <span>More...</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+                  <DropdownMenuItem>
+                    <Plus className="mr-2 h-4 w-4" />
+                    <span>New Team</span>
+                    <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Github className="mr-2 h-4 w-4" />
+                  <span>GitHub</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <LifeBuoy className="mr-2 h-4 w-4" />
+                  <span>Support</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem disabled>
+                  <Cloud className="mr-2 h-4 w-4" />
+                  <span>API</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                  <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>
