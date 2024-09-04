@@ -6,7 +6,6 @@ import { AccessTime, ListAlt } from '@mui/icons-material';
 import girl from '../../assets/girl.png';
 import Rating from '@mui/material/Rating';
 
-
 import { Card } from "@/components/ui/card";
 import {
     Carousel,
@@ -20,6 +19,7 @@ import { Link } from "react-router-dom";
 
 
 
+
 const Home = () => {
     return (
         <div className="flex w-full h-full">
@@ -28,24 +28,24 @@ const Home = () => {
                 <Navbar />
                 <section className="py-0">
                     <div className="container py-0 sm:py-8">
-                        <div className="w-full bg-[#F0F7FF] mt-20 relative rounded-md p-6 sm:p-10">
-                            <div className="w-full sm:w-full md:w-full xl:w-1/2">
-                                <div className="flex flex-col text-left">
-                                    <h4 className="font-sans text-xl font-semibold font-roboto md:text-4xl sm:text-3xl lg:text-5xl">
-                                        Prepare for Your <br />Civil Service Exams
-                                    </h4>
-                                    <p className="mt-2 text-sm opacity-75 md:text-base font-roboto md:mt-4">
-                                        Use our Civil Service Reviewer to get ready for your exams. Practice with easy-to-follow modules, answer practice questions, and get clear explanations to help you pass the exam.
-                                    </p>
-                                </div>
-                                <Button className="px-4 py-2 mt-4 text-sm bg-blue-500 rounded-full hover:bg-blue-600 md:text-base lg:text-lg">
-                                    Learn More
-                                </Button>
+                        <div className="w-full bg-[#F0F7FF] dark:bg-gray-900 mt-20 relative rounded-md p-6 sm:p-10">
+                        <div className="w-full sm:w-full md:w-full xl:w-1/2">
+                            <div className="flex flex-col text-left">
+                            <h4 className="font-sans text-xl font-semibold text-gray-900 font-roboto md:text-4xl sm:text-3xl lg:text-5xl dark:text-gray-100">
+                                Prepare for Your <br />Civil Service Exams
+                            </h4>
+                            <p className="mt-2 text-sm text-gray-800 opacity-75 md:text-base font-roboto md:mt-4 dark:text-gray-300">
+                                Use our Civil Service Reviewer to get ready for your exams. Practice with easy-to-follow modules, answer practice questions, and get clear explanations to help you pass the exam.
+                            </p>
                             </div>
-                            <img src={girl} alt="" className="hidden xl:block w-[32rem] absolute right-0 bottom-0" />
+                            <Button className="px-4 py-2 mt-4 text-sm bg-blue-500 rounded-full hover:bg-blue-600 dark:bg-gray-50 dark:hover:bg-gray-200 md:text-base lg:text-lg">
+                            Learn More
+                            </Button>
+                        </div>
+                        <img src={girl} alt="Illustration of a girl" className="hidden xl:block w-[32rem] absolute right-0 bottom-0" />
                         </div>
                     </div>
-                </section>
+                    </section>
 
                 <section>
                     <div className="container py-10 mx-auto">
@@ -72,9 +72,12 @@ const Home = () => {
                                                         </div>
                                                         <div className="flex flex-col w-2/3 p-4">
                                                             <h4 className="text-sm font-semibold md:text-base lg:text-lg">
+                                                        <div className="flex flex-col w-2/3 p-4">
+                                                            <h4 className="text-sm font-semibold md:text-base lg:text-lg md:truncate">
                                                                 {course.title}
                                                             </h4>
                                                             <p className="text-xs text-gray-600 md:text-sm lg:text-base">
+                                                            <p className="text-xs text-gray-600 md:text-sm lg:text-base truncate-multiline">
                                                                 {course.description}
                                                             </p>
                                                         </div>
@@ -430,7 +433,6 @@ const Home = () => {
                         </Carousel>
                     </div>
                 </section>
-
 
                 <Footer />
             </div>

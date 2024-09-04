@@ -19,3 +19,11 @@ body {
   width:0.80em !important;
   height:0.80em !important;
 }
+
+.truncate-multiline {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
