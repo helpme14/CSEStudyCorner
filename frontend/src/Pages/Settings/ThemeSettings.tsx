@@ -11,14 +11,15 @@ import { ModeToggle } from "@/components/ui/mode-toggle";
 import { Divider } from "@mui/material";
 
 
+
 const Settings = () => {
   return (
-    <div className="w-full flex h-screen">
+    <div className="w-full flex h-screen ">
         <Sidebar />
         <div className="flex flex-col w-full">
             <Navbar />
             <section>
-                <div className="container mx-auto py-20">
+                <div className="container py-20 ">
                 <Box sx={{ flexGrow: 1 }}>
                     <div className="flex flex-col gap-2 pb-6">
                         <span className="font-bold text-3xl">Settings</span>

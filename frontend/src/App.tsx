@@ -7,6 +7,9 @@ import "./index.css";
 import { ThemeProvider } from "./components/ui/theme-provider";
 import ThemeSettings from "./Pages/Settings/ThemeSettings";
 import PublicProfile from "./Pages/Settings/PublicProfile";
+import AccountSettings from "./Pages/Settings/AccountSettings";
+import { Toaster } from 'react-hot-toast';
+import CloseAccount from "./Pages/Settings/CloseAccount";
 
 
 
@@ -15,6 +18,7 @@ import PublicProfile from "./Pages/Settings/PublicProfile";
 function App() {
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+       <Toaster />
       <Router>
           <div className="container px-6 mx-auto font-sans">
             <Routes>
@@ -41,6 +45,18 @@ function App() {
                 path="/profile"
                 element={
                     <PublicProfile />
+                }
+              />
+               <Route
+                path="/account-settings"
+                element={
+                    <AccountSettings />
+                }
+              />
+               <Route
+                path="/close-account"
+                element={
+                    <CloseAccount />
                 }
               />
           </Routes>

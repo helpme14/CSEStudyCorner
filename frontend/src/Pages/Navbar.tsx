@@ -43,7 +43,7 @@ interface NavbarProps {
 const Navbar: React.FC <NavbarProps> = ({ className }) => {
   return (
     <nav className={`sticky top-0 z-50 block w-full h-15 ${className}`}>
-      <div className=" px-6 py-2 w-full  bg-white shadow dark:bg-gray-800">
+      <div className=" px-8 py-2 w-full  bg-white shadow dark:bg-gray-800">
         <div className="flex items-center justify-between">
           <a href="#">
             <img className="w-36 h-6 sm:h-10" src={Secondlogo} alt="Logo" />
@@ -106,7 +106,7 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
                     <span>Billing</span>
                     <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
                     </DropdownMenuItem>
-                    <Link  to="/theme">
+                    <Link  to="/settings">
                       <DropdownMenuItem>
                         <Settings className="mr-2 h-4 w-4" />
                         <span>Settings</span>
