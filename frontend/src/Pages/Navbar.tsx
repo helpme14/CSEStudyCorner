@@ -51,7 +51,7 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
 
           <div className="flex items-center">
             {/* Search Bar */}
-            <div className="relative flex items-center">
+            <div className="relative sm:flex hidden items-center">
               <FaSearch className="absolute left-3 text-gray-500" />
               <input
                 type="text"
