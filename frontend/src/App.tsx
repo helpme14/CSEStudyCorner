@@ -7,7 +7,10 @@ import Home from "./Pages/Learning/Home";
 import "./index.css";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "../components/routes/PrivateRoute";
-import Settings from "./Pages/Settings/Settings";
+import ThemeSettings from "./Pages/Settings/ThemeSettings";
+import PublicProfile from "./Pages/Settings/PublicProfile";
+
+
 interface PrivateRouteProps {
   component: React.ComponentType;
 }
@@ -33,9 +36,15 @@ function App() {
                 }
               />
                <Route
-                path="/settings"
+                path="/theme"
                 element={
-                    <Settings />
+                    <ThemeSettings />
+                }
+              />
+               <Route
+                path="/profile"
+                element={
+                    <PublicProfile />
                 }
               />
           </Routes>

@@ -106,7 +106,7 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
                     <span>Billing</span>
                     <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
                     </DropdownMenuItem>
-                    <Link  to="/settings">
+                    <Link  to="/theme">
                       <DropdownMenuItem>
                         <Settings className="mr-2 h-4 w-4" />
                         <span>Settings</span>

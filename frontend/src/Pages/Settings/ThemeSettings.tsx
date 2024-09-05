@@ -8,6 +8,8 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import SideSettings from "./SideSettings";
 import { ModeToggle } from "@/components/ui/mode-toggle";
+import { Divider } from "@mui/material";
+
 
 const Settings = () => {
   return (
@@ -18,13 +20,20 @@ const Settings = () => {
             <section>
                 <div className="container mx-auto py-20">
                 <Box sx={{ flexGrow: 1 }}>
+                    <div className="flex flex-col gap-2 pb-6">
+                        <span className="font-bold text-3xl">Settings</span>
+                        <p className="text-base text-gray-500 dark:text-white">Manage your account settings and set e-mail preferences.</p>
+                    </div>
+                    <Divider />
                     <Grid container spacing={2}>
-                        <Grid item xs={12} sm={12}  md={3} >
+                        <Grid item xs={12} sm={12}  md={3} className="!pl-0" >
                             <SideSettings />
                         </Grid>
                         <Grid item xs={12} sm={12} md={9}>
-                            <div className="flex flex-col gap-4 pt-10 px-10">
-                                <span className="text-2xl font-semibold">Account Settings</span>
+                        <div className="flex flex-col gap-2 py-4">
+                                <span className="text-xl font-medium">Theme Preferences</span>
+                                <p className="text-sm text-gray-500 dark:text-white">Choose between light, dark, or system themes to personalize the look and feel of your interface.</p>
+                                <Divider className="pt-4" />
                                 <ModeToggle />
                             </div>
                         </Grid>
