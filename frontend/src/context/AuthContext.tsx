@@ -39,6 +39,7 @@ interface CustomJwtPayload extends JwtPayload {
   id: number;
   username: string;
   email: string;
+  bio: string;
 }
 
 // Create the AuthContext with default values
@@ -72,9 +73,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
-    // console.log("Making request to:", apiUrl);
-    // console.log("Payload:", JSON.stringify({ email, password }));
-
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -84,7 +82,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         body: JSON.stringify({ email, password }),
       });
 
-      console.log("Response:", response);
+      // console.log("Response:", response);
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -319,7 +317,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       logoutTimer = setTimeout(logoutUser, 5 * 60 * 1000); // 5 minutes
     };
 
-    if (location.pathname === "/home") {
+    // Define paths where auto-logout should NOT happen
+    const excludedPaths = ["/", "/register"];
+
+    if (!excludedPaths.includes(location.pathname)) {
       window.addEventListener("mousemove", handleActivity);
       window.addEventListener("keydown", handleActivity);
       window.addEventListener("click", handleActivity);

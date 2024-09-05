@@ -19,15 +19,11 @@ function App() {
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Router>
         <AuthProvider>
-          <div className="container px-6 mx-auto font-sans">
+          <div className="container px-6 mx-auto font-sans dark:bg-gray-800 dark:text-white">
             <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/registration" element={<Registration />} />
-            </Routes>
-          </div>
-          <div className="dark:bg-gray-800 dark:text-white">
-            <Routes>
               <Route
                 path="/home"
                 element={
@@ -47,3 +43,4 @@ function App() {
 }
 
 export default App;
+
