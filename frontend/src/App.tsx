@@ -4,15 +4,21 @@ import Pricing from "./Pages/Pricing/Pricing";
 import Registration from "./Pages/RegisterLogin/Registration";
 import Home from "./Pages/Learning/Home";
 import "./index.css";
+import { AuthProvider } from "./context/AuthContext";
+import PrivateRoute from "../components/routes/PrivateRoute";
+import ThemeSettings from "./Pages/Settings/ThemeSettings";
+import PublicProfile from "./Pages/Settings/PublicProfile";
 import { ThemeProvider } from "./components/ui/theme-provider";
-import Settings from "./Pages/Settings/Settings";
 
-
+// interface PrivateRouteProps {
+//   component: React.ComponentType;
+// }
 
 function App() {
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Router>
+        <AuthProvider>
           <div className="container px-6 mx-auto font-sans">
             <Routes>
               <Route path="/" element={<Landing />} />
@@ -21,23 +27,22 @@ function App() {
             </Routes>
           </div>
           <div className="dark:bg-gray-800 dark:text-white">
-          <Routes>
-          <Route
+            <Routes>
+              <Route
                 path="/home"
                 element={
+                  <PrivateRoute>
                     <Home />
+                  </PrivateRoute>
                 }
               />
-               <Route
-                path="/settings"
-                element={
-                    <Settings />
-                }
-              />
-          </Routes>
+              <Route path="/theme" element={<ThemeSettings />} />
+              <Route path="/profile" element={<PublicProfile />} />
+            </Routes>
           </div>
+        </AuthProvider>
       </Router>
-     </ThemeProvider>
+    </ThemeProvider>
   );
 }
 
