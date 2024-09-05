@@ -16,11 +16,26 @@ import {
 } from "@/components/ui/carousel";
 import Footer from "../Footer.tsx";
 import { Link } from "react-router-dom";
+import { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 
 
 
 
 const Home = () => {
+    useEffect(() => {
+        AOS.init({
+          duration: 1000,  // Customize duration, easing, etc.    
+          offset: 200,     // Offset to trigger animation early or later
+            mirror: true,    // Trigger animation on scroll up
+            once: false,  // Animation should only happen once
+        });
+        AOS.refresh();      // Refresh AOS after initialization
+      }, []);
+
+      
     return (
         <div className="w-full flex h-full">
             <Sidebar />
@@ -59,10 +74,10 @@ const Home = () => {
                             </div>
                             <div className="w-full mt-5">
                                 <span className="text-3xl font-semibold">Let's start Learning</span>
-                                <Carousel className="w-full mt-5 relative">
+                                <Carousel className="w-full mt-5 relative " data-aos="fade-up" data-aos-duration="1000">
                                     <CarouselContent className="-ml-1">
                                         {courses.map((course: Course) => (
-                                            <CarouselItem key={course.id} className="pl-1 md:basis-1/2 lg:basis-1/3">
+                                            <CarouselItem key={course.id} className="pl-1 md:basis-1/2 lg:basis-1/3 ">
                                                 <div className="p-1 relative">
                                                     <Card className="h-[8rem] sm:h-full flex">
                                                         <div
@@ -111,7 +126,7 @@ const Home = () => {
                         <span className="text-3xl font-semibold">Civil Service Categories</span>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 py-8">
                             {categories.map((category: Categories) => (
-                                <Card key={category.id} className="p-3 relative">
+                                <Card key={category.id} className="p-3 relative" data-aos="fade-up" data-aos-duration="1500"  data-aos-anchor-placement="top-bottom">
                                     <div className="flex gap-5">
                                         <img
                                             src={category.imageUrl}
@@ -170,7 +185,7 @@ const Home = () => {
                             <CarouselContent className="flex">
                                 {courses.map((course: Course) => (
                                     <CarouselItem key={course.id} className="md:basis-1/2 lg:basis-1/4">
-                                                <Card className="relative h-75 flex flex-col">
+                                                <Card className="relative h-75 flex flex-col" data-aos="fade-up" data-aos-duration="1000"  data-aos-anchor-placement="top-bottom" >
                                                     <img
                                                         src={course.imageUrl}
                                                         alt={course.title}
@@ -186,7 +201,7 @@ const Home = () => {
                                                             <Rating name="read-only" value={course.rating} className="!text-base" readOnly />
                                                             <span className="text-sm opacity-75">({course.numberOfStudents})</span>
                                                         </div>
-                                                        <div className="mt-2 flex items-center gap-4 text-sm text-gray-600">
+                                                        <div className="mt-2 flex flex-col sm:flex-row items-start sm:items-center gap-4 text-sm text-gray-600">
                                                             <div className="flex items-center gap-1">
                                                                 <GoClock className="text-gray-500 iconLesson" />
                                                                 <span>{course.duration}</span> {/* Example: "2 hours 30 minutes" */}
@@ -237,7 +252,7 @@ const Home = () => {
                             <CarouselContent className="flex">
                                 {courses.map((course: Course) => (
                                     <CarouselItem key={course.id} className="md:basis-1/2 lg:basis-1/4">
-                                                <Card className="relative h-75 flex flex-col">
+                                                <Card className="relative h-75 flex flex-col" data-aos="fade-up" data-aos-duration="1500"  data-aos-anchor-placement="top-bottom">
                                                     <img
                                                         src={course.imageUrl}
                                                         alt={course.title}
@@ -253,7 +268,7 @@ const Home = () => {
                                                             <Rating name="read-only" value={course.rating} className="!text-base" readOnly />
                                                             <span className="text-sm opacity-75">({course.numberOfStudents})</span>
                                                         </div>
-                                                        <div className="mt-2 flex items-center gap-4 text-sm text-gray-600">
+                                                        <div className="mt-2 flex flex-col sm:flex-row items-start sm:items-center gap-4 text-sm text-gray-600">
                                                             <div className="flex items-center gap-1">
                                                                 <GoClock className="text-gray-500 iconLesson" />
                                                                 <span>{course.duration}</span> {/* Example: "2 hours 30 minutes" */}
@@ -304,7 +319,7 @@ const Home = () => {
                             <CarouselContent className="flex">
                                 {courses.map((course: Course) => (
                                     <CarouselItem key={course.id} className="md:basis-1/2 lg:basis-1/4">
-                                                <Card className="relative h-75 flex flex-col">
+                                                <Card className="relative h-75 flex flex-col" data-aos="fade-up" data-aos-duration="1500"  data-aos-anchor-placement="top-bottom">
                                                     <img
                                                         src={course.imageUrl}
                                                         alt={course.title}
@@ -320,7 +335,7 @@ const Home = () => {
                                                             <Rating name="read-only" value={course.rating} className="!text-base" readOnly />
                                                             <span className="text-sm opacity-75">({course.numberOfStudents})</span>
                                                         </div>
-                                                        <div className="mt-2 flex items-center gap-4 text-sm text-gray-600">
+                                                        <div className="mt-2 flex flex-col sm:flex-row items-start sm:items-center gap-4 text-sm text-gray-600">
                                                             <div className="flex items-center gap-1">
                                                                 <GoClock className="text-gray-500 iconLesson" />
                                                                 <span>{course.duration}</span> {/* Example: "2 hours 30 minutes" */}
@@ -371,7 +386,7 @@ const Home = () => {
                             <CarouselContent className="flex">
                                 {courses.map((course: Course) => (
                                     <CarouselItem key={course.id} className="md:basis-1/2 lg:basis-1/4">
-                                                <Card className="relative h-75 flex flex-col">
+                                                <Card className="relative h-75 flex flex-col" data-aos="fade-up" data-aos-duration="1500"  data-aos-anchor-placement="top-bottom">
                                                     <img
                                                         src={course.imageUrl}
                                                         alt={course.title}
@@ -387,7 +402,7 @@ const Home = () => {
                                                             <Rating name="read-only" value={course.rating} className="!text-base" readOnly />
                                                             <span className="text-sm opacity-75">({course.numberOfStudents})</span>
                                                         </div>
-                                                        <div className="mt-2 flex items-center gap-4 text-sm text-gray-600">
+                                                        <div className="mt-2 flex flex-col sm:flex-row  items-start sm:items-center gap-4 text-sm text-gray-600">
                                                             <div className="flex items-center gap-1">
                                                                 <GoClock className="text-gray-500 iconLesson" />
                                                                 <span>{course.duration}</span> {/* Example: "2 hours 30 minutes" */}
