@@ -5,7 +5,10 @@ import Registration from "./Pages/RegisterLogin/Registration";
 import Home from "./Pages/Learning/Home";
 import "./index.css";
 import { ThemeProvider } from "./components/ui/theme-provider";
-import Settings from "./Pages/Settings/Settings";
+import ThemeSettings from "./Pages/Settings/ThemeSettings";
+import PublicProfile from "./Pages/Settings/PublicProfile";
+
+
 
 
 
@@ -29,9 +32,15 @@ function App() {
                 }
               />
                <Route
-                path="/settings"
+                path="/theme"
                 element={
-                    <Settings />
+                    <ThemeSettings />
+                }
+              />
+               <Route
+                path="/profile"
+                element={
+                    <PublicProfile />
                 }
               />
           </Routes>
