@@ -3,6 +3,7 @@ from django.urls import path
 from authentication import views
 from . import views
 
+
 urlpatterns = [
     path("token/", views.MyTokenObtainPairView.as_view()),
     path("token/refresh/",TokenRefreshView.as_view()),
@@ -10,6 +11,7 @@ urlpatterns = [
     path('test/', views.testEndPoint, name='test'),
     path('', views.getRoutes),
     path('verify-otp/', views.verify_otp, name='verify-otp'),
-
+    path('user/update/', views.UserProfileUpdateView.as_view(), name='user-update'),
+    path('user/', views.UserProfileView.as_view(), name='user-profile'),
 
 ]
