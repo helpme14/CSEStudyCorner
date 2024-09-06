@@ -8,14 +8,16 @@ import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "../components/routes/PrivateRoute";
 import ThemeSettings from "./Pages/Settings/ThemeSettings";
 import PublicProfile from "./Pages/Settings/PublicProfile";
+import AccountSettings from "./Pages/Settings/AccountSettings";
+import { Toaster } from 'react-hot-toast';
+import CloseAccount from "./Pages/Settings/CloseAccount";
 import { ThemeProvider } from "./components/ui/theme-provider";
 import NotFound from "./Pages/NotFound";
-// interface PrivateRouteProps {
-//   component: React.ComponentType;
-// }
+
 function App() {
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+       <Toaster />
       <Router>
         <AuthProvider>
           <div className="container px-6 mx-auto font-sans">
@@ -54,8 +56,24 @@ function App() {
                   </PrivateRoute>
                 }
               />
-               <Route path="*" element={<NotFound />} />{ /*Catch-all route for undefined endpoints*/}
-            </Routes>
+                <Route
+                path="/home/account-settings"
+                element={
+                  <PrivateRoute>
+                    <AccountSettings />
+                    </PrivateRoute>
+                }
+              />
+               <Route
+                path="/home/close-account"
+                element={
+                  <PrivateRoute>
+                    <CloseAccount />
+                    </PrivateRoute>
+                }
+              />
+              
+          </Routes>
           </div>
           
         </AuthProvider>

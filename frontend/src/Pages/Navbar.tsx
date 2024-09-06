@@ -1,5 +1,6 @@
 import React,{useContext} from 'react';
-import Secondlogo from '../assets/SecondLogo.png';
+import Secondlogo from '../assets/Light-corner.png';
+import darkSecondlogo from '../assets/Dark-corner.png';
 import { FaSearch } from "react-icons/fa"; 
 import { Link } from "react-router-dom";
 
@@ -49,10 +50,12 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
   const {logoutUser} = authContext
   return (
     <nav className={`sticky top-0 z-50 block w-full h-15 ${className}`}>
-      <div className="w-full px-6 py-2 bg-white shadow dark:bg-gray-800">
+      <div className="w-full px-8 py-2 bg-white shadow dark:bg-gray-800">
         <div className="flex items-center justify-between">
           <a href="#">
             <img className="h-6 w-36 sm:h-10" src={Secondlogo} alt="Logo" />
+            <img className="w-28 sm:w-36 h-8 sm:h-10 dark:hidden" src={Secondlogo} alt="Logo" />
+            <img className="w-28 sm:w-36 h-8 sm:h-10 dark:block hidden" src={darkSecondlogo} alt="Logo" />
           </a>
 
           <div className="flex items-center">
