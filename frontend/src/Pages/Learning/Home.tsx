@@ -161,7 +161,7 @@ const Home = () => {
 
                 <section>
                     <div className="container mx-auto">
-                        <div className="w-full flex flex-col sm:flex-row justify-between bg-gray-800 p-6 mt-5 items-center">
+                        <div className="w-full flex flex-col sm:flex-row justify-between bg-gray-800 p-6 mt-5 items-center dark:bg-slate-950">
                                     <span className="text-white font-semibold text-center sm:text-left">
                                         Do you want to study offline? Download our Civil Service Reviewer!
                                     </span>

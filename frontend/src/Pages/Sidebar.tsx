@@ -1,6 +1,8 @@
-import logo from '../assets/StudyCorner-logo.png';
+import logo from '../assets/cap-logo.png';
+import DarkLogo from '../assets/cap-logo-light.png'
 
 import { GoHome, GoGlobe, GoRepo, GoBookmark, GoGear, GoInfo, GoSearch } from "react-icons/go";
+import { Link } from 'react-router-dom';
 interface SidebarProps {
   className?: string; 
 }
@@ -16,16 +18,17 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
       >
         <nav className="flex flex-col flex-1 space-y-3 items-center fixed">
           <a href="#">
-            <img className="w-10 h-10 mb-3" src={logo} alt="Logo" />
+            <img className="w-10 h-10 mb-3 dark:hidden" src={logo} alt="Logo" />
+            <img className="w-10 h-10 mb-3 hidden dark:block" src={DarkLogo} alt="Dark Mode Logo" />
           </a>
 
           {/* Navigation Items */}
-          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
+          <Link to="/home" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
             <div className='flex flex-col gap-1 items-center'>
               <GoHome className='w-6 h-6' />
               <span className=' font-medium text-[0.8rem]'>Home</span>
             </div>
-          </a>
+          </Link>
 
           <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
           <div className='flex flex-col gap-1 items-center'>
@@ -48,12 +51,12 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             </div>
           </a>
 
-          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
+          <Link to="/theme" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
             <div className='flex flex-col gap-1 items-center'>
               <GoGear className='w-5 h-5' />
               <span className=' font-medium text-[0.8rem]'>Settings</span>
             </div>
-          </a>
+          </Link>
 
           <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
             <div className='flex flex-col gap-1 items-center'>

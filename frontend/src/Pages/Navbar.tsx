@@ -1,5 +1,6 @@
 import React from 'react';
-import Secondlogo from '../assets/SecondLogo.png';
+import Secondlogo from '../assets/Light-corner.png';
+import darkSecondlogo from '../assets/Dark-corner.png';
 import { FaSearch } from "react-icons/fa"; 
 import { Link } from "react-router-dom";
 
@@ -46,7 +47,8 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
       <div className=" px-8 py-2 w-full  bg-white shadow dark:bg-gray-800">
         <div className="flex items-center justify-between">
           <a href="#">
-            <img className="w-36 h-6 sm:h-10" src={Secondlogo} alt="Logo" />
+            <img className="w-28 sm:w-36 h-8 sm:h-10 dark:hidden" src={Secondlogo} alt="Logo" />
+            <img className="w-28 sm:w-36 h-8 sm:h-10 dark:block hidden" src={darkSecondlogo} alt="Logo" />
           </a>
 
           <div className="flex items-center">
@@ -106,7 +108,7 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
                     <span>Billing</span>
                     <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
                     </DropdownMenuItem>
-                    <Link  to="/settings">
+                    <Link  to="/theme">
                       <DropdownMenuItem>
                         <Settings className="mr-2 h-4 w-4" />
                         <span>Settings</span>
