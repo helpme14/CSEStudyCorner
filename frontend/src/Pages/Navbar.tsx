@@ -42,14 +42,17 @@ interface NavbarProps {
 
 
 const Navbar: React.FC <NavbarProps> = ({ className }) => {
+  
   const authContext = useContext(AuthContext)
+  
   if (!authContext) {
       throw new Error('AuthContext must be used within an AuthProvider');
     }
   
   const {logoutUser} = authContext
+  
   return (
-    <nav className={`sticky top-0 z-50 block w-full h-15 ${className}`}>
+    <nav className={`sticky top-0 z-50 block w-full h-15 ${className} `}>
       <div className="w-full px-8 py-2 bg-white shadow dark:bg-gray-800">
         <div className="flex items-center justify-between">
           <a href="#">
