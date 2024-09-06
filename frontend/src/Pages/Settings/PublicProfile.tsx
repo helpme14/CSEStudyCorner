@@ -34,7 +34,7 @@ const PublicProfile = () => {
   };
 
   return (
-    <div className="w-full flex h-full overflow-hidden">
+    <div className="w-full flex h-full">
       <Sidebar />
       <div className="flex flex-col w-full">
         <Navbar />
@@ -94,8 +94,6 @@ const PublicProfile = () => {
                             Recommended size: 400x400px. Supported formats: .jpg, .png, .gif.
                         </p>
                         </div>
-
-
                         <form className="flex flex-col gap-3">
                         <div className="pt-4 flex flex-col gap-3">
                             <Label htmlFor="username" className="font-medium text-medium">

@@ -17,10 +17,10 @@ import CloseAccount from "./Pages/Settings/CloseAccount";
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme" >
        <Toaster />
-      <Router>
-          <div className="container px-6 mx-auto font-sans">
+      <Router >
+          <div className="px-6 mx-auto font-sans dark:bg-gray-900 ">
             <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/pricing" element={<Pricing />} />

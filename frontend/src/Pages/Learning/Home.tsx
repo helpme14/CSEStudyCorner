@@ -27,12 +27,12 @@ import 'aos/dist/aos.css';
 const Home = () => {
     useEffect(() => {
         AOS.init({
-          duration: 1000,  // Customize duration, easing, etc.    
-          offset: 200,     // Offset to trigger animation early or later
-            mirror: true,    // Trigger animation on scroll up
-            once: false,  // Animation should only happen once
+          duration: 1000,
+          offset: 200,     
+            mirror: true,   
+            once: false, 
         });
-        AOS.refresh();      // Refresh AOS after initialization
+        AOS.refresh();      
       }, []);
 
       
