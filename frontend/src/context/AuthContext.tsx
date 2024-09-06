@@ -18,6 +18,8 @@ interface AuthContextType {
   setAuthTokens: Dispatch<SetStateAction<AuthTokens | null>>;
   loginUser: (email: string, password: string) => Promise<void>;
   logoutUser: () => void;
+  fetchProfileData: () => Promise<void>;
+  updateProfile: (updatedProfile: Partial<CustomJwtPayload>) => Promise<void>;
   registerUser: (
     email: string,
     regFname: string,
@@ -41,6 +43,8 @@ interface CustomJwtPayload extends JwtPayload {
   email: string;
   bio: string;
   full_name:string;
+  first_name:string;
+  last_name:string;
 }
 
 // Create the AuthContext with default values
@@ -259,12 +263,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const refreshToken = useCallback(async () => {
     const apiUrl = import.meta.env.VITE_AUTHENTICATION_REFRESH_TOKEN_API;
-
+  
     if (!apiUrl) {
       console.error("API URL is not defined");
       return;
     }
-
+  
+    console.log("Refreshing token...");
+  
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -273,14 +279,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         },
         body: JSON.stringify({ refresh: authTokens?.refresh }),
       });
+  
+      
+      
       const data: AuthTokens = await response.json();
-
+     
+  
       if (response.status === 200) {
         setAuthTokens(data);
         setUser(jwtDecode<CustomJwtPayload>(data.access));
         localStorage.setItem("authTokens", JSON.stringify(data));
+        console.log("Success refreshing token");
         return data.access;
       } else {
+        console.error("Failed to refresh token:", data);
         logoutUser();
       }
     } catch (error) {
@@ -288,16 +300,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       logoutUser();
     }
   }, [authTokens, setAuthTokens, setUser, logoutUser]);
-
+  
   useEffect(() => {
     if (authTokens) {
-      // Start the interval to refresh the token periodically
+      // console.log("Setting up token refresh interval...");
       const interval = setInterval(() => {
         refreshToken();
       }, 4 * 60 * 1000); // 4 minutes
-
-      // Cleanup function to clear the interval on component unmount or authTokens change
-      return () => clearInterval(interval);
+  
+      return () => {
+        // console.log("Clearing token refresh interval...");
+        clearInterval(interval);
+      };
     }
   }, [authTokens, refreshToken]);
 
@@ -315,7 +329,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (logoutTimer) {
         clearTimeout(logoutTimer);
       }
-      logoutTimer = setTimeout(logoutUser, 5 * 60 * 1000); // 5 minutes
+      logoutTimer = setTimeout(logoutUser, 10 * 60 * 1000); // 5 minutes
     };
 
     // Define paths where auto-logout should NOT happen
@@ -338,6 +352,88 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       };
     }
   }, [location.pathname, logoutUser]);
+    
+  const fetchProfileData = useCallback(async () => {
+    if (!authTokens) {
+      console.error("No authentication tokens available.");
+      return;
+    }
+
+    const apiUrl = import.meta.env.VITE_USER_PROFILE_API;
+    if (!apiUrl) {
+      console.error("API URL for user profile is not defined.");
+      return;
+    }
+
+    try {
+      const response = await fetch(apiUrl, {
+        headers: {
+          "Authorization": `Bearer ${authTokens.access}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const updatedUser = await response.json();
+        setUser(updatedUser); // Update the context or state with new user profile data
+      } else {
+        console.error('Failed to fetch user profile');
+      }
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+    }
+  }, [authTokens]);
+
+  useEffect(() => {
+    if (authTokens) {
+      fetchProfileData(); // Fetch user profile when tokens are available
+    }
+  }, [authTokens, fetchProfileData]);
+
+  const updateProfile = async (updatedProfile: Partial<CustomJwtPayload>) => {
+    if (!authTokens) {
+      console.error("No authentication tokens available.");
+      return;
+    }
+  
+    const apiUrl = import.meta.env.VITE_UPDATE_PROFILE_API;
+    if (!apiUrl) {
+      console.error("API URL for updating profile is not defined.");
+      return;
+    }
+  
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'PUT', // Or PATCH, depending on your API
+        headers: {
+          'Authorization': `Bearer ${authTokens.access}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedProfile),
+      });
+  
+      if (response.ok) {
+        const updatedUser = await response.json();
+        setUser(prevUser => ({
+          ...prevUser,
+          ...updatedUser,
+        }));
+        swal.fire({
+          title: "Profile Updated",
+          icon: "success",
+          toast: true,
+          timer: 3000,
+          position: "top-right",
+          timerProgressBar: true,
+          showConfirmButton: false,
+        });
+      } else {
+        console.error('Failed to update profile');
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
+  };
 
   const contextData: AuthContextType = {
     user,
@@ -347,6 +443,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     logoutUser,
     registerUser,
     refreshToken,
+    fetchProfileData,
+    updateProfile,
   };
 
   return (
