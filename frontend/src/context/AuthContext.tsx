@@ -40,6 +40,7 @@ interface CustomJwtPayload extends JwtPayload {
   username: string;
   email: string;
   bio: string;
+  full_name:string;
 }
 
 // Create the AuthContext with default values
