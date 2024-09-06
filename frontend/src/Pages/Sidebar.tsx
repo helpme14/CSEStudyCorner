@@ -23,42 +23,42 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
           </a>
 
           {/* Navigation Items */}
-          <Link to="/home" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
+          <Link to="/home" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300">
             <div className='flex flex-col gap-1 items-center'>
               <GoHome className='w-6 h-6' />
-              <span className=' font-medium text-[0.8rem]'>Home</span>
+              <span className=' font-medium text-[0.8rem] '>Home</span>
             </div>
           </Link>
 
-          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
+          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300">
           <div className='flex flex-col gap-1 items-center'>
               <GoGlobe className='w-5 h-5' />
               <span className=' font-medium text-[0.8rem]'>Explore</span>
             </div>
           </a>
 
-          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
+          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300">
             <div className='flex flex-col gap-1 items-center'>
                 <GoRepo className='w-5 h-5' />
                 <span className=' font-medium text-[0.8rem]'>Courses</span>
               </div>
           </a>
 
-          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
+          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300">
             <div className='flex flex-col gap-1 items-center'>
               <GoBookmark className='w-5 h-5' />
               <span className=' font-medium text-[0.8rem]'>Saved</span>
             </div>
           </a>
 
-          <Link to="/theme" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
+          <Link to="/theme" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 hover:text-blue-500  dark:hover:text-blue-300">
             <div className='flex flex-col gap-1 items-center'>
               <GoGear className='w-5 h-5' />
               <span className=' font-medium text-[0.8rem]'>Settings</span>
             </div>
           </Link>
 
-          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
+          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300">
             <div className='flex flex-col gap-1 items-center'>
               <GoInfo className='w-5 h-5' />
               <span className=' font-medium text-[0.8rem]'>Help</span>
