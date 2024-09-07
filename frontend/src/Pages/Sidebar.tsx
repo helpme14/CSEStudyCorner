@@ -73,7 +73,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             </div>
           </a>
 
-          <Link to="/theme" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 hover:text-blue-500  dark:hover:text-blue-300">
+          <Link to="/home/theme" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 hover:text-blue-500  dark:hover:text-blue-300">
             <div className='flex flex-col items-center gap-1'>
               <GoGear className='w-5 h-5' />
               <span className=' font-medium text-[0.8rem]'>Settings</span>
