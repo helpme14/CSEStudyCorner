@@ -18,7 +18,7 @@ const PublicProfile = () => {
     throw new Error("AuthContext must be used within an AuthProvider");
   }
 
-  const { user, fetchProfileData } = authContext;
+  const { user, fetchProfileData ,updateProfile} = authContext;
 
   const [formData, setFormData] = useState({
     username: user?.username || "",
@@ -78,6 +78,17 @@ const PublicProfile = () => {
       .toUpperCase();
     return initials;
   };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // Call updateProfile from AuthContext
+    try {
+      await updateProfile(formData);
+    } catch (error) {
+      console.error("Error updating profile", error);
+    }
+  };
+  
 
   return (
     <div className="flex w-full h-full">
@@ -148,7 +159,7 @@ const PublicProfile = () => {
                       </p>
                     </div>
 
-                    <form className="flex flex-col gap-3">
+                    <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
                       <div className="flex flex-col gap-3 pt-4">
                         <Label
                           htmlFor="username"
@@ -159,6 +170,7 @@ const PublicProfile = () => {
                         <Input
                           type="text"
                           id="Username"
+                          name="username"
                           placeholder="Username"
                           onChange={handleChange}
                           value={formData.username}
@@ -179,6 +191,7 @@ const PublicProfile = () => {
                         <Input
                           type="email"
                           id="email"
+                          name="email"
                           placeholder="Email"
                           onChange={handleChange}
                           value={formData.email}
@@ -197,6 +210,7 @@ const PublicProfile = () => {
                         </Label>
                         <Textarea
                           id="bio"
+                          name="bio"
                           placeholder="Tell us a little bit about yourself"
                           onChange={handleChange}
                           value={formData.bio}
