@@ -17,7 +17,7 @@ const CloseAccount = () => {
     const [isOpen, setIsOpen] = useState(false);
   return (
     
-        <div className="w-full flex h-screen ">
+        <div className="flex w-full h-screen ">
                 <Sidebar />
                 <div className="flex flex-col w-full">
                     <Navbar />
@@ -25,7 +25,7 @@ const CloseAccount = () => {
                         <div className="container py-20 ">
                         <Box sx={{ flexGrow: 1 }}>
                             <div className="flex flex-col gap-2 pb-6">
-                                <span className="font-bold text-3xl">Settings</span>
+                                <span className="text-3xl font-bold">Settings</span>
                                 <p className="text-base text-gray-500 dark:text-white">Manage your account settings and set e-mail preferences.</p>
                             </div>
                             <Divider />
@@ -44,23 +44,23 @@ const CloseAccount = () => {
                                         {/* Button to trigger the modal */}
                                         <DialogTrigger asChild>
                                             <Button variant="destructive">
-                                            <GoTrash className="mr-2 text-base" />
+                                            <GoTrash className="mr-2 text-base " />
                                             Close Account
                                             </Button>
                                         </DialogTrigger>
 
-                                        <DialogOverlay className="fixed inset-0 bg-black/50 transition-opacity duration-300" />
+                                        <DialogOverlay className="fixed inset-0 transition-opacity duration-300 bg-black/50" />
 
                                         <DialogContent
-                                            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-6 bg-white rounded-lg shadow-md dark:bg-gray-800 transition-transform duration-300"
+                                            className="fixed p-6 transition-transform duration-300 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-md left-1/2 top-1/2 dark:bg-gray-800"
                                             style={{ transitionTimingFunction: "ease-in-out" }}
                                         >
-                                            <h2 className="text-xl font-semibold">Close Account</h2>
+                                            <h2 className="text-xl font-semibold dark:text-white">Close Account</h2>
                                             <p className="mt-2 text-sm text-gray-500 dark:text-gray-300">
                                             Are you sure you want to close your account? This action cannot be undone.
                                             </p>
 
-                                            <div className="mt-6 flex justify-end gap-2">
+                                            <div className="flex justify-end gap-2 mt-6">
                                             <Button variant="secondary" onClick={() => setIsOpen(false)}>
                                                 Cancel
                                             </Button>
