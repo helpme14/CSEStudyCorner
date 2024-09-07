@@ -4,11 +4,11 @@ import Nav from "../Header"
 
 const Pricing = () => {
   return (
-    <section>
+    <section className="h-full">
         <Nav />
         <DynamicBackground gradient1="#ff80b5" gradient2="#9089fc" />
         <div className="bg-white dark:bg-gray-900">
-        <div className="container px-6 sm:py-20 py-8 mx-auto">
+        <div className="container sm:py-20 py-8 mx-auto">
             <div className="xl:items-center xl:-mx-8 xl:flex">
             <div className="flex flex-col items-center xl:items-start xl:mx-8">
                 <h1 className="text-2xl font-medium text-gray-800 capitalize lg:text-3xl dark:text-white">

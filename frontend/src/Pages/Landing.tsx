@@ -9,7 +9,7 @@ const Landing = () => {
 
 
   return (
-    <section className="">
+    <section className="h-screen">
       <Nav />
         <div className="relative px-6 isolate lg:px-8">
           <div className="absolute inset-x-0 overflow-hidden -top-40 -z-10 transform-gpu blur-3xl sm:-top-80" aria-hidden="true">
@@ -17,15 +17,15 @@ const Landing = () => {
           </div>
           <div className="max-w-5xl py-32 mx-auto sm:py-30 lg:py-40">
             <div className="hidden sm:mb-8 sm:flex sm:justify-center">
-              <div className="relative px-3 py-1 text-sm leading-6 text-gray-600 rounded-full ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+              <div className="relative px-3 py-1 text-sm leading-6 text-gray-600 rounded-full dark:text-white dark:ring-white ring-1 ring-gray-900/10 hover:ring-gray-900/20">
               Prepare for your upcoming  Civil Service exam with our latest review materials. <a href="#" className="font-semibold text-indigo-600"><span className="absolute inset-0" aria-hidden="true"></span>Read more <span aria-hidden="true">&rarr;</span></a>
               </div>
             </div>
             <div className="px-4 text-center sm:px-6 lg:px-8">
-              <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl md:text-5xl lg:text-6xl">
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl md:text-5xl lg:text-6xl">
                 Prepare for the Civil Service Exam with Confidence
               </h1>
-              <p className="mt-6 text-base leading-7 text-gray-600 sm:text-lg md:text-xl md:leading-8">
+              <p className="mt-6 text-base leading-7 text-gray-600 sm:text-lg md:text-xl md:leading-8 dark:text-white">
                 Access comprehensive review materials, take practice tests, and track your progress.
               </p>
               <div className="flex flex-col items-center justify-center gap-4 mt-10 sm:flex-row sm:gap-x-6">
@@ -37,7 +37,7 @@ const Landing = () => {
                 </a>
                 <Link
                   to="/pricing"
-                  className="text-sm font-semibold leading-6 text-gray-900 sm:text-base"
+                  className="text-sm font-semibold leading-6 text-gray-900 sm:text-base dark:text-white"
                 >
                   Get Materials<span aria-hidden="true">→</span>
                 </Link>
