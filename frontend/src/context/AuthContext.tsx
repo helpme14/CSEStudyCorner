@@ -32,6 +32,11 @@ interface AuthContextType {
   refreshToken: () => Promise<string | void>;
 }
 
+interface Profile {
+  age_bracket?: string;
+  bio?: string;
+  // Add other profile fields to update if meron
+}
 interface AuthTokens {
   access: string;
   refresh: string;
@@ -45,6 +50,7 @@ interface CustomJwtPayload extends JwtPayload {
   full_name:string;
   first_name:string;
   last_name:string;
+  profile?: Profile;
 }
 
 // Create the AuthContext with default values
@@ -402,14 +408,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
   
+    // Prepare the payload with the nested profile object
+    const payload = {
+      username: updatedProfile.username,
+      email: updatedProfile.email,
+      first_name: updatedProfile.first_name,
+      last_name: updatedProfile.last_name,
+      profile: {
+        age_bracket: updatedProfile.profile?.age_bracket, 
+        bio: updatedProfile.profile?.bio, // Assuming bio is in profile
+      },
+    };
+  
     try {
+      console.log("Payload being sent:", payload);  // Log the payload for debugging
+  
       const response = await fetch(apiUrl, {
-        method: 'PUT', // Or PATCH, depending on your API
+        method: 'PUT',
         headers: {
           'Authorization': `Bearer ${authTokens.access}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(updatedProfile),
+        body: JSON.stringify(payload),
       });
   
       if (response.ok) {
@@ -428,7 +448,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           showConfirmButton: false,
         });
       } else {
-        console.error('Failed to update profile');
+        const errorData = await response.json();
+        console.error('Failed to update profile:', errorData);
       }
     } catch (error) {
       console.error('Error updating profile:', error);
