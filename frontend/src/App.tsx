@@ -10,6 +10,8 @@ import PublicProfile from "./Pages/Settings/PublicProfile";
 import AccountSettings from "./Pages/Settings/AccountSettings";
 import { Toaster } from 'react-hot-toast';
 import CloseAccount from "./Pages/Settings/CloseAccount";
+import ForgotPassword from "./Pages/RegisterLogin/ForgotPassword";
+import EmailTempalte from "./Pages/RegisterLogin/EmailTemplate";
 
 
 
@@ -59,6 +61,19 @@ function App() {
                     <CloseAccount />
                 }
               />
+                  <Route
+                path="/forgot-password"
+                element={
+                    <ForgotPassword />
+                }
+              />
+              <Route
+                path="/email-template"
+                element={
+                    <EmailTempalte />
+                }
+              />
+
           </Routes>
           </div>
       </Router>
