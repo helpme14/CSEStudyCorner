@@ -1,4 +1,6 @@
 import React from "react";
+import Secondlogo from '../assets/Light-corner.png';
+import darkSecondlogo from '../assets/Dark-corner.png';
 
 const Footer: React.FC = () => {
   return (
@@ -9,8 +11,13 @@ const Footer: React.FC = () => {
                 <div className="px-6">
                 <a href="#">
                     <img
-                    className="w-auto h-7"
-                    src="https://merakiui.com/images/full-logo.svg"
+                    className="w-auto h-7 dark:hidden"
+                    src={Secondlogo}
+                    alt="Brand Logo"
+                    />
+                     <img
+                    className="w-auto h-7 dark:block hidden"
+                    src={darkSecondlogo}
                     alt="Brand Logo"
                     />
                 </a>
@@ -132,7 +139,7 @@ const Footer: React.FC = () => {
 
             <div>
             <p className="text-center text-gray-500 dark:text-gray-400">
-                © Meraki UI All rights reserved 2021
+                © Status All rights reserved 2024
             </p>
             </div>
         </div>

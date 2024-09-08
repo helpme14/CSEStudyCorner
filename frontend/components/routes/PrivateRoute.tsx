@@ -9,20 +9,21 @@ interface PrivateRouteProps {
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   // Use the AuthContext to get authTokens
-
   const context = useContext(AuthContext);
-  //check if undefined, else error
+
+  // Check if context is undefined, else throw an error
   if (!context) {
-    throw new Error("useContext must be used within an AuthProvider");
+    throw new Error("PrivateRoute must be used within an AuthProvider");
   }
+
   const { authTokens } = context;
 
   // If the user is not authenticated, redirect to the login page
   if (!authTokens) {
-    return <Navigate to="/registration" />;
+    return <Navigate to="/registration" />;  // Redirect to login page
   }
 
-  // else, render the children components
+  // Otherwise, render the children components
   return <>{children}</>;
 };
 

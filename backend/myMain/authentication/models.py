@@ -45,10 +45,7 @@ class Profile(models.Model):
     # verified = models.BooleanField(default=False)
     age_bracket = models.CharField(max_length=8, choices=AGE_BRACKET_CHOICES, default='U18')
 
-    def save(self, *args, **kwargs):
-        # Automatically set the full_name field by combining first_name and last_name from the User model
-        self.full_name = f"{self.user.first_name} {self.user.last_name}".strip()
-        super().save(*args, **kwargs)
+
 
     def __str__(self):
         return self.full_name
@@ -57,4 +54,14 @@ class Profile(models.Model):
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
+        # Create a profile for a newly created user
         Profile.objects.create(user=instance)
+    else:
+        # Update the full_name in Profile when User's first_name or last_name changes
+        profile = instance.profile
+        new_full_name = f"{instance.first_name} {instance.last_name}".strip()
+        
+        # Only update if the full_name is different
+        if profile.full_name != new_full_name:
+            profile.full_name = new_full_name
+            profile.save()

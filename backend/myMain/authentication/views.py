@@ -13,6 +13,8 @@ import requests
 import logging
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
+from authentication.serializer import UserProfileUpdateSerializer,UserProfileSerializer
+
 
 logger = logging.getLogger(__name__)
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -99,3 +101,16 @@ def verify_otp(request):
             return Response({'error': 'Invalid OTP or email'}, status=status.HTTP_400_BAD_REQUEST)
     
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class UserProfileView(generics.RetrieveAPIView):
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+class UserProfileUpdateView(generics.UpdateAPIView):
+    serializer_class = UserProfileUpdateSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        # Return the currently authenticated user
+        return self.request.user

@@ -27,6 +27,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
         logger.info(f"Token obtained for user: {user.email}")
         # Add custom claims
+        token['first_name'] = user.first_name  # Add first_name
+        token['last_name'] = user.last_name    # Add last_name
         token['full_name'] = user.profile.full_name
         token['username'] = user.username
         token['email'] = user.email
@@ -140,3 +142,45 @@ class VerifyOTPSerializer(serializers.Serializer):
         user.otp_created_at = None
         user.save()
         return user
+    
+class UserProfileSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer(read_only=True)  # Nest ProfileSerializer to include profile details
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name', 'profile']  # Include profile in fields
+        read_only_fields = ['username', 'email']  # Set read-only fields if needed
+
+class UserProfileUpdateSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer()  # Nested serializer for profile fields
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name', 'profile']
+        extra_kwargs = {
+            'email': {'required': False},  # Make email optional
+            'username': {'required': False},
+            'first_name': {'required': False},
+            'last_name': {'required': False},
+        }
+
+    def update(self, instance, validated_data):
+        profile_data = validated_data.pop('profile', {})
+
+        # Update User fields
+        if 'username' in validated_data:
+            instance.username = validated_data['username']
+        if 'first_name' in validated_data:
+            instance.first_name = validated_data['first_name']
+        if 'last_name' in validated_data:
+            instance.last_name = validated_data['last_name']
+        instance.save()
+
+        # Update Profile fields
+        profile = instance.profile
+        for attr, value in profile_data.items():
+            setattr(profile, attr, value)
+        profile.save()
+
+        return instance
+    

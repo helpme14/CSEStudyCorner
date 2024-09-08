@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import DynamicBackground from "../Bacground";
 import Nav from "../Header";
 import Box from '@mui/material/Box';
@@ -6,6 +6,7 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -17,7 +18,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import swal from 'sweetalert2';
 import AuthContext from '../../context/AuthContext';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -25,12 +25,19 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 const Registration = () => {
   const [value, setValue] = useState('1');
   const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
 
   if (!authContext) {
     throw new Error('AuthContext must be used within an AuthProvider');
   }
 
-  const { registerUser, loginUser } = authContext;
+  const { user, registerUser, loginUser } = authContext;
+  useEffect(() => {
+    // If user is logged in, redirect to home
+    if (user) {
+      navigate("/home");
+    }
+  }, [user, navigate]);
 
   // State for login form
   const [loginEmail, setLoginEmail] = useState('');
@@ -44,7 +51,6 @@ const Registration = () => {
   const [regPassword, setRegPassword] = useState('');
   const [regConfirmPassword, setRegConfirmPassword] = useState('');
   const [ageBracket, setAgeBracket] = useState('');
-  const [ageBracketError, setAgeBracketError] = useState('');
   
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -59,10 +65,7 @@ const Registration = () => {
 
   const handleRegistration = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!ageBracket) {
-      setAgeBracketError("Please select your age bracket");
-      return;
-    }
+    
     if (!regFname || !regLname || !regUsername || !regEmail || !regPassword || !regConfirmPassword) {
       swal.fire({
         title: "All fields are required",

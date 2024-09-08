@@ -1,5 +1,6 @@
 import React,{useContext} from 'react';
-import Secondlogo from '../assets/SecondLogo.png';
+import Secondlogo from '../assets/Light-corner.png';
+import darkSecondlogo from '../assets/Dark-corner.png';
 import { FaSearch } from "react-icons/fa"; 
 import { Link } from "react-router-dom";
 
@@ -41,18 +42,23 @@ interface NavbarProps {
 
 
 const Navbar: React.FC <NavbarProps> = ({ className }) => {
+  
   const authContext = useContext(AuthContext)
+  
   if (!authContext) {
       throw new Error('AuthContext must be used within an AuthProvider');
     }
   
   const {logoutUser} = authContext
+  
   return (
-    <nav className={`sticky top-0 z-50 block w-full h-15 ${className}`}>
-      <div className="w-full px-6 py-2 bg-white shadow dark:bg-gray-800">
+    <nav className={`sticky top-0 z-50 block w-full h-15 ${className} `}>
+      <div className="w-full px-8 py-2 bg-white shadow dark:bg-gray-800">
         <div className="flex items-center justify-between">
           <a href="#">
-            <img className="h-6 w-36 sm:h-10" src={Secondlogo} alt="Logo" />
+            
+            <img className="h-8 w-28 sm:w-36 sm:h-10 dark:hidden" src={Secondlogo} alt="Logo" />
+            <img className="hidden h-8 w-28 sm:w-36 sm:h-10 dark:block" src={darkSecondlogo} alt="Logo" />
           </a>
 
           <div className="flex items-center">
@@ -112,7 +118,7 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
                     <span>Billing</span>
                     <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
                     </DropdownMenuItem>
-                    <Link  to="/theme">
+                    <Link  to="/home/profile">
                       <DropdownMenuItem>
                         <Settings className="w-4 h-4 mr-2" />
                         <span>Settings</span>

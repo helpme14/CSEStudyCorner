@@ -27,12 +27,12 @@ import 'aos/dist/aos.css';
 const Home = () => {
     useEffect(() => {
         AOS.init({
-          duration: 1000,  // Customize duration, easing, etc.    
-          offset: 200,     // Offset to trigger animation early or later
-            mirror: true,    // Trigger animation on scroll up
-            once: false,  // Animation should only happen once
+          duration: 1000,
+          offset: 200,     
+            mirror: true,   
+            once: false, 
         });
-        AOS.refresh();      // Refresh AOS after initialization
+        AOS.refresh();      
       }, []);
 
       
@@ -161,7 +161,7 @@ const Home = () => {
 
                 <section>
                     <div className="container mx-auto">
-                        <div className="flex flex-col items-center justify-between w-full p-6 mt-5 bg-gray-800 sm:flex-row">
+                        <div className="flex flex-col items-center justify-between w-full p-6 mt-5 bg-gray-800 sm:flex-row dark:bg-slate-950">
                                     <span className="font-semibold text-center text-white sm:text-left">
                                         Do you want to study offline? Download our Civil Service Reviewer!
                                     </span>
