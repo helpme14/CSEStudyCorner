@@ -27,8 +27,9 @@ interface AuthContextType {
     username: string,
     password: string,
     password2: string,
-    profile: { age_bracket: string }
+    profile: Profile
   ) => Promise<void>;
+
   refreshToken: () => Promise<string | void>;
 }
 
@@ -47,9 +48,9 @@ interface CustomJwtPayload extends JwtPayload {
   username: string;
   email: string;
   bio: string;
-  full_name:string;
-  first_name:string;
-  last_name:string;
+  full_name: string;
+  first_name: string;
+  last_name: string;
   profile?: Profile;
 }
 
@@ -165,8 +166,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     username: string,
     password: string,
     password2: string,
+    profile: Profile,
 
-    profile: { age_bracket: string }
+   
   ) => {
     const apiUrl = import.meta.env.VITE_AUTHENTICATION_REGISTER_API;
     setAuthTokens(null);
@@ -269,14 +271,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const refreshToken = useCallback(async () => {
     const apiUrl = import.meta.env.VITE_AUTHENTICATION_REFRESH_TOKEN_API;
-  
+
     if (!apiUrl) {
       console.error("API URL is not defined");
       return;
     }
-  
+
     console.log("Refreshing token...");
-  
+
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -285,12 +287,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         },
         body: JSON.stringify({ refresh: authTokens?.refresh }),
       });
-  
-      
-      
+
       const data: AuthTokens = await response.json();
-     
-  
+
       if (response.status === 200) {
         setAuthTokens(data);
         setUser(jwtDecode<CustomJwtPayload>(data.access));
@@ -306,14 +305,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       logoutUser();
     }
   }, [authTokens, setAuthTokens, setUser, logoutUser]);
-  
+
   useEffect(() => {
     if (authTokens) {
       // console.log("Setting up token refresh interval...");
       const interval = setInterval(() => {
         refreshToken();
       }, 4 * 60 * 1000); // 4 minutes
-  
+
       return () => {
         // console.log("Clearing token refresh interval...");
         clearInterval(interval);
@@ -358,7 +357,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       };
     }
   }, [location.pathname, logoutUser]);
-    
+
   const fetchProfileData = useCallback(async () => {
     if (!authTokens) {
       console.error("No authentication tokens available.");
@@ -374,7 +373,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       const response = await fetch(apiUrl, {
         headers: {
-          "Authorization": `Bearer ${authTokens.access}`,
+          Authorization: `Bearer ${authTokens.access}`,
           "Content-Type": "application/json",
         },
       });
@@ -383,10 +382,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const updatedUser = await response.json();
         setUser(updatedUser); // Update the context or state with new user profile data
       } else {
-        console.error('Failed to fetch user profile');
+        console.error("Failed to fetch user profile");
       }
     } catch (error) {
-      console.error('Error fetching profile:', error);
+      console.error("Error fetching profile:", error);
     }
   }, [authTokens]);
 
@@ -408,21 +407,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
   
-    // Prepare the payload with the nested profile object
     const payload = {
       username: updatedProfile.username,
       email: updatedProfile.email,
       first_name: updatedProfile.first_name,
       last_name: updatedProfile.last_name,
       profile: {
-        age_bracket: updatedProfile.profile?.age_bracket, 
-        bio: updatedProfile.profile?.bio, // Assuming bio is in profile
+        age_bracket: updatedProfile.profile?.age_bracket,
+        bio: updatedProfile.profile?.bio,
       },
     };
   
-    try {
-      console.log("Payload being sent:", payload);  // Log the payload for debugging
+    console.log("Payload being sent:", payload);
   
+    try {
       const response = await fetch(apiUrl, {
         method: 'PUT',
         headers: {
@@ -448,11 +446,37 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           showConfirmButton: false,
         });
       } else {
-        const errorData = await response.json();
-        console.error('Failed to update profile:', errorData);
+        let errorMessage = 'Failed to update profile';
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || 'Unknown error occurred';
+        } catch  {
+          errorMessage = 'Failed to parse error response';
+        }
+        console.error(errorMessage);
+        swal.fire({
+          title: "Update Failed",
+          text: errorMessage,
+          icon: "error",
+          toast: true,
+          timer: 3000,
+          position: "top-right",
+          timerProgressBar: true,
+          showConfirmButton: false,
+        });
       }
     } catch (error) {
       console.error('Error updating profile:', error);
+      swal.fire({
+        title: "Update Failed",
+        text: "An unexpected error occurred. Please try again.",
+        icon: "error",
+        toast: true,
+        timer: 3000,
+        position: "top-right",
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
     }
   };
 

@@ -42,9 +42,11 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 User = get_user_model()
 
 class ProfileSerializer(serializers.ModelSerializer):
+    age_bracket = serializers.CharField( required=False)
+    bio = serializers.CharField(allow_blank=True, required=False)
     class Meta:
         model = Profile
-        fields = [ 'age_bracket']
+        fields = [ 'age_bracket','bio']
 
 class RegisterSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True, required=True)
@@ -64,7 +66,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         print("Validated Data:", validated_data)  #for debugging
         profile_data = validated_data.pop('profile', {})
 
-     
         # Create the User instance
         user = User.objects.create_user(
             username=validated_data['username'],
@@ -105,16 +106,11 @@ class RegisterSerializer(serializers.ModelSerializer):
         # Access the profile through the user instance
         try:
             profile = instance.profile
-            # Add Profile fields to the representation
             rep['bio'] = profile.bio
-            # rep['image'] = profile.image.url if profile.image else ''
-            # rep['verified'] = profile.verified
             rep['age_bracket'] = profile.age_bracket
         except Profile.DoesNotExist:
             # Handle the case where the profile does not exist
             rep['bio'] = ''
-            # rep['image'] = ''
-            # rep['verified'] = False
             rep['age_bracket'] = ''
 
         return rep

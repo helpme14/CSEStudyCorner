@@ -16,7 +16,7 @@ const AccountSettings = () => {
     throw new Error("AuthContext must be used within an AuthProvider");
   }
 
-  const { user, fetchProfileData } = authContext;
+  const { user, fetchProfileData,updateProfile } = authContext;
 
   // State to store form data
   const [formData, setFormData] = useState({
@@ -55,15 +55,17 @@ const AccountSettings = () => {
     }));
   };
 
-  // Save changes handler (if you want to send updated data to the server)
-  const handleSaveChanges = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Add  API call here to update the user profile (e.g., PATCH /api/user/profile/)
-    // After successfully updating, I can re-fetch the profile data
-    // await fetchProfileData(); // Refetch updated profile data
+  // Save changes handler ( to send updated data to the server)
+  const handleSaveChanges = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // Call updateProfile from AuthContext
+    try {
+      await updateProfile(formData);
+    } catch (error) {
+      console.error("Error updating profile", error);
+    }
   };
-
+  
   return (
     <div className="flex w-full h-screen overflow-hidden">
       <Sidebar />
@@ -104,6 +106,7 @@ const AccountSettings = () => {
                             value={formData.first_name}
                             onChange={handleChange}
                             placeholder="First Name"
+                            autoComplete='first_name'
                           />
                         </div>
                         <div className="flex flex-col w-full gap-3 pt-4">
@@ -112,11 +115,12 @@ const AccountSettings = () => {
                           </Label>
                           <Input
                             type="text"
-                            id="lastName"
+                            id="lat_name"
                             name="last_name"
                             value={formData.last_name}
                             onChange={handleChange}
                             placeholder="Last Name"
+                            autoComplete='lastName'
                           />
                         </div>
                       </div>
@@ -133,6 +137,7 @@ const AccountSettings = () => {
                             value={currentPassword}
                             onChange={(e) => setCurrentPassword(e.target.value)}
                             placeholder="Current Password"
+                            autoComplete='currentPassword'
                           />
                         </div>
                         <div className="flex flex-col w-full gap-3 pt-4">
@@ -145,6 +150,7 @@ const AccountSettings = () => {
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
                             placeholder="New Password"
+                            autoComplete='new-password'
                           />
                         </div>
                       </div>

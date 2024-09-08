@@ -18,14 +18,17 @@ const PublicProfile = () => {
     throw new Error("AuthContext must be used within an AuthProvider");
   }
 
-  const { user, fetchProfileData ,updateProfile} = authContext;
+  const { user, fetchProfileData, updateProfile } = authContext;
 
   const [formData, setFormData] = useState({
     username: user?.username || "",
     email: user?.email || "",
-    bio: user?.bio || "",
     first_name: user?.first_name || "",
     last_name: user?.last_name || "",
+    profile: {
+      age_bracket: user?.profile?.age_bracket  || "",
+      bio: user?.profile?.bio || "",
+    },
   });
   useEffect(() => {
     // When user data changes, update the formData state
@@ -33,12 +36,16 @@ const PublicProfile = () => {
       setFormData({
         username: user.username || "",
         email: user.email || "",
-        bio: user.bio || "",
         first_name: user.first_name || "",
         last_name: user.last_name || "",
+        profile: {
+          age_bracket:  user?.profile?.age_bracket  || "",
+          bio: user?.profile?.bio || "",
+        },
       });
     }
   }, [user]);
+  
   
   useEffect(() => {
     fetchProfileData();
@@ -48,16 +55,26 @@ const PublicProfile = () => {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    // If the field is inside the profile object
+    if (name in formData.profile) {
+      setFormData((prevState) => ({
+        ...prevState,
+        profile: {
+          ...prevState.profile,
+          [name]: value,
+        },
+      }));
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
+
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const username = formData.first_name+" "+formData.last_name;
-
-
+  const username = formData.first_name + " " + formData.last_name;
 
   // Function to handle image selection
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,14 +98,27 @@ const PublicProfile = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log("Form Data Submitted:", formData);
+  
+    // Prepare the profile data with optional fields
+    const profileData = {
+      ...(formData.profile.age_bracket && { age_bracket: formData.profile.age_bracket }), // Only include if not empty
+      bio: formData.profile.bio, // Always include bio
+    };
+  
     // Call updateProfile from AuthContext
     try {
-      await updateProfile(formData);
+      await updateProfile({
+        username: formData.username,
+        email: formData.email,
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        profile: profileData,
+      });
     } catch (error) {
       console.error("Error updating profile", error);
     }
   };
-  
 
   return (
     <div className="flex w-full h-full">
@@ -119,7 +149,6 @@ const PublicProfile = () => {
                     <Divider className="pt-4" />
                     <div className="flex flex-col gap-3 pt-4">
                       <Label
-                        htmlFor="profilePicture"
                         className="font-medium text-medium"
                       >
                         Profile Picture
@@ -137,6 +166,7 @@ const PublicProfile = () => {
                               {getInitials(username)}
                             </span>
                           )}
+                          
                         </div>
 
                         <label
@@ -159,7 +189,10 @@ const PublicProfile = () => {
                       </p>
                     </div>
 
-                    <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+                    <form
+                      className="flex flex-col gap-3"
+                      onSubmit={handleSubmit}
+                    >
                       <div className="flex flex-col gap-3 pt-4">
                         <Label
                           htmlFor="username"
@@ -213,8 +246,9 @@ const PublicProfile = () => {
                           name="bio"
                           placeholder="Tell us a little bit about yourself"
                           onChange={handleChange}
-                          value={formData.bio}
+                          value={formData.profile.bio}
                         />
+                      
                         <p className="text-sm text-gray-500 dark:text-white">
                           You can @mention other users and organizations to link
                           to them.
