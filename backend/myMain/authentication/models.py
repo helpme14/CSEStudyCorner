@@ -40,7 +40,7 @@ class Profile(models.Model):
     
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=300)
-    bio = models.CharField(max_length=300, blank=True,null=True)
+    bio = models.CharField(max_length=300, blank=True,null=True,default="")
     image = models.ImageField(default="default.jpg", upload_to="user_images", blank=True)
     # verified = models.BooleanField(default=False)
     age_bracket = models.CharField(max_length=8, choices=AGE_BRACKET_CHOICES, default='U18')
@@ -55,7 +55,7 @@ class Profile(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         # Create a profile for a newly created user
-        Profile.objects.create(user=instance)
+        Profile.objects.create(user=instance, full_name=f"{instance.first_name} {instance.last_name}".strip(), bio="")
     else:
         # Update the full_name in Profile when User's first_name or last_name changes
         profile = instance.profile
