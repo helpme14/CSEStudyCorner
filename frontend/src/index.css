@@ -6,6 +6,8 @@
 @tailwind utilities;
 
 html body {
+  background-color: var(--background);
+  color: var(--foreground);
   overflow: auto !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -26,4 +28,66 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 224 71.4% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 220.9 39.3% 11%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 224 71.4% 4.1%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+ 
+  .dark {
+    --background: #473f2c !important;
+    --foreground: #657b83 !important;
+    --primary: #268bd2 !important;
+    --secondary: #2aa198 !important;
+    --accent: #b58900 !important;
+    --muted: #93a1a1 !important;
+    --card: #eee8d5 !important;
+    --popover: #eee8d5 !important;
+    --border: #93a1a1 !important;
+    --input: #93a1a1 !important;
+    --ring: #268bd2 !important;
+  }
+
+  .solarized {
+    --background: #473f2c !important;
+    --foreground: red !important;
+    --primary: #268bd2 !important;
+    --secondary: #2aa198 !important;
+    --accent: #b58900 !important;
+    --muted: #93a1a1 !important;
+    --card: #eee8d5 !important;
+    --popover: #eee8d5 !important;
+    --border: #93a1a1 !important;
+    --input: #93a1a1 !important;
+    --ring: #268bd2 !important;
+  }
+
+
 }

@@ -37,7 +37,7 @@ const Home = () => {
 
       
     return (
-        <div className="w-full flex h-full">
+        <div className="w-full flex h-full text-foreground">
             <Sidebar />
             <div className="flex flex-col w-full">
                 <Navbar />

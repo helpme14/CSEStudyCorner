@@ -4,6 +4,7 @@ import Pricing from "./Pages/Pricing/Pricing";
 import Registration from "./Pages/RegisterLogin/Registration";
 import Home from "./Pages/Learning/Home";
 import "./index.css";
+import "./App.css";
 import { ThemeProvider } from "./components/ui/theme-provider";
 import ThemeSettings from "./Pages/Settings/ThemeSettings";
 import PublicProfile from "./Pages/Settings/PublicProfile";
