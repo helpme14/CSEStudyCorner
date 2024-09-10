@@ -12,6 +12,7 @@ import { Toaster } from 'react-hot-toast';
 import CloseAccount from "./Pages/Settings/CloseAccount";
 import ForgotPassword from "./Pages/RegisterLogin/ForgotPassword";
 import EmailTempalte from "./Pages/RegisterLogin/EmailTemplate";
+import ProfilePicture from "./Pages/Settings/ProfilePicture";
 
 
 
@@ -71,6 +72,12 @@ function App() {
                 path="/email-template"
                 element={
                     <EmailTempalte />
+                }
+              />
+               <Route
+                path="/profile-picture"
+                element={
+                    <ProfilePicture />
                 }
               />
 

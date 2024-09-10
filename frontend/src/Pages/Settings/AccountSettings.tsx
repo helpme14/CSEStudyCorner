@@ -16,7 +16,7 @@ const AccountSettings = () => {
   const [newPassword, setNewPassword] = useState<string>('');
 
   return (
-    <div className="w-full flex h-screen overflow-hidden">
+    <div className="w-full flex h-screen">
       <Sidebar />
         <div className="flex flex-col w-full">
             <Navbar />

@@ -3,6 +3,11 @@ import Secondlogo from '../assets/Light-corner.png';
 import darkSecondlogo from '../assets/Dark-corner.png';
 import { FaSearch } from "react-icons/fa"; 
 import { Link } from "react-router-dom";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar"
 
 import {
   Cloud,
@@ -86,11 +91,10 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
               <DropdownMenuTrigger asChild >
                 <button type="button" className="flex items-center focus:outline-none" aria-label="toggle profile dropdown">
                   <div className="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full">
-                    <img
-                      src='https://i.pinimg.com/originals/a9/da/3d/a9da3df52d836a48a091afb99134cfd6.jpg'
-                      className="object-cover w-full h-full"
-                      alt="Profile"
-                    />
+                  <Avatar className='h-8 w-8'>
+                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
                   </div>
                 </button>
               </DropdownMenuTrigger>

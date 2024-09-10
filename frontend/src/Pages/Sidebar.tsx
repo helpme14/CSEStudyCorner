@@ -1,35 +1,19 @@
 import logo from '../assets/cap-logo.png';
 import DarkLogo from '../assets/cap-logo-light.png'
-import { useState } from "react";
-
-import { GoHome, GoGlobe, GoRepo, GoBookmark, GoGear, GoInfo, GoSearch } from "react-icons/go";
-import { Dialog, DialogContent, DialogTrigger, DialogOverlay } from "@/components/ui/dialog";
-import {
-  Calculator,
-  Calendar,
-  CreditCard,
-  Settings,
-  Smile,
-  User,
-} from "lucide-react"
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-  CommandShortcut,
-} from "@/components/ui/command"
-
+import { GoHome, GoGlobe, GoRepo, GoBookmark, GoGear, GoInfo, GoSearch, GoPerson } from "react-icons/go";
 import { Link } from 'react-router-dom';
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar"
+
 interface SidebarProps {
   className?: string; 
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ className }) => {
-  const [isOpen, setIsOpen] = useState(false);
+
 
   return (
     <div className={`relative ${className}`}>
@@ -89,82 +73,33 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
       </aside>
 
 
-    
-      <nav className="sm:flex md:flex lg:flex xl:hidden z-20 fixed bottom-0 left-0 w-full bg-white border-t rtl:border-l rtl:border-r-0 dark:bg-gray-900 dark:border-gray-700 flex justify-around p-4">
-        <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
-          <GoHome className="w-5 h-6" />
-        </a>
-
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger asChild>
-              <a
-                href="#"
-                className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100"
-              >
-                <GoSearch className="w-5 h-5" />
-              </a>
-            </DialogTrigger>
-
-
-            <DialogOverlay className="fixed inset-0 bg-black/50 transition-opacity duration-300" />
-            <DialogContent
-              className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-md dark:bg-gray-800 transition-transform duration-300 !p-0"
-              style={{ transitionTimingFunction: "ease-in-out" }}
-            >
-              <Command className="rounded-lg border shadow-md md:min-w-[450px]">
-                <CommandInput placeholder="Type a command or search..." />
-                <CommandList>
-                  <CommandEmpty>No results found.</CommandEmpty>
-                  <CommandGroup heading="Suggestions">
-                    <CommandItem>
-                      <Calendar className="mr-2 h-4 w-4" />
-                      <span>Calendar</span>
-                    </CommandItem>
-                    <CommandItem>
-                      <Smile className="mr-2 h-4 w-4" />
-                      <span>Search Emoji</span>
-                    </CommandItem>
-                    <CommandItem disabled>
-                      <Calculator className="mr-2 h-4 w-4" />
-                      <span>Calculator</span>
-                    </CommandItem>
-                  </CommandGroup>
-                  <CommandSeparator />
-                  <CommandGroup heading="Settings">
-                    <CommandItem>
-                      <User className="mr-2 h-4 w-4" />
-                      <span>Profile</span>
-                      <CommandShortcut>⌘P</CommandShortcut>
-                    </CommandItem>
-                    <CommandItem>
-                      <CreditCard className="mr-2 h-4 w-4" />
-                      <span>Billing</span>
-                      <CommandShortcut>⌘B</CommandShortcut>
-                    </CommandItem>
-                    <CommandItem>
-                      <Settings className="mr-2 h-4 w-4" />
-                      <span>Settings</span>
-                      <CommandShortcut>⌘S</CommandShortcut>
-                    </CommandItem>
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-                {/* 
-              <div className="mt-6 flex justify-end gap-2">
-                <Button variant="secondary" onClick={() => setIsOpen(false)}>
-                  Close
-                </Button>
-              </div>*/}
-            </DialogContent>
-          </Dialog>
-        
-        <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
-          <GoRepo className="w-5 h-5" />
-        </a>
-    
-        <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
-          <GoBookmark className="w-5 h-5" />
-        </a>
+    {/* fcking bottom nav */}
+      <nav className="sm:flex md:flex lg:flex xl:hidden z-20 fixed bottom-0 left-0 w-full bg-white border-t rtl:border-l rtl:border-r-0 dark:bg-gray-800 dark:border-gray-700 flex justify-around p-2">
+      
+          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100 flex items-center flex-col">
+            <GoRepo className="w-5 h-5" />
+            <span className=' font-medium text-[0.8rem] text-gray-700'>View</span>
+          </a>
+          <a
+            href="#"
+            className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100 flex items-center flex-col"
+          >
+            <GoSearch className="w-5 h-5" />
+            <span className=' font-medium text-[0.8rem] text-gray-700'>Search</span>
+          </a>
+          <span></span>
+          <span></span>
+          <a href="#" className="absolute -top-7 bg-gradient-to-r from-purple-500 to-blue-500 px-4 py-3.5 text-white rounded-full shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-300">
+            <GoHome className="w-5 h-6" />
+          </a>
+          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100 flex items-center flex-col">
+            <GoBookmark className="w-5 h-5" />
+            <span className=' font-medium text-[0.8rem] text-gray-700'>Saved</span>
+</a>
+          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100 flex items-center flex-col">
+            <GoPerson className="w-6 h-6" />
+            <span className=' font-medium text-[0.8rem] text-gray-700'>Me</span>
+          </a>
       </nav>
 
     </div>

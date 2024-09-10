@@ -1,4 +1,4 @@
-import { useState } from 'react';
+
 import Navbar from "../Navbar";
 import Sidebar from "../Sidebar";
 import Box from '@mui/material/Box';
@@ -9,32 +9,12 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { FiUpload } from 'react-icons/fi'; // Importing upload icon from react-icons
+
 
 const PublicProfile = () => {
-  const [profileImage, setProfileImage] = useState<string | null>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [username, setUsername] = useState<string>('Alice Green'); // For demonstration, prefilled username
-
-  // Function to handle image selection
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setSelectedFile(file);
-      const imageUrl = URL.createObjectURL(file);
-      setProfileImage(imageUrl);
-    }
-  };
-
-  // Generate initials from the username
-  const getInitials = (name: string) => {
-    const nameParts = name.split(' ');
-    const initials = nameParts.map(part => part.charAt(0)).join('').toUpperCase();
-    return initials;
-  };
-
+ 
   return (
-    <div className="w-full flex h-full">
+    <div className="w-full flex sm:h-screen h-full">
       <Sidebar />
       <div className="flex flex-col w-full">
         <Navbar />
@@ -59,41 +39,8 @@ const PublicProfile = () => {
                         This is how others will see you on the site.
                         </p>
                         <Divider className="pt-4" />
-
-
+                    </div>
                         <div className="pt-4 flex flex-col gap-3">
-                        <Label htmlFor="profilePicture" className="font-medium text-medium">
-                            Profile Picture
-                        </Label>
-                        <div className="relative group w-24 h-24">
-                            <div className="w-full h-full rounded-full overflow-hidden border-2 border-gray-300 dark:border-gray-500 flex items-center justify-center bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400">
-                            {profileImage ? (
-                                <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
-                            ) : (
-                                <span className="text-2xl font-bold text-gray-700 dark:text-white">
-                                {getInitials(username)}
-                                </span>
-                            )}
-                            </div>
-
-                            <label
-                            htmlFor="profilePicture"
-                            className="absolute inset-0 bg-gray-500 rounded-full bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                            >
-                            <FiUpload className="text-white text-2xl" />
-                            </label>
-                            <input
-                            type="file"
-                            accept="image/*"
-                            id="profilePicture"
-                            className="hidden"
-                            onChange={handleImageChange}
-                            />
-                        </div>
-                        <p className="text-sm text-gray-500 dark:text-white">
-                            Recommended size: 400x400px. Supported formats: .jpg, .png, .gif.
-                        </p>
-                        </div>
                         <form className="flex flex-col gap-3">
                         <div className="pt-4 flex flex-col gap-3">
                             <Label htmlFor="username" className="font-medium text-medium">
@@ -102,8 +49,7 @@ const PublicProfile = () => {
                             <Input
                             type="text"
                             id="Username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+    
                             placeholder="Username"
                             />
                             <p className="text-sm text-gray-500 dark:text-white">

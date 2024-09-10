@@ -81,7 +81,7 @@ const CloseAccount = () => {
 };
 
 const handleAccountClosure = () => {
-    // Add your account closure logic here
+
     console.log("Account closed");
   };
   
