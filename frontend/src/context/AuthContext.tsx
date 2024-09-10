@@ -59,6 +59,18 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export default AuthContext;
 
+const showAlert = (title: string, icon: "success" | "error", text?: string) => {
+  swal.fire({
+    title,
+    icon,
+    text,
+    toast: true,
+    timer: 3000,
+    position: "top-right",
+    timerProgressBar: true,
+    showConfirmButton: false,
+  });
+};
 // AuthProvider component
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [authTokens, setAuthTokens] = useState<AuthTokens | null>(() =>
@@ -84,7 +96,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       console.error("Authentication API URL is not defined");
       return;
     }
-
+  
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -93,13 +105,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         },
         body: JSON.stringify({ email, password }),
       });
-
-      // console.log("Response:", response);
-
+  
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Error data:", errorData);
-
+  
         let errorMessage = "An error occurred during login";
         if (response.status === 401) {
           errorMessage = errorData.detail || "Invalid email or password";
@@ -109,254 +119,176 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         } else if (response.status === 404) {
           errorMessage = "Account does not exist";
         }
-
-        swal.fire({
-          title: errorMessage,
-          icon: "error",
-          toast: true,
-          timer: 3000,
-          position: "top-right",
-          timerProgressBar: true,
-          showConfirmButton: false,
-        });
-
+  
+        showAlert(errorMessage, "error");
         throw new Error(errorMessage); // Ensure detailed error message is thrown
       }
-
+  
       const data: AuthTokens = await response.json();
-
       setAuthTokens(data);
       setUser(jwtDecode<CustomJwtPayload>(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
       navigate("/home");
-
-      swal.fire({
-        title: "Login Successful",
-        icon: "success",
-        toast: true,
-        timer: 3000,
-        position: "top-right",
-        timerProgressBar: true,
-        showConfirmButton: false,
-      });
+      showAlert("Login Successful", "success");
     } catch (error) {
       console.error("Login error:", error);
-
+  
       let errorMessage = "An unexpected error occurred";
       if (error instanceof Error) {
         errorMessage = error.message;
       }
-
-      swal.fire({
-        title: errorMessage,
-        icon: "error",
-        toast: true,
-        timer: 3000,
-        position: "top-right",
-        timerProgressBar: true,
-        showConfirmButton: false,
-      });
+  
+      showAlert(errorMessage, "error");
     }
   };
 
-  const registerUser = async (
-    email: string,
-    first_name: string,
-    last_name: string,
-    username: string,
-    password: string,
-    password2: string,
-    profile: Profile,
 
-   
-  ) => {
-    const apiUrl = import.meta.env.VITE_AUTHENTICATION_REGISTER_API;
-    setAuthTokens(null);
-    setUser(null);
+ //REGISTER
+const registerUser = async (
+  email: string,
+  first_name: string,
+  last_name: string,
+  username: string,
+  password: string,
+  password2: string,
+  profile: Profile
+) => {
+  const apiUrl = import.meta.env.VITE_AUTHENTICATION_REGISTER_API;
+  setAuthTokens(null);
+  setUser(null);
 
-    localStorage.removeItem("authTokens");
+  localStorage.removeItem("authTokens");
 
-    if (!apiUrl) {
-      console.error("API URL is not defined");
-      return;
-    }
+  if (!apiUrl) {
+    console.error("API URL is not defined");
+    return;
+  }
 
-    try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          first_name,
-          last_name,
-          username,
-          password,
-          password2,
-          profile,
-        }),
-      });
-
-      if (response.status === 201) {
-        navigate("/registration");
-        swal.fire({
-          title: "Registration Successful, Login Now",
-          icon: "success",
-          toast: true,
-          timer: 3000,
-          position: "top-right",
-          timerProgressBar: true,
-          showConfirmButton: false,
-        });
-      } else if (response.status === 400) {
-        // Parse the response to get the error details
-        const errorData = await response.json();
-
-        if (errorData.email) {
-          swal.fire({
-            title: "Email already exists",
-            text: errorData.email, // Assuming it's a list of error messages
-            icon: "error",
-            toast: true,
-            timer: 3000,
-            position: "top-right",
-            timerProgressBar: true,
-            showConfirmButton: false,
-          });
-        } else {
-          swal.fire({
-            title: "An Error Occurred",
-            text: "Please check your input and try again.",
-            icon: "error",
-            toast: true,
-            timer: 3000,
-            position: "top-right",
-            timerProgressBar: true,
-            showConfirmButton: false,
-          });
-        }
-      } else {
-        swal.fire({
-          title: "An Unexpected Error Occurred",
-          icon: "error",
-          toast: true,
-          timer: 3000,
-          position: "top-right",
-          timerProgressBar: true,
-          showConfirmButton: false,
-        });
-      }
-    } catch (error) {
-      console.error("Registration failed:", error);
-    }
-  };
-
-  const logoutUser = useCallback(() => {
-    setAuthTokens(null);
-    setUser(null);
-
-    localStorage.removeItem("authTokens");
-    navigate("/registration");
-    swal.fire({
-      title: "You have been logged out...",
-      icon: "success",
-      toast: true,
-      timer: 3000,
-      position: "top-right",
-      timerProgressBar: true,
-      showConfirmButton: false,
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        first_name,
+        last_name,
+        username,
+        password,
+        password2,
+        profile,
+      }),
     });
-  }, [navigate]);
 
-  const refreshToken = useCallback(async () => {
-    const apiUrl = import.meta.env.VITE_AUTHENTICATION_REFRESH_TOKEN_API;
+    if (response.status === 201) {
+      navigate("/registration");
+      showAlert("Registration Successful, Login Now", "success");
+    } else if (response.status === 400) {
+      const errorData = await response.json();
 
-    if (!apiUrl) {
-      console.error("API URL is not defined");
-      return;
-    }
-
-    console.log("Refreshing token...");
-
-    try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ refresh: authTokens?.refresh }),
-      });
-
-      const data: AuthTokens = await response.json();
-
-      if (response.status === 200) {
-        setAuthTokens(data);
-        setUser(jwtDecode<CustomJwtPayload>(data.access));
-        localStorage.setItem("authTokens", JSON.stringify(data));
-        console.log("Success refreshing token");
-        return data.access;
+      if (errorData.email) {
+        showAlert("Email already exists", "error", errorData.email);
       } else {
-        console.error("Failed to refresh token:", data);
-        logoutUser();
+        showAlert("An Error Occurred", "error", "Please check your input and try again.");
       }
-    } catch (error) {
-      console.error("Error refreshing token:", error);
+    } else {
+      showAlert("An Unexpected Error Occurred", "error");
+    }
+  } catch (error) {
+    console.error("Registration failed:", error);
+  }
+};
+
+//LOGOUT
+const logoutUser = useCallback(() => {
+  setAuthTokens(null);
+  setUser(null);
+
+  localStorage.removeItem("authTokens");
+  navigate("/registration");
+  showAlert("You have been logged out...", "success");
+}, [navigate]);
+
+
+//REFRESHTOKEN
+const refreshToken = useCallback(async () => {
+  const apiUrl = import.meta.env.VITE_AUTHENTICATION_REFRESH_TOKEN_API;
+
+  if (!apiUrl || !authTokens?.refresh) {
+    console.error("API URL or refresh token not defined");
+    return;
+  }
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ refresh: authTokens.refresh }),
+    });
+
+    if (response.ok) {
+      const data: AuthTokens = await response.json();
+      setAuthTokens(data);
+      setUser(jwtDecode<CustomJwtPayload>(data.access));
+      localStorage.setItem("authTokens", JSON.stringify(data));
+      console.log("Success refreshing token");
+      return data.access;
+    } else {
+      console.error("Failed to refresh token");
       logoutUser();
     }
-  }, [authTokens, setAuthTokens, setUser, logoutUser]);
+  } catch (error) {
+    console.error("Error refreshing token:", error);
+    logoutUser();
+  }
+}, [authTokens?.refresh, logoutUser, setAuthTokens, setUser]);
 
-  useEffect(() => {
-    if (authTokens) {
-      // console.log("Setting up token refresh interval...");
-      const interval = setInterval(() => {
-        refreshToken();
-      }, 4 * 60 * 1000); // 4 minutes
+// Efficiently handle token refreshing every 4 minutes
+useEffect(() => {
+  if (authTokens) {
+    const tokenRefreshInterval = 4 * 60 * 1000; // 4 minutes
 
-      return () => {
-        // console.log("Clearing token refresh interval...");
-        clearInterval(interval);
-      };
-    }
-  }, [authTokens, refreshToken]);
+    const interval = setInterval(refreshToken, tokenRefreshInterval);
 
-  useEffect(() => {
-    if (authTokens) {
-      setUser(jwtDecode<CustomJwtPayload>(authTokens.access));
-    }
-    setLoading(false);
-  }, [authTokens]);
+    return () => clearInterval(interval);
+  }
+}, [authTokens, refreshToken]);
 
-  useEffect(() => {
-    let logoutTimer: NodeJS.Timeout;
+// Automatically decode user from the access token
+useEffect(() => {
+  if (authTokens?.access) {
+    setUser(jwtDecode<CustomJwtPayload>(authTokens.access));
+  }
+  setLoading(false); // Loading only after token check
+}, [authTokens?.access]);
 
-    const handleActivity = () => {
-      if (logoutTimer) {
-        clearTimeout(logoutTimer);
-      }
-      logoutTimer = setTimeout(logoutUser, 10 * 60 * 1000); // 5 minutes
+// User inactivity handler (Auto-logout)
+useEffect(() => {
+  const excludedPaths = ["/", "/register"];
+  let logoutTimer: NodeJS.Timeout;
+
+  const handleActivity = () => {
+    if (logoutTimer) clearTimeout(logoutTimer);
+    logoutTimer = setTimeout(logoutUser, 10 * 60 * 1000); // 10 minutes
+  };
+
+  if (!excludedPaths.includes(location.pathname)) {
+    window.addEventListener("mousemove", handleActivity);
+    window.addEventListener("keydown", handleActivity);
+    window.addEventListener("click", handleActivity);
+
+    handleActivity(); // Initialize on first load
+
+    return () => {
+      window.removeEventListener("mousemove", handleActivity);
+      window.removeEventListener("keydown", handleActivity);
+      window.removeEventListener("click", handleActivity);
+      clearTimeout(logoutTimer); // Ensure proper cleanup
     };
+  }
+}, [location.pathname, logoutUser]);
 
-    // Define paths where auto-logout should NOT happen
-    const excludedPaths = ["/", "/register"];
-
-    if (!excludedPaths.includes(location.pathname)) {
-      window.addEventListener("mousemove", handleActivity);
-      window.addEventListener("keydown", handleActivity);
-      window.addEventListener("click", handleActivity);
-
-      handleActivity(); // Start timer immediately
-
-      return () => {
-        window.removeEventListener("mousemove", handleActivity);
-        window.removeEventListener("keydown", handleActivity);
-        window.removeEventListener("click", handleActivity);
-        if (logoutTimer) {
-          clearTimeout(logoutTimer);
-        }
-      };
-    }
-  }, [location.pathname, logoutUser]);
 
   const fetchProfileData = useCallback(async () => {
     if (!authTokens) {
@@ -395,6 +327,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [authTokens, fetchProfileData]);
 
+  //UPDATE
   const updateProfile = async (updatedProfile: Partial<CustomJwtPayload>) => {
     if (!authTokens) {
       console.error("No authentication tokens available.");
@@ -436,49 +369,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           ...prevUser,
           ...updatedUser,
         }));
-        swal.fire({
-          title: "Profile Updated",
-          icon: "success",
-          toast: true,
-          timer: 3000,
-          position: "top-right",
-          timerProgressBar: true,
-          showConfirmButton: false,
-        });
+        showAlert("Profile Updated", "success");
       } else {
         let errorMessage = 'Failed to update profile';
         try {
           const errorData = await response.json();
           errorMessage = errorData.message || 'Unknown error occurred';
-        } catch  {
+        } catch {
           errorMessage = 'Failed to parse error response';
         }
         console.error(errorMessage);
-        swal.fire({
-          title: "Update Failed",
-          text: errorMessage,
-          icon: "error",
-          toast: true,
-          timer: 3000,
-          position: "top-right",
-          timerProgressBar: true,
-          showConfirmButton: false,
-        });
+        showAlert("Update Failed", "error", errorMessage);
       }
     } catch (error) {
       console.error('Error updating profile:', error);
-      swal.fire({
-        title: "Update Failed",
-        text: "An unexpected error occurred. Please try again.",
-        icon: "error",
-        toast: true,
-        timer: 3000,
-        position: "top-right",
-        timerProgressBar: true,
-        showConfirmButton: false,
-      });
+      showAlert("Update Failed", "error", "An unexpected error occurred. Please try again.");
     }
   };
+  
 
   const contextData: AuthContextType = {
     user,
