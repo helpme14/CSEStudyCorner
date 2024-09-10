@@ -43,7 +43,7 @@ const Home = () => {
                 <Navbar />
                 <section className="py-0">
                     <div className="container sm:py-8 py-0">
-                        <div className="w-full bg-[#F0F7FF] dark:bg-gray-900 mt-20 relative rounded-md p-6 sm:p-10">
+                        <div className="w-full bg-[#F0F7FF] dark:bg-gray-900 sm:mt-20 mt-10 relative rounded-md p-6 sm:p-10">
                         <div className="sm:w-full md:w-full w-full xl:w-1/2">
                             <div className="flex flex-col text-left">
                             <h4 className="font-roboto font-semibold text-xl md:text-4xl sm:text-3xl lg:text-5xl font-sans text-gray-900 dark:text-gray-100">
@@ -122,7 +122,7 @@ const Home = () => {
                 </section>
 
                 <section>
-                    <div className="container mx-auto py-10 sm:py-2">
+                    <div className="container mx-auto py-4 sm:py-2">
                         <span className="text-3xl font-semibold">Civil Service Categories</span>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 py-8">
                             {categories.map((category: Categories) => (

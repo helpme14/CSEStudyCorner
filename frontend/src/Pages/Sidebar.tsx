@@ -74,8 +74,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
 
 
     {/* fcking bottom nav */}
-      <nav className="sm:flex md:flex lg:flex xl:hidden z-20 fixed bottom-0 left-0 w-full bg-white border-t rtl:border-l rtl:border-r-0 dark:bg-gray-800 dark:border-gray-700 flex justify-around p-2">
-      
+      <nav className="sm:flex md:flex lg:flex xl:hidden z-20 fixed bottom-0 left-0 w-full  bg-white border-t rtl:border-l rtl:border-r-0 dark:bg-gray-800 dark:border-gray-700 flex justify-around p-2">
           <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100 flex items-center flex-col">
             <GoRepo className="w-5 h-5" />
             <span className=' font-medium text-[0.8rem] text-gray-700'>View</span>

@@ -50,22 +50,22 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
   return (
     <nav className={`sticky top-0 z-50 block w-full h-15 ${className}`}>
       <div className=" px-8 py-2 w-full  bg-white shadow dark:bg-gray-800">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between w-full">
           <a href="#">
             <img className="w-28 sm:w-36 h-8 sm:h-10 dark:hidden" src={Secondlogo} alt="Logo" />
             <img className="w-28 sm:w-36 h-8 sm:h-10 dark:block hidden" src={darkSecondlogo} alt="Logo" />
           </a>
+            <div className="relative sm:flex hidden items-center">
+              <FaSearch className="absolute left-3 text-gray-500 cursor-pointer" />
+              <input
+                type="text"
+                className="pl-10 pr-4 py-2 text-gray-700 border border-w-2 bg-gray-50 rounded-full dark:bg-gray-700 dark:text-gray-300 focus:outline-none  transition-all duration-300 ease-in-out w-[30vw] focus:w-[50vw]"
+                placeholder="Search courses"
+              />
+            </div>
 
           <div className="flex items-center">
             {/* Search Bar */}
-            <div className="relative sm:flex hidden items-center">
-              <FaSearch className="absolute left-3 text-gray-500" />
-              <input
-                type="text"
-                className="pl-10 pr-4 py-2 text-gray-700 bg-gray-200 rounded-md dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-gray-600 transition-all duration-300 ease-in-out w-32 focus:w-64"
-                placeholder="Search..."
-              />
-            </div>
 
             {/* Notifications */}
             <button
