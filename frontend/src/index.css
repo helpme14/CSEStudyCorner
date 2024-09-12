@@ -61,19 +61,6 @@ body {
     --chart-5: 27 87% 67%;
   }
  
-  .dark {
-    --background: #473f2c !important;
-    --foreground: #657b83 !important;
-    --primary: #268bd2 !important;
-    --secondary: #2aa198 !important;
-    --accent: #b58900 !important;
-    --muted: #93a1a1 !important;
-    --card: #eee8d5 !important;
-    --popover: #eee8d5 !important;
-    --border: #93a1a1 !important;
-    --input: #93a1a1 !important;
-    --ring: #268bd2 !important;
-  }
 
   .solarized {
     --background: #473f2c !important;

@@ -1,12 +1,8 @@
 import logo from '../assets/cap-logo.png';
 import DarkLogo from '../assets/cap-logo-light.png'
-import { GoHome, GoGlobe, GoRepo, GoBookmark, GoGear, GoInfo, GoSearch, GoPerson } from "react-icons/go";
+import { GoHome, GoPackage, GoRepo, GoBookmark, GoGear, GoInfo, GoSearch, GoPerson } from "react-icons/go";
 import { Link } from 'react-router-dom';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
+
 
 interface SidebarProps {
   className?: string; 
@@ -37,7 +33,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
 
           <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300">
           <div className='flex flex-col gap-1 items-center'>
-              <GoGlobe className='w-5 h-5' />
+              <GoPackage className='w-5 h-5' />
               <span className=' font-medium text-[0.8rem]'>Explore</span>
             </div>
           </a>

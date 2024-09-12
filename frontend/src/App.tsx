@@ -31,57 +31,16 @@ function App() {
               <Route path="/registration" element={<Registration />} />
             </Routes>
           </div>
-          <div className="dark:bg-gray-800 dark:text-white">
+          <div className="dark:bg-gray-900 dark:text-white">
           <Routes>
-          <Route
-                path="/home"
-                element={
-                    <Home />
-                }
-              />
-               <Route
-                path="/theme"
-                element={
-                    <ThemeSettings />
-                }
-              />
-               <Route
-                path="/profile"
-                element={
-                    <PublicProfile />
-                }
-              />
-               <Route
-                path="/account-settings"
-                element={
-                    <AccountSettings />
-                }
-              />
-               <Route
-                path="/close-account"
-                element={
-                    <CloseAccount />
-                }
-              />
-                  <Route
-                path="/forgot-password"
-                element={
-                    <ForgotPassword />
-                }
-              />
-              <Route
-                path="/email-template"
-                element={
-                    <EmailTempalte />
-                }
-              />
-               <Route
-                path="/profile-picture"
-                element={
-                    <ProfilePicture />
-                }
-              />
-
+            <Route path="/home" element={<Home />} />
+            <Route path="/theme" element={<ThemeSettings />} />
+            <Route path="/profile" element={<PublicProfile />} />
+            <Route path="/account-settings" element={<AccountSettings />} />
+            <Route path="/close-account" element={<CloseAccount />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/email-template" element={<EmailTempalte />} />
+            <Route path="/profile-picture" element={<ProfilePicture />} />
           </Routes>
           </div>
       </Router>
