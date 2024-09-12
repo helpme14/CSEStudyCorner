@@ -24,7 +24,7 @@ const SideSettings = () => {
         <li className={`hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-300 ${
             activeLink === "/home/profile" ? "bg-blue-100 dark:bg-blue-700" : ""
           }`} >
-          <Link to="/profile" onClick={() => handleActiveLink("/home/profile")} className="flex items-center p-3 text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+          <Link to="/home/profile" onClick={() => handleActiveLink("/home/profile")} className="flex items-center p-3 text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
             <GoPerson className="mr-3 text-xl" />
             <span className="text-sm font-medium">Public Profile</span>
           </Link>
