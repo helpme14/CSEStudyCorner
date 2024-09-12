@@ -3,6 +3,11 @@ import Secondlogo from '../assets/Light-corner.png';
 import darkSecondlogo from '../assets/Dark-corner.png';
 import { FaSearch } from "react-icons/fa"; 
 import { Link } from "react-router-dom";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar"
 
 import {
   Cloud,
@@ -52,25 +57,27 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
   const {logoutUser} = authContext
   
   return (
-    <nav className={`sticky top-0 z-50 block w-full h-15 ${className} `}>
-      <div className="w-full px-8 py-2 bg-white shadow dark:bg-gray-800">
-        <div className="flex items-center justify-between">
+    <nav className={`sticky top-0 z-50 block w-full h-15 ${className}`}>
+      <div className="w-full px-8 py-2 bg-white shadow  dark:bg-gray-800">
+      <div className="flex items-center justify-between w-full">
           <a href="#">
-            
             <img className="h-8 w-28 sm:w-36 sm:h-10 dark:hidden" src={Secondlogo} alt="Logo" />
             <img className="hidden h-8 w-28 sm:w-36 sm:h-10 dark:block" src={darkSecondlogo} alt="Logo" />
           </a>
 
-          <div className="flex items-center">
+          <div className="relative items-center hidden sm:flex"></div>
             {/* Search Bar */}
             <div className="relative items-center hidden sm:flex">
-              <FaSearch className="absolute text-gray-500 left-3" />
+            <FaSearch className="absolute text-gray-500 cursor-pointer left-3" />
               <input
                 type="text"
-                className="w-32 py-2 pl-10 pr-4 text-gray-700 transition-all duration-300 ease-in-out bg-gray-200 rounded-md dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-gray-600 focus:w-64"
-                placeholder="Search..."
+                className="pl-10 pr-4 py-2 text-gray-700 border border-w-2 bg-gray-50 rounded-full dark:bg-gray-700 dark:text-gray-300 focus:outline-none  transition-all duration-300 ease-in-out w-[30vw] focus:w-[50vw]"
+                placeholder="Search courses"
               />
             </div>
+
+          <div className="flex items-center">
+            {/* Search Bar */}
 
             {/* Notifications */}
             <button
@@ -96,11 +103,10 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
               <DropdownMenuTrigger asChild >
                 <button type="button" className="flex items-center focus:outline-none" aria-label="toggle profile dropdown">
                   <div className="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full">
-                    <img
-                      src='https://i.pinimg.com/originals/a9/da/3d/a9da3df52d836a48a091afb99134cfd6.jpg'
-                      className="object-cover w-full h-full"
-                      alt="Profile"
-                    />
+                  <Avatar className='w-8 h-8'>
+                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
                   </div>
                 </button>
               </DropdownMenuTrigger>

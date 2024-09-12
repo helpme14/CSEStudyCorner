@@ -67,7 +67,7 @@ const AccountSettings = () => {
   };
   
   return (
-    <div className="flex w-full h-screen overflow-hidden">
+    <div className="w-full flex h-screen">
       <Sidebar />
       <div className="flex flex-col w-full">
         <Navbar />

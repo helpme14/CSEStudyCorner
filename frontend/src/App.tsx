@@ -3,10 +3,16 @@ import Landing from "./Pages/Landing";
 import Pricing from "./Pages/Pricing/Pricing";
 import Registration from "./Pages/RegisterLogin/Registration";
 import Home from "./Pages/Learning/Home";
+import "./index.css";
+import "./App.css";
+import { ThemeProvider } from "./components/ui/theme-provider";
 import ThemeSettings from "./Pages/Settings/ThemeSettings";
 import PublicProfile from "./Pages/Settings/PublicProfile";
 import AccountSettings from "./Pages/Settings/AccountSettings";
 import CloseAccount from "./Pages/Settings/CloseAccount";
+import ForgotPassword from "./Pages/RegisterLogin/ForgotPassword";
+import EmailTempalte from "./Pages/RegisterLogin/EmailTemplate";
+import ProfilePicture from "./Pages/Settings/ProfilePicture";
 import NotFound from "./Pages/NotFound";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "../components/routes/PrivateRoute";
@@ -70,6 +76,25 @@ function App() {
                       </PrivateRoute>
                     }
                   />
+                  <Route
+                path="/forgot-password"
+                element={
+                    <ForgotPassword />
+                }
+              />
+              <Route
+                path="/email-template"
+                element={
+                    <EmailTempalte />
+                }
+              />
+               <Route
+                path="/profile-picture"
+                element={
+                    <ProfilePicture />
+                }
+              />
+
                 
                 {/* Catch-all Route for 404 */}
                 <Route path="*" element={<NotFound />} />

@@ -37,13 +37,13 @@ const Home = () => {
 
       
     return (
-        <div className="flex w-full h-full">
+        <div className="flex w-full h-full text-foreground">
             <Sidebar />
             <div className="flex flex-col w-full">
                 <Navbar />
                 <section className="py-0">
                     <div className="container py-0 sm:py-8">
-                        <div className="w-full bg-[#F0F7FF] dark:bg-gray-900 mt-20 relative rounded-md p-6 sm:p-10">
+                        <div className="w-full bg-[#F0F7FF] dark:bg-gray-900 sm:mt-20 mt-10 relative rounded-md p-6 sm:p-10">
                         <div className="w-full sm:w-full md:w-full xl:w-1/2">
                             <div className="flex flex-col text-left">
                             <h4 className="font-sans text-xl font-semibold text-gray-900 font-roboto md:text-4xl sm:text-3xl lg:text-5xl dark:text-gray-100">
@@ -122,7 +122,7 @@ const Home = () => {
                 </section>
 
                 <section>
-                    <div className="container py-10 mx-auto sm:py-2">
+                    <div className="container py-4 mx-auto sm:py-2">
                         <span className="text-3xl font-semibold">Civil Service Categories</span>
                         <div className="grid grid-cols-1 gap-4 py-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
                             {categories.map((category: Categories) => (

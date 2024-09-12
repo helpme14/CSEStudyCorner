@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import swal from 'sweetalert2';
 import AuthContext from '../../context/AuthContext';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Link } from 'react-router-dom';
 
 const Registration = () => {
   const [value, setValue] = useState('1');
@@ -146,7 +147,7 @@ const Registration = () => {
     <section className="h-screen">
       <Nav />
       <DynamicBackground gradient1="#ff80b5" gradient2="#9089fc" />
-      <Box sx={{ width: '100%', typography: 'body1' }} className="flex flex-col items-center justify-center mt-[6rem] z-20">
+      <Box sx={{ width: '100%', typography: 'body1' }} className="z-50 flex flex-col items-center justify-center">
         <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }} className="flex justify-center">
             <TabList onChange={handleChange} aria-label="lab API tabs example" sx={{ width: "100%", maxWidth: "md" }}>
@@ -154,14 +155,13 @@ const Registration = () => {
               <Tab label="Register" value="2" />
             </TabList>
           </Box>
-
-          {/* Login Tab */}
-          <TabPanel value="1" className="w-full">
+           {/* Login Tab */}
+           <TabPanel value="1" className="w-full">
             <div className="flex items-center justify-center w-full">
-              <Card className="flex flex-col items-center w-full sm:w-1/2 lg:w-1/3 xl:w-1/3 md:w-1/2">
+              <Card className="flex flex-col items-center w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 md:w-1/3">
                 <form onSubmit={handleLogin} className="w-full">
                   <CardHeader className="text-center">
-                    <CardTitle>Login</CardTitle>
+                    <CardTitle>Welcome back!</CardTitle>
                     <CardDescription>Enter your email and password to log in.</CardDescription>
                   </CardHeader>
                   <CardContent className="w-full">
@@ -176,6 +176,7 @@ const Registration = () => {
                           onChange={(e) => setLoginEmail(e.target.value)}
                           autoComplete="email"
                           required
+                          className='z-50'
                         />
                       </div>
                       <div className="grid items-center gap-1.5">
@@ -188,8 +189,14 @@ const Registration = () => {
                           onChange={(e) => setLoginPassword(e.target.value)}
                           autoComplete="current-password"
                           required
+                          className='z-50'
                         />
                       </div>
+                      <div>
+                    <Link to="/forgot-password">
+                      <a className='z-50 mt-1 text-sm text-blue-500 underline'>Forgot your password?</a>
+                    </Link>
+                  </div>
                     </div>
                   </CardContent>
                   <CardFooter className="w-full">
@@ -199,10 +206,9 @@ const Registration = () => {
               </Card>
             </div>
           </TabPanel>
-
-          {/* Register Tab */}
-          <TabPanel value="2" className="w-full">
-            <div className="flex items-center justify-center w-full">
+           {/* Register Tab */}
+           <TabPanel value="2" className="flex items-center justify-center w-full mt-0">
+            
               <Card className="flex flex-col items-center w-full sm:w-1/2 lg:w-1/3 xl:w-1/3 md:w-1/2">
                 <form onSubmit={handleRegistration} className="w-full">
                   <CardHeader className="text-center">
@@ -245,6 +251,7 @@ const Registration = () => {
                           onChange={(e) => setRegUsername(e.target.value)}
                           autoComplete="username"
                           required
+                           className='z-50'
                         />
                       </div>
                       <div className="grid items-center gap-1.5">
@@ -287,9 +294,9 @@ const Registration = () => {
                         <Label htmlFor="age-bracket">Age Bracket</Label>
                         <Select onValueChange={(value) => setAgeBracket(value)} required>
                           <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select your age bracket" />
+                            <SelectValue placeholder="Select your age bracket"  className='z-50'/>
                           </SelectTrigger>
-                          <SelectContent >
+                          <SelectContent  className="w-full" >
                           <SelectItem value="U18">18yrs old and below</SelectItem>
                             <SelectItem value="18-24">18-24</SelectItem>
                             <SelectItem value="25-30">25-30</SelectItem>
@@ -306,7 +313,7 @@ const Registration = () => {
                   </CardFooter>
                 </form>
               </Card>
-            </div>
+           
           </TabPanel>
         </TabContext>
       </Box>
