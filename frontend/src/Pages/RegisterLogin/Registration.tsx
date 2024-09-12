@@ -149,10 +149,10 @@ const Registration = () => {
       <DynamicBackground gradient1="#ff80b5" gradient2="#9089fc" />
       <Box sx={{ width: '100%', typography: 'body1' }} className="z-50 flex flex-col items-center justify-center">
         <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }} className="flex justify-center">
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }} className="flex justify-center ">
             <TabList onChange={handleChange} aria-label="lab API tabs example" sx={{ width: "100%", maxWidth: "md" }}>
-              <Tab label="Log In" value="1" />
-              <Tab label="Register" value="2" />
+              <Tab label="Log In" value="1" className='dark:text-white' />
+              <Tab label="Register" value="2" className='dark:text-white'  />
             </TabList>
           </Box>
            {/* Login Tab */}
@@ -193,9 +193,9 @@ const Registration = () => {
                         />
                       </div>
                       <div>
-                    <Link to="/forgot-password">
-                      <a className='z-50 mt-1 text-sm text-blue-500 underline'>Forgot your password?</a>
-                    </Link>
+                      <Link to="/forgot-password" className='z-50 mt-1 text-sm text-blue-500 underline'>
+  Forgot your password?
+</Link>
                   </div>
                     </div>
                   </CardContent>

@@ -42,7 +42,7 @@ const SideSettings = () => {
         <li className={`hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-300 ${
           activeLink === "/home/account-settings" ? "bg-blue-100 dark:bg-blue-700" : ""
         }`}>
-          <Link to="/account-settings"  onClick={() => handleActiveLink("/home/account-settings")} className="flex items-center p-3 text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+          <Link to="/home/account-settings"  onClick={() => handleActiveLink("/home/account-settings")} className="flex items-center p-3 text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
             <GoGear className="mr-3 text-xl" />
             <span className="text-sm font-medium">Account Settings</span>
           </Link>
