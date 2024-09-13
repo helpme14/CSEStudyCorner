@@ -152,8 +152,8 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
                     <span className='font-semibold'>Popular on CSE Study Corner</span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-2">
                       {courses.slice(0, 3).map((course: Course) => (
-                          <Card key={course.id} className="p-4 bg-white rounded-lg hover:shadow-lg transition-shadow duration-300 ease-in-out cursor-pointer">
-                              <div className="flex flex-col gap-4">
+                          <Card key={course.id} className=" bg-white border rounded-lg hover:shadow-lg transition-shadow duration-300 ease-in-out cursor-pointer">
+                              <div className="flex flex-col">
                                   <div className="relative">
                                       <img
                                           src={course.imageUrl}
@@ -161,7 +161,7 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
                                           className="w-full h-32 object-cover rounded-lg"
                                       />
                                   </div>
-                                  <div className="flex flex-col gap-2">
+                                  <div className="flex flex-col gap-1 p-4">
                                       <h3 className="text-lg font-semibold text-gray-800">{course.title}</h3>
                                       <p className="text-sm text-gray-600">{course.description}</p>
                                   </div>
