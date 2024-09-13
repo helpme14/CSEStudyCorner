@@ -43,7 +43,7 @@ const Home = () => {
                 <Navbar />
                 <section className="py-0">
                     <div className="container sm:py-8 py-0">
-                        <div className="w-full bg-[#F0F7FF] dark:bg-gray-800 sm:mt-20 mt-10 relative rounded-md p-6 sm:p-10 ">
+                        <div className="w-full bg-[#F0F7FF] dark:bg-gray-800/60 sm:mt-20 mt-10 relative rounded-md p-6 sm:p-10 ">
                         <div className="sm:w-full md:w-full w-full xl:w-1/2 ">
                             <div className="flex flex-col text-left">
                             <h4 className="font-roboto font-semibold text-xl md:text-4xl sm:text-3xl lg:text-5xl font-sans text-gray-900 dark:text-gray-100">
@@ -167,9 +167,9 @@ const Home = () => {
                                     </span>
                                     <div className="flex flex-col sm:flex-row gap-2 mt-4 sm:mt-0">
                                         <Link to="/pricing">
-                                            <Button variant="outline">Download now</Button>
+                                            <Button variant="outline" className="dark:bg-white dark:text-gray-800">Download now</Button>
                                         </Link>
-                                        <Button className="bg-none border">Dismiss</Button>
+                                        <Button className="bg-none border dark:bg-gray-800 dark:text-white">Dismiss</Button>
                                     </div>
                         </div>
                     </div>

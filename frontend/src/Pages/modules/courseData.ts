@@ -95,7 +95,7 @@ export const categories: Categories[] = [
   },
   {
     id: 4,
-    title: "Time Management for Exams",
+    title: "Time Management",
     imageUrl:faker.image.imageUrl(640, 480, 'education', true), // Placeholder image
     total_course: 22,
   },

@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import Secondlogo from '../assets/Light-corner.png';
 import darkSecondlogo from '../assets/Dark-corner.png';
-import { FaSearch } from "react-icons/fa"; 
+import { GoXCircle, GoSearch  } from "react-icons/go";
 import { Link } from "react-router-dom";
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import { searches as searchData } from "./modules/searchData";
+import { Card } from "@/components/ui/card";
+import {categories, Categories, courses, Course } from "./modules/courseData";
 import {
   Avatar,
   AvatarFallback,
@@ -49,6 +54,24 @@ interface NavbarProps {
 const Navbar: React.FC <NavbarProps> = ({ className }) => {
 
   const [isFocused, setIsFocused] = useState(false)
+  const [showDiv, setShowDiv] = useState(false);
+  const [searches, setSearches] = useState(searchData);
+
+  const handleFocus = () => {
+    setIsFocused(true);
+    setTimeout(() => {
+      setShowDiv(true);
+    }, 300);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    setShowDiv(false);
+  };
+
+  const handleDelete = (id: number) => {
+    setSearches((prevSearches) => prevSearches.filter((search) => search.id !== id));
+  };
   
   return (
     <nav className={`sticky top-0 z-50 block w-full h-15 ${className} `}>
@@ -59,30 +82,99 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
             <img className="w-28 sm:w-36 h-8 sm:h-10 dark:block hidden" src={darkSecondlogo} alt="Logo" />
           </a>
           <form className='relative'>
-            <div className="relative sm:flex hidden items-center">
-              <FaSearch className="absolute left-3 text-gray-500 cursor-pointer" />
+            {showDiv && (
+              <div
+                className="fixed inset-0 bg-black bg-opacity-50 z-20"
+                onClick={handleBlur}
+              ></div>
+            )}
+
+            <div className={` ${isFocused ? ' z-50 relative sm:flex hidden items-center' : 'relative sm:flex hidden items-center'
+                  }` }>
+              <GoSearch  className="absolute left-3 text-gray-500 cursor-pointer" />
               <input
                 type="text"
-                className="pl-10 pr-4 py-2 text-gray-700 border border-w-2 bg-gray-50 rounded-full dark:bg-gray-700 dark:text-gray-300 focus:outline-none  transition-all duration-300 ease-in-out w-[30vw] focus:w-[50vw]"
+                className="px-10 py-2 text-gray-700  bg-gray-50 rounded-full dark dark:bg-gray-700 dark:text-gray-300 focus:outline-none border-2 dark:border-gray-500 transition-all duration-300 ease-in-out w-[30vw] focus:w-[50vw] ${isFocused ? 'z-50 border-gray-400' : 'border-gray-500'"
                 placeholder="Search courses"
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
               />
-              <FaSearch className="absolute right-4 text-gray-500 cursor-pointer" />
+                {isFocused && (
+                  <GoXCircle className="absolute right-4 text-gray-500 cursor-pointer"  />
+                )}
             </div>
 
-            {isFocused && (
-        <div className={`absolute top-18 p-4 bg-white shadow-lg text-gray-700 w-[49vw] rounded-b-xl left-1/2 -translate-x-1/2 flex flex-col gap-2 transition-opacity duration-300 ease-in-out ${isFocused ? 'opacity-100 visible delay-10000' : 'opacity-0 invisible'}`}>
-          <div>
-          sdsds
-          </div>
-        </div>
-      )}
+            {showDiv && (
+              <div
+                className={`absolute top-7 p-6 bg-white shadow-lg text-gray-700 w-[49.7vw] rounded-b-xl left-1/2 -translate-x-1/2 flex flex-col gap-2 transition-opacity duration-300 ease-in-out dark:bg-gray-800 dark:text-gray-300 ${isFocused ? 'opacity-100 visible z-40' : 'opacity-0 invisible'
+                  }`}
+              >
+                <div className='flex flex-col font-sans mt-5 items-between justify-center gap-5'>
+                  <div>
+                    <span className='font-semibold'>Recent searches</span>
+                      <div className='mt-2'>
+                      <Stack direction="row" spacing={2}>
+                        {searches.map((search) => (
+                          <Chip
+                            key={search.id}
+                            label={search.title}
+                
+                            onDelete={() => handleDelete(search.id)}
+                          />
+                        ))}
+                      </Stack>
+                      </div>
+                  </div>
+                  <div>
+                    <span className='font-semibold'>Recommended for you</span>
+                      <div className='mt-2'>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {categories.map((category: Categories) => (
+                                <Card key={category.id} className="p-3 relative"  data-aos-anchor-placement="top-bottom">
+                                    <div className="flex gap-5">
+                                        <img
+                                            src={category.imageUrl}
+                                            alt={category.title}
+                                            className="h-14 object-cover w-14 rounded-md"
+                                        />
+                                        <div className="col-span-2 flex flex-col">
+                                            <h3 className="text-base font-semibold">{category.title}</h3>
+                                            <p className="text-sm text-gray-600">{category.total_course} Courses</p>
+                                        </div>
+                                    </div>
+                            
+                                </Card>
+                            ))}
+                        </div>
+                      </div>
+                  </div>
+                  <div>
+                    <span className='font-semibold'>Popular on CSE Study Corner</span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-2">
+                      {courses.slice(0, 3).map((course: Course) => (
+                          <Card key={course.id} className="p-4 bg-white rounded-lg hover:shadow-lg transition-shadow duration-300 ease-in-out cursor-pointer">
+                              <div className="flex flex-col gap-4">
+                                  <div className="relative">
+                                      <img
+                                          src={course.imageUrl}
+                                          alt={course.title}
+                                          className="w-full h-32 object-cover rounded-lg"
+                                      />
+                                  </div>
+                                  <div className="flex flex-col gap-2">
+                                      <h3 className="text-lg font-semibold text-gray-800">{course.title}</h3>
+                                      <p className="text-sm text-gray-600">{course.description}</p>
+                                  </div>
+                              </div>
+                          </Card>
+                      ))}
+                  </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </form>
-
           <div className="flex items-center">
-
-
             {/* Notifications */}
             <button
               className="mx-4 text-gray-600 transition-colors duration-300 transform dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-400 focus:text-gray-700 dark:focus:text-gray-400 focus:outline-none"
