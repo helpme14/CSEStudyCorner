@@ -1,2 +1,4 @@
 # Ignore the .vscode folder
 .vscode/
+
+/frontend/.prettierrc
