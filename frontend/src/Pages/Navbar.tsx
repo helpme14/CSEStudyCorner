@@ -1,4 +1,4 @@
-import React,{useContext} from 'react';
+import React,{useContext,useState} from 'react';
 import Secondlogo from '../assets/Light-corner.png';
 import darkSecondlogo from '../assets/Dark-corner.png';
 import { FaSearch } from "react-icons/fa"; 
@@ -47,7 +47,7 @@ interface NavbarProps {
 
 
 const Navbar: React.FC <NavbarProps> = ({ className }) => {
-  
+  const [isFocused, setIsFocused] = useState(false)
   const authContext = useContext(AuthContext)
   
   if (!authContext) {
@@ -58,26 +58,36 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
   
   return (
     <nav className={`sticky top-0 z-50 block w-full h-15 ${className}`}>
-      <div className="w-full px-8 py-2 bg-white shadow  dark:bg-gray-800">
+      <div className="w-full px-8 py-2 bg-white shadow dark:bg-gray-800">
       <div className="flex items-center justify-between w-full">
           <a href="#">
             <img className="h-8 w-28 sm:w-36 sm:h-10 dark:hidden" src={Secondlogo} alt="Logo" />
             <img className="hidden h-8 w-28 sm:w-36 sm:h-10 dark:block" src={darkSecondlogo} alt="Logo" />
           </a>
-
-          <div className="relative items-center hidden sm:flex"></div>
-            {/* Search Bar */}
+  {/* Search */}
+          <form className='relative'>
             <div className="relative items-center hidden sm:flex">
-            <FaSearch className="absolute text-gray-500 cursor-pointer left-3" />
+              <FaSearch className="absolute text-gray-500 cursor-pointer left-3" />
               <input
                 type="text"
                 className="pl-10 pr-4 py-2 text-gray-700 border border-w-2 bg-gray-50 rounded-full dark:bg-gray-700 dark:text-gray-300 focus:outline-none  transition-all duration-300 ease-in-out w-[30vw] focus:w-[50vw]"
                 placeholder="Search courses"
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
               />
+              <FaSearch className="absolute text-gray-500 cursor-pointer right-4" />
             </div>
 
+            {isFocused && (
+        <div className={`absolute top-18 p-4 bg-white shadow-lg text-gray-700 w-[49vw] rounded-b-xl left-1/2 -translate-x-1/2 flex flex-col gap-2 transition-opacity duration-300 ease-in-out ${isFocused ? 'opacity-100 visible delay-10000' : 'opacity-0 invisible'}`}>
+          <div>
+          sdsds
+          </div>
+        </div>
+      )}
+          </form>
+
           <div className="flex items-center">
-            {/* Search Bar */}
 
             {/* Notifications */}
             <button

@@ -291,6 +291,7 @@ useEffect(() => {
 
 
   const fetchProfileData = useCallback(async () => {
+    console.log('Auth Tokens in fetchProfileData:', authTokens); // Log tokens here
     if (!authTokens) {
       console.error("No authentication tokens available.");
       return;

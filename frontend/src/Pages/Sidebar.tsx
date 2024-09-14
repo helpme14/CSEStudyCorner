@@ -2,7 +2,7 @@ import logo from "../assets/cap-logo.png";
 import DarkLogo from "../assets/cap-logo-light.png";
 import {
   GoHome,
-  GoGlobe,
+  GoPackage,
   GoRepo,
   GoBookmark,
   GoGear,
@@ -50,7 +50,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300"
           >
             <div className="flex flex-col items-center gap-1">
-              <GoGlobe className="w-5 h-5" />
+              <GoPackage className="w-5 h-5" />
               <span className=" font-medium text-[0.8rem]">Explore</span>
             </div>
           </a>
