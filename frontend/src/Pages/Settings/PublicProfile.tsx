@@ -1,25 +1,26 @@
-import {useState, useContext, useEffect, useRef} from 'react'
-import Navbar from '../Navbar'
-import Sidebar from '../Sidebar'
-import Box from '@mui/material/Box'
-import Divider from '@mui/material/Divider'
-import Grid from '@mui/material/Grid'
-import SideSettings from './SideSettings'
-import {Label} from '@/components/ui/label'
-import {Input} from '@/components/ui/input'
-import {Textarea} from '@/components/ui/textarea'
-import {Button} from '@/components/ui/button'
-import {Skeleton} from '@/components/ui/skeleton'
-import AuthContext from '../../context/AuthContext'
-import {FiUpload} from 'react-icons/fi' // Importing upload icon from react-icons
+import {useState, useContext, useEffect, useRef} from 'react';
+import Navbar from '../Navbar';
+import Sidebar from '../Sidebar';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
+import SideSettings from './SideSettings';
+import {Label} from '@/components/ui/label';
+import {Input} from '@/components/ui/input';
+import {Textarea} from '@/components/ui/textarea';
+import {Button} from '@/components/ui/button';
+import {Skeleton} from '@/components/ui/skeleton';
+import AuthContext from '../../context/AuthContext';
+import { useFetchWithLoading } from '../../hooks/useFetchWithLoading';
 
 const PublicProfile = () => {
-  const authContext = useContext(AuthContext)
+  const authContext = useContext(AuthContext);
+  
   if (!authContext) {
-    throw new Error('AuthContext must be used within an AuthProvider')
+    throw new Error('AuthContext must be used within an AuthProvider');
   }
 
-  const {user, fetchProfileData, updateProfile} = authContext
+  const {user, fetchProfileData, updateProfile} = authContext;
 
   // State for form data and loading
   const [formData, setFormData] = useState({
@@ -31,41 +32,10 @@ const PublicProfile = () => {
       age_bracket: '',
       bio: ''
     }
-  })
+  });
+  // Using the loading state from the useFetchWithLoading hook
+  const loading = useFetchWithLoading(fetchProfileData);
 
-  const [loading, setLoading] = useState(true) // Loading state
-  const fetchStartTime = useRef<number | null>(null) // Track start time
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        fetchStartTime.current = Date.now() // Set fetch start time
-        await fetchProfileData()
-        const fetchDuration =
-          Date.now() - (fetchStartTime.current || Date.now())
-        const minDuration = 2000 // Minimum delay of 2 seconds
-
-        // Wait for minDuration if necessary
-        if (fetchDuration < minDuration) {
-          setTimeout(() => setLoading(false), minDuration - fetchDuration)
-        } else {
-          setLoading(false)
-        }
-      } catch (error) {
-        console.error('Error fetching profile data', error)
-        setLoading(false)
-      }
-    }
-
-    if (import.meta.env.VITE_NODE_ENV !== 'development') {
-      fetchData()
-    } else {
-      // Simulate loading delay in development
-      setTimeout(() => {
-        setLoading(false)
-      }, 2000) // 2 seconds delay for demo
-    }
-  }, [fetchProfileData])
 
   useEffect(() => {
     if (user) {
@@ -78,14 +48,14 @@ const PublicProfile = () => {
           age_bracket: user?.profile?.age_bracket || '',
           bio: user?.profile?.bio || ''
         }
-      })
+      });
     }
-  }, [user])
+  }, [user]);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const {name, value} = event.target
+    const {name, value} = event.target;
     if (name in formData.profile) {
       setFormData((prevState) => ({
         ...prevState,
@@ -93,47 +63,25 @@ const PublicProfile = () => {
           ...prevState.profile,
           [name]: value
         }
-      }))
+      }));
     } else {
       setFormData((prevState) => ({
         ...prevState,
         [name]: value
-      }))
+      }));
     }
-  }
-
-  const [profileImage, setProfileImage] = useState<string | null>(null)
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const username = formData.first_name + ' ' + formData.last_name
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      setSelectedFile(file)
-      const imageUrl = URL.createObjectURL(file)
-      setProfileImage(imageUrl)
-    }
-  }
-
-  const getInitials = (name: string) => {
-    const nameParts = name.split(' ')
-    const initials = nameParts
-      .map((part) => part.charAt(0))
-      .join('')
-      .toUpperCase()
-    return initials
-  }
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    console.log('Form Data Submitted:', formData)
+    event.preventDefault();
+    console.log('Form Data Submitted:', formData);
 
     const profileData = {
       ...(formData.profile.age_bracket && {
         age_bracket: formData.profile.age_bracket
       }),
       bio: formData.profile.bio
-    }
+    };
 
     try {
       await updateProfile({
@@ -142,12 +90,12 @@ const PublicProfile = () => {
         first_name: formData.first_name,
         last_name: formData.last_name,
         profile: profileData
-      })
+      });
     } catch (error) {
-      console.error('Error updating profile', error)
+      console.error('Error updating profile', error);
     }
-  }
-
+  };
+  // console.log(user)
   return (
     <div className="flex w-full h-full sm:h-screen">
       <Sidebar />
@@ -173,7 +121,6 @@ const PublicProfile = () => {
                     <p className="text-sm text-gray-500 dark:text-white">
                       This is how others will see you on the site.
                     </p>
-                    
 
                     <div className="relative flex flex-col gap-3 ">
                       {loading ? (
@@ -275,7 +222,7 @@ const PublicProfile = () => {
         </section>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PublicProfile
+export default PublicProfile;

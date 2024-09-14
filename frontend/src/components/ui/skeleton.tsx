@@ -14,7 +14,7 @@ function Skeleton({
   return (
     <div
       className={cn(
-        'animate-pulse rounded-md bg-gray-200 dark:bg-gray-700',
+        'animate-pulse rounded-md bg-gray-400 dark:bg-gray-700',
         width,
         height,
         className

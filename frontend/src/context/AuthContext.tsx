@@ -243,17 +243,28 @@ const refreshToken = useCallback(async () => {
     logoutUser();
   }
 }, [authTokens?.refresh, logoutUser, setAuthTokens, setUser]);
+const getExpiryTime = (token: string) => {
+  const decodedToken = jwtDecode<CustomJwtPayload>(token);
+  return decodedToken.exp ? decodedToken.exp * 1000 : null;
+};
 
-// Efficiently handle token refreshing every 4 minutes
+// Efficiently handle token refreshing based on access token expiry
 useEffect(() => {
-  if (authTokens) {
-    const tokenRefreshInterval = 4 * 60 * 1000; // 4 minutes
+  if (authTokens?.access) {
+    const accessExpiryTime = getExpiryTime(authTokens.access);
+    if (!accessExpiryTime) return;
 
-    const interval = setInterval(refreshToken, tokenRefreshInterval);
+    const currentTime = Date.now();
+    const timeUntilExpiry = accessExpiryTime - currentTime;
 
-    return () => clearInterval(interval);
+    // Set refresh interval to trigger before the token expires ( sample ay : 1 minute before)
+    const refreshBeforeExpiry = Math.max(timeUntilExpiry - 60 * 1000, 0);
+
+    const interval = setTimeout(refreshToken, refreshBeforeExpiry);
+
+    return () => clearTimeout(interval);
   }
-}, [authTokens, refreshToken]);
+}, [authTokens?.access, refreshToken]);
 
 // Automatically decode user from the access token
 useEffect(() => {
@@ -291,7 +302,7 @@ useEffect(() => {
 
 
   const fetchProfileData = useCallback(async () => {
-    console.log('Auth Tokens in fetchProfileData:', authTokens); // Log tokens here
+    // console.log('Auth Tokens in fetchProfileData:', authTokens); // Log tokens here
     if (!authTokens) {
       console.error("No authentication tokens available.");
       return;
