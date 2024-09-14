@@ -173,50 +173,9 @@ const PublicProfile = () => {
                     <p className="text-sm text-gray-500 dark:text-white">
                       This is how others will see you on the site.
                     </p>
-                    <Divider className="pt-4" />
                     
-                    <div className="flex flex-col gap-3 pt-4">
-                      <Label
-                        htmlFor="profilePicture"
-                        className="font-medium text-medium">
-                        Profile Picture
-                      </Label>
-                      <div className="relative w-24 h-24 group">
-                        <div className="flex items-center justify-center w-full h-full overflow-hidden text-gray-500 bg-gray-200 border-2 border-gray-300 rounded-full dark:border-gray-500 dark:bg-gray-700 dark:text-gray-400">
-                          {profileImage ? (
-                            <img
-                              src={profileImage}
-                              alt="Profile"
-                              className="object-cover w-full h-full"
-                            />
-                          ) : (
-                            <span className="text-2xl font-bold text-gray-700 dark:text-white">
-                              {getInitials(username)}
-                            </span>
-                          )}
-                        </div>
 
-                        <label
-                          htmlFor="profilePicture"
-                          className="absolute inset-0 flex items-center justify-center transition-opacity bg-gray-500 bg-opacity-50 rounded-full opacity-0 cursor-pointer group-hover:opacity-100">
-                          <FiUpload className="text-2xl text-white" />
-                        </label>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          id="profilePicture"
-                          className="hidden"
-                          onChange={handleImageChange}
-                        />
-                      </div>
-                      <p className="text-sm text-gray-500 dark:text-white">
-                        Recommended size: 400x400px. Supported formats: .jpg,
-                        .png, .gif.
-                      </p>
-                    </div>
-
-                    
-                    <div className="relative flex flex-col gap-3 pt-4">
+                    <div className="relative flex flex-col gap-3 ">
                       {loading ? (
                         <>
                           {/* For Username Label */}

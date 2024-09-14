@@ -54,7 +54,7 @@ export const courses: Course[] = [
   },
   {
       id: 4,
-      title: "Time Management for Exams",
+      title: "Time Management",
       description: "Learn to manage your time effectively during exams.",
       imageUrl: faker.image.imageUrl(640, 480, 'education', true),
       rating: parseFloat((Math.random() * (5 - 3) + 3).toFixed(1)),
