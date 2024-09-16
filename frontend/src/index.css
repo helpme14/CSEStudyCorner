@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
-
+@import 'primereact/resources/themes/saga-blue/theme.css'; /* theme */
+@import 'primereact/resources/primereact.min.css'; /* core css */
+@import 'primeicons/primeicons.css'; /* icons */
 
 @tailwind base;
 @tailwind components;
@@ -62,18 +64,8 @@ body {
   }
  
 
-  .solarized {
-    --background: #473f2c !important;
-    --foreground: red !important;
-    --primary: #268bd2 !important;
-    --secondary: #2aa198 !important;
-    --accent: #b58900 !important;
-    --muted: #93a1a1 !important;
-    --card: #eee8d5 !important;
-    --popover: #eee8d5 !important;
-    --border: #93a1a1 !important;
-    --input: #93a1a1 !important;
-    --ring: #268bd2 !important;
+  .dark {
+   --Card: #1F2937 !important;
   }
 
 

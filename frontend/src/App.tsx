@@ -14,6 +14,7 @@ import CloseAccount from "./Pages/Settings/CloseAccount";
 import ForgotPassword from "./Pages/RegisterLogin/ForgotPassword";
 import EmailTempalte from "./Pages/RegisterLogin/EmailTemplate";
 import ProfilePicture from "./Pages/Settings/ProfilePicture";
+import CourseDetails from "./Pages/Learning/CourseDetails";
 
 
 
@@ -24,7 +25,7 @@ function App() {
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme" >
        <Toaster />
       <Router >
-          <div className="px-6 mx-auto font-sans dark:bg-gray-900 ">
+          <div className="px-6 mx-auto font-sans dark:bg-gray-800 ">
             <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/pricing" element={<Pricing />} />
@@ -41,6 +42,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/email-template" element={<EmailTempalte />} />
             <Route path="/profile-picture" element={<ProfilePicture />} />
+            <Route path="/course-details" element={<CourseDetails />} />
           </Routes>
           </div>
       </Router>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Secondlogo from '../assets/Light-corner.png';
 import darkSecondlogo from '../assets/Dark-corner.png';
-import { GoXCircle, GoSearch  } from "react-icons/go";
+import { GoXCircle, GoSearch, GoMoon  } from "react-icons/go";
 import { Link } from "react-router-dom";
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
@@ -19,7 +19,6 @@ import {
   CreditCard,
   Github,
   Keyboard,
-  LifeBuoy,
   LogOut,
   Mail,
   MessageSquare,
@@ -106,7 +105,7 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
 
             {showDiv && (
               <div
-                className={`absolute top-7 p-6 bg-white shadow-lg text-gray-700 w-[49.7vw] rounded-b-xl left-1/2 -translate-x-1/2 flex flex-col gap-2 transition-opacity duration-300 ease-in-out dark:bg-gray-800 dark:text-gray-300 ${isFocused ? 'opacity-100 visible z-40' : 'opacity-0 invisible'
+                className={`absolute top-7 p-6 bg-white shadow-lg text-gray-700 w-[49.7vw] rounded-b-xl left-1/2 -translate-x-1/2 flex flex-col gap-2 transition-opacity duration-300 ease-in-out dark:bg-gray-900 dark:text-gray-300 ${isFocused ? 'opacity-100 visible z-40' : 'opacity-0 invisible'
                   }`}
               >
                 <div className='flex flex-col font-sans mt-5 items-between justify-center gap-5'>
@@ -118,7 +117,7 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
                           <Chip
                             key={search.id}
                             label={search.title}
-                
+                            className='dark:text-white dark:bg-dark-200'
                             onDelete={() => handleDelete(search.id)}
                           />
                         ))}
@@ -130,7 +129,7 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
                       <div className='mt-2'>
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             {categories.map((category: Categories) => (
-                                <Card key={category.id} className="p-3 relative"  data-aos-anchor-placement="top-bottom">
+                                <Card key={category.id} className="p-3 relative dark:bg-[#1F2937]"  data-aos-anchor-placement="top-bottom">
                                     <div className="flex gap-5">
                                         <img
                                             src={category.imageUrl}
@@ -152,7 +151,7 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
                     <span className='font-semibold'>Popular on CSE Study Corner</span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-2">
                       {courses.slice(0, 3).map((course: Course) => (
-                          <Card key={course.id} className=" bg-white border rounded-lg hover:shadow-lg transition-shadow duration-300 ease-in-out cursor-pointer">
+                          <Card key={course.id} className=" bg-white border rounded-lg hover:shadow-lg transition-shadow duration-300 ease-in-out cursor-pointer dark:bg-[#1F2937]">
                               <div className="flex flex-col">
                                   <div className="relative">
                                       <img
@@ -162,7 +161,7 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
                                       />
                                   </div>
                                   <div className="flex flex-col gap-1 p-4">
-                                      <h3 className="text-lg font-semibold text-gray-800">{course.title}</h3>
+                                      <h3 className="text-lg font-semibold text-gray-800 dark:text-white">{course.title}</h3>
                                       <p className="text-sm text-gray-600">{course.description}</p>
                                   </div>
                               </div>
@@ -273,10 +272,12 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
                   <Github className="mr-2 h-4 w-4" />
                   <span>GitHub</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <LifeBuoy className="mr-2 h-4 w-4" />
-                  <span>Support</span>
-                </DropdownMenuItem>
+                <Link to="/theme">
+                  <DropdownMenuItem>
+                    <GoMoon className="mr-2 h-4 w-4" />
+                    <span>Dark Mode</span>
+                  </DropdownMenuItem>
+                </Link>
                 <DropdownMenuItem disabled>
                   <Cloud className="mr-2 h-4 w-4" />
                   <span>API</span>

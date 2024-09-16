@@ -1,7 +1,7 @@
 import Navbar from "../Navbar";
 import Sidebar from "../Sidebar";
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import SideSettings from "./SideSettings";
 import { Divider} from "@mui/material";
 import { useState } from "react";

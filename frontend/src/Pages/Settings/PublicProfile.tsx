@@ -1,8 +1,8 @@
 
 import Navbar from "../Navbar";
 import Sidebar from "../Sidebar";
-import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import SideSettings from "./SideSettings";
 import { Label } from "@/components/ui/label";
