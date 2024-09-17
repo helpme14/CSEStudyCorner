@@ -8,25 +8,25 @@ const App = () => {
     {
       label: 'Settings',
       icon: <GoGear className='h-8 w-5' />,
-      className: "bg-gray-500 shadow-md text-white cursor-pointer",
+      className: "bg-white shadow-md text-blue-500 border border-gray-400 cursor-pointer",
       tooltip: 'Open Settings'
     },
     {
       label: 'Saved',
       icon: <GoBookmark className='h-8 w-5' />,
-      className: "bg-gray-500 shadow-md text-white cursor-pointer",
+      className: "bg-white shadow-md text-blue-500 border border-gray-400 cursor-pointer",
       tooltip: 'View Saved Items'
     },
     {
       label: 'Courses',
-      icon: <GoRepo className='h-8 w-5' />,
-      className: "bg-gray-500 shadow-md text-white cursor-pointer",
+      icon: <GoRepo className='h-7 w-4' />,
+      className: "bg-white shadow-md text-blue-500 border border-gray-400 cursor-pointer",
       tooltip: 'Browse Courses'
     },
     {
       label: 'Home',
-      icon: <GoHome className='h-9 w-6' />,
-      className: "bg-gray-500 shadow-md text-white cursor-pointer",
+      icon: <GoHome className='h-9 w-5' />,
+      className: "bg-white shadow-md text-blue-500 border border-gray-400 cursor-pointer",
       tooltip: 'Go to Home'
     },
   ];

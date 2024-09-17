@@ -319,7 +319,7 @@ const Home = () => {
                             <CarouselContent className="flex">
                                 {courses.map((course: Course) => (
                                     <CarouselItem key={course.id} className="md:basis-1/2 lg:basis-1/4">
-                                                <Card className="relative h-75 flex flex-col dark:bg-[#1F2937]" data-aos="fade-up" data-aos-duration="1500"  data-aos-anchor-placement="top-bottom">
+                                                <Card className="relative h-75 flex flex-col dark:bg-[#1F2937] cursor-pointer" data-aos="fade-up" data-aos-duration="1500"  data-aos-anchor-placement="top-bottom">
                                                     <img
                                                         src={course.imageUrl}
                                                         alt={course.title}
