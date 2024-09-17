@@ -47,8 +47,13 @@ const App = () => {
         }))}
         radius={120}
         direction="up"
-        style={{ right: 20, bottom: 20 }}
-        buttonClassName="bg-blue-500 text-white"
+        style={{
+          position: 'fixed',
+          right: '1rem', // Adjusted for responsiveness
+          bottom: '1rem', // Adjusted for responsiveness
+          zIndex: 1000
+        }}
+        buttonClassName="bg-blue-500 opacity-75 text-white"
         showIcon={<IoMdMenu />} hideIcon="pi pi-times"
       />
     </div>
