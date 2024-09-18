@@ -39,9 +39,9 @@ const Home = () => {
     return (
         <div className="w-full flex h-full text-foreground">
             <Sidebar  />
-            <div className="flex flex-col flex-grow lg:w-[calc(100%-4.5rem)] w-full md:w-full ">
+            <div className="flex flex-col flex-grow lg:w-[calc(100%-4.5rem)] w-full md:w-full -z-10 ">
                 <Navbar />
-                <section className="py-0">
+                <section className="py-0 -z-10">
                     <div className="container sm:py-8 py-0">
                         <div className="w-full bg-[#F0F7FF] dark:bg-[#07305D] sm:mt-20 mt-10 relative rounded-md p-6 sm:p-10 ">
                         <div className="sm:w-full md:w-full w-full xl:w-1/2 ">
@@ -62,7 +62,7 @@ const Home = () => {
                     </div>
                     </section>
 
-                <section>
+                <section className="-z-10">
                     <div className="container mx-auto py-10">
                         <div className="flex flex-col gap-5">
                             <div className="flex gap-5 overflow-x-auto">
@@ -121,7 +121,7 @@ const Home = () => {
                     </div>
                 </section>
 
-                <section>
+                <section className="-z-10">
                     <div className="container mx-auto py-4 sm:py-2">
                         <span className="text-xl font-semibold xl:text-3xl sm:text-base md:text-xl lg:text-2xl">Civil Service Categories</span>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 py-8">
@@ -159,7 +159,7 @@ const Home = () => {
                     </div>
                 </section>
 
-                <section>
+                <section className="-z-10">
                     <div className="container mx-auto">
                         <div className="w-full flex flex-col sm:flex-row justify-between bg-gray-800 p-6 mt-5 items-center dark:bg-[#1F2937]">
                                     <span className="text-white font-semibold text-center sm:text-left">
@@ -175,7 +175,7 @@ const Home = () => {
                     </div>
                 </section>
 
-                <section>
+                <section className="-z-10">
                     <div className="container mx-auto py-10 sm:pt-10">
                            <div className="flex flex-col gap-2">
                             <span className="text-xl font-semibold xl:text-3xl sm:text-base md:text-xl lg:text-2xl">What to learn next</span>                     
@@ -245,7 +245,7 @@ const Home = () => {
                     </div>
                 </section>
 
-                <section>
+                <section className="-z-10">
                     <div className="container mx-auto py-10 sm:pt-10">
                         <span className="text-xl font-semibold xl:text-3xl sm:text-base md:text-xl lg:text-2xl">Recommended for you</span>
                         <Carousel className="w-full mt-5 relative">
@@ -312,7 +312,7 @@ const Home = () => {
                     </div>
                 </section>
 
-                <section>
+                <section  className="-z-10">
                     <div className="container mx-auto py-10 sm:pt-10">
                         <span className="text-xl font-semibold xl:text-3xl sm:text-base md:text-xl lg:text-2xl">Learners are viewing</span>
                         <Carousel className="w-full mt-5 relative">
@@ -379,7 +379,7 @@ const Home = () => {
                     </div>
                 </section>
 
-                <section>
+                <section  className="-z-10">
                     <div className="container mx-auto py-10 sm:pt-10">
                         <span className="text-xl font-semibold xl:text-3xl sm:text-base md:text-xl lg:text-2xl">Top lessons right now</span>
                         <Carousel className="w-full mt-5 relative">

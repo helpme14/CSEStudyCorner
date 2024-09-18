@@ -43,101 +43,16 @@ const CourseDetails = () => {
             <Grid container spacing={1} className="sm:px-8 px-0 sm:py-2 py-0">
             {/* Left section: YouTube Iframe */}
             <Grid item xs={12} md={showRightGrid ? 9 : 12} className="relative ">
-                <Iframe
-                url="https://www.youtube.com/embed/_uQrJ0TkZlc"
-                
-                id="youtube-iframe"
-                display="block"
-                position="relative"
-                className="sm:rounded-lg rounded-none shadow-lg w-full sm:h-[600px] h-[400px] "
-                />
-                <div className="p-4">
-                <Tabs
-                    value={activeTab}
-                    onChange={handleTabChange}
-                    aria-label="course details tabs"
-                    className="border-b border-gray-300 overflow-y-auto"
-                >
-                    <Tab
-                    label="Overview"
-                    sx={{
-                        fontSize: '0.875rem',
-                        fontWeight: 'bold',
-                        color: 'black'
-                    }}
-                    />
-                    <Tab
-                    label="Syllabus"
-                    sx={{
-                        fontSize: '0.875rem',
-                        fontWeight: 'bold',
-                        color: 'black'
-                    }}
-                    />
-                    <Tab
-                    label="Instructor"
-                    sx={{
-                        fontSize: '0.875rem',
-                        fontWeight: 'bold',
-                        color: 'black'
-                    }}
-                    />
-                </Tabs>
-                <div className="p-4">
-                    {activeTab === 0 && (
-                        <div className=" bg-white shadow-lg rounded-lg">
-                        <Typography variant="h5" className="font-bold text-gray-800 mb-4">
-                        Overview of the Philippines
-                        </Typography>
-                        <div className="space-y-4">
-                        <Typography variant="body1" className="text-gray-700">
-                            This course offers an in-depth exploration of the Philippines, covering its geography, culture, history, and key attractions. Whether you're planning to visit or want to learn more about the country, this course provides essential insights.
-                        </Typography>
-                        
-                        <div className="flex items-center space-x-2">
-                            <FiBookOpen className="h-6 w-6 text-blue-500" />
-                            <Typography variant="body1" className="text-gray-700">
-                            Learn about the rich history and cultural heritage of the Philippines
-                            </Typography>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                            <FiBookOpen className="h-6 w-6 text-blue-500" />
-                            <Typography variant="body1" className="text-gray-700">
-                            Explore major tourist destinations and hidden gems
-                            </Typography>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                            <FiBookOpen className="h-6 w-6 text-blue-500" />
-                            <Typography variant="body1" className="text-gray-700">
-                            Understand the diverse languages, festivals, and traditions
-                            </Typography>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2">
-                            <FiBookOpen className="h-6 w-6 text-blue-500" />
-                            <Typography variant="body1" className="text-gray-700">
-                            Discover the economic landscape and opportunities in the country
-                            </Typography>
-                        </div>
-                        </div>
-                    </div>
-                    )}
-                    {activeTab === 1 && (
-                    <Typography variant="body1">
-                        This section contains the course syllabus. You can list out the modules or chapters and any relevant details.
-                    </Typography>
-                    )}
-                    {activeTab === 2 && (
-                    <Typography variant="body1">
-                        This section provides information about the course instructor. You can include their bio, qualifications, and experience.
-                    </Typography>
-                    )}
+                <div className="relative">
+                    <Iframe
+                    url="https://www.youtube.com/embed/_uQrJ0TkZlc"
                     
-                </div>
-                </div>
-                <div className="absolute top-1/2 right-2 transform -translate-y-1/2">
+                    id="youtube-iframe"
+                    display="block"
+                    position="relative"
+                    className="sm:rounded-lg rounded-none shadow-lg w-full sm:h-[600px] h-[400px] "
+                    />
+                     <div className="absolute top-1/2 right-2 transform -translate-y-1/2">
                     <Button
                         onClick={toggleRightGrid}
                         variant="contained"
@@ -157,6 +72,93 @@ const CourseDetails = () => {
                         )}
                     </Button>
                     </div>
+                </div>
+                <div className="p-4">
+                <Tabs
+                    value={activeTab}
+                    onChange={handleTabChange}
+                    aria-label="course details tabs"
+                    className="border-b border-gray-300 overflow-y-auto"
+                >
+                    <Tab
+                    label="Overview"
+                    sx={{
+                        fontSize: '0.875rem',
+                        fontWeight: 'bold',
+                        color: 'black'
+                    }}
+                    />
+                    <Tab
+                    label="Q&A"
+                    sx={{
+                        fontSize: '0.875rem',
+                        fontWeight: 'bold',
+                        color: 'black'
+                    }}
+                    />
+                    <Tab
+                    label="Announcements"
+                    sx={{
+                        fontSize: '0.875rem',
+                        fontWeight: 'bold',
+                        color: 'black'
+                    }}
+                    />
+                </Tabs>
+                <div className="p-4">
+                    {activeTab === 0 && (
+                    <div className=" bg-white shadow-lg rounded-lg">
+                    <Typography variant="h5" className="font-bold text-gray-800 mb-4">
+                      Overview of the Philippines
+                    </Typography>
+                    <div className="space-y-4">
+                      <Typography variant="body1" className="text-gray-700">
+                        This course offers an in-depth exploration of the Philippines, covering its geography, culture, history, and key attractions. Whether you're planning to visit or want to learn more about the country, this course provides essential insights.
+                      </Typography>
+                      
+                      <div className="flex items-center space-x-2">
+                        <FiBookOpen className="h-6 w-6 text-blue-500" />
+                        <Typography variant="body1" className="text-gray-700">
+                          Learn about the rich history and cultural heritage of the Philippines
+                        </Typography>
+                      </div>
+                      
+                      <div className="flex items-center space-x-2">
+                        <FiBookOpen className="h-6 w-6 text-blue-500" />
+                        <Typography variant="body1" className="text-gray-700">
+                          Explore major tourist destinations and hidden gems
+                        </Typography>
+                      </div>
+                      
+                      <div className="flex items-center space-x-2">
+                        <FiBookOpen className="h-6 w-6 text-blue-500" />
+                        <Typography variant="body1" className="text-gray-700">
+                          Understand the diverse languages, festivals, and traditions
+                        </Typography>
+                      </div>
+                      
+                      <div className="flex items-center space-x-2">
+                        <FiBookOpen className="h-6 w-6 text-blue-500" />
+                        <Typography variant="body1" className="text-gray-700">
+                          Discover the economic landscape and opportunities in the country
+                        </Typography>
+                      </div>
+                    </div>
+                  </div>
+                    )}
+                    {activeTab === 1 && (
+                    <Typography variant="body1">
+                        This section contains the course syllabus. You can list out the modules or chapters and any relevant details.
+                    </Typography>
+                    )}
+                    {activeTab === 2 && (
+                    <Typography variant="body1">
+                        This section provides information about the course instructor. You can include their bio, qualifications, and experience.
+                    </Typography>
+                    )}
+                    
+                </div>
+                </div>
             </Grid>
 
             {showRightGrid && (

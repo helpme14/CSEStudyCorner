@@ -1,6 +1,7 @@
 import logo from '../assets/cap-logo.png';
 import DarkLogo from '../assets/cap-logo-light.png'
-import { GoHome, GoStack, GoRepo, GoBookmark, GoGear, GoInfo, GoSearch, GoPerson } from "react-icons/go";
+import { GoHome, GoStack, GoRepo, GoBookmark, GoGear, GoInfo, GoSearch, GoPerson, GoChevronRight } from "react-icons/go";
+import { explore } from './modules/exploreCategories';
 import { Link } from 'react-router-dom';
 
 
@@ -13,9 +14,10 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
 
   return (
     <div className={`relative ${className}`}>
+      
       {/* Sidebar */}
       <aside
-        className={`sm:hidden md:hidden lg:hidden xl:flex top-0 left-0  hidden flex-col items-center w-[4.5rem] h-full py-3 overflow-y-auto bg-[#f5f5f5] border-r rtl:border-l rtl:border-r-0 dark:bg-gray-800 dark:border-gray-700`}
+        className={` sm:hidden md:hidden lg:hidden xl:flex top-0 left-0  hidden flex-col items-center w-[4.5rem] h-full py-3 overflow-y-auto bg-[#f5f5f5] border-r rtl:border-l rtl:border-r-0 dark:bg-gray-800 dark:border-gray-700`}
       >
         <nav className="flex flex-col flex-1 space-y-3 items-center fixed">
           <a href="#">
@@ -25,16 +27,32 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
 
           {/* Navigation Items */}
           <Link to="/home" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300">
-            <div className='flex flex-col gap-1 items-center'>
+            <div className='flex flex-col gap-2 items-center'>
               <GoHome className='w-6 h-6' />
               <span className=' font-medium text-[0.8rem] '>Home</span>
             </div>
           </Link>
-
-          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300">
-          <div className='flex flex-col gap-1 items-center'>
+          
+          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300 relative z-50 group">
+            <div className='flex flex-col gap-1 items-center'>
               <GoStack className='w-5 h-5' />
-              <span className=' font-medium text-[0.8rem]'>Explore</span>
+              <span className='font-medium text-[0.8rem]'>Explore</span>
+            </div>
+
+            {/* Hover Fullscreen Container */}
+            <div className="absolute -top-40 left-full hidden group-hover:flex  bg-[#f5f5f5] dark:bg-gray-900 w-[15vw] h-[110vh] py-6 pl-6 pr-0 dark:border-gray-700 z-50">
+              <div className="">
+                <h2 className="text-base text-gray-700 font-semibold dark:text-gray-300 ms-2">Explore Categories</h2>
+                <div className=' flex flex-col gap-1 mt-2 w-full'>
+                  {explore.map((explore) => (
+                    <div key={explore.id} className='text-sm text-gray-500 font-medium line-clamp-1 hover:bg-gray-200 p-2 rounded-md flex gap-2 justify-between  items-center w-full'>
+                      <span>{explore.title}</span>
+                      <GoChevronRight className='w-10 h-5' />
+                    </div>
+                  ))}
+                </div>
+
+              </div>
             </div>
           </a>
 
@@ -90,13 +108,12 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
           <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100 flex items-center flex-col">
             <GoBookmark className="w-5 h-5" />
             <span className=' font-medium text-[0.8rem] text-gray-700'>Saved</span>
-</a>
+        </a>
           <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100 flex items-center flex-col">
             <GoPerson className="w-6 h-6" />
             <span className=' font-medium text-[0.8rem] text-gray-700'>Me</span>
           </a>
       </nav>
-
     </div>
   );
 };

@@ -73,7 +73,7 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
   };
   
   return (
-    <nav className={`sticky top-0 z-50 block w-full h-15 ${className} `}>
+    <nav className={`sticky top-0 z-10 block w-full h-15 ${className} `}>
       <div className=" px-8 py-2 w-full  bg-white shadow dark:bg-gray-800">
         <div className="flex items-center justify-between w-full">
           <a href="#">
