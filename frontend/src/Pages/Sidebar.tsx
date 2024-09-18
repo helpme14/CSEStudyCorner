@@ -3,7 +3,7 @@ import DarkLogo from '../assets/cap-logo-light.png'
 import { GoHome, GoStack, GoRepo, GoBookmark, GoGear, GoInfo, GoSearch, GoPerson, GoChevronRight } from "react-icons/go";
 import { explore } from './modules/exploreCategories';
 import { Link } from 'react-router-dom';
-
+import { useState } from 'react';
 
 interface SidebarProps {
   className?: string; 
@@ -11,6 +11,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ className }) => {
 
+  const [isHovered, setIsHovered ] = useState(false);
 
   return (
     <div className={`relative ${className}`}>
@@ -40,18 +41,28 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             </div>
 
             {/* Hover Fullscreen Container */}
-            <div className="absolute -top-40 left-full hidden group-hover:flex  bg-[#f5f5f5] dark:bg-gray-900 w-[15vw] h-[110vh] py-6 pl-6 pr-0 dark:border-gray-700 z-50">
+            <div className="absolute -top-40 left-full hidden group-hover:flex  bg-[#f5f5f5] dark:bg-gray-900 w-[13vw] h-[110vh] py-6 pl-6 pr-0 dark:border-gray-700 z-50"    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)} >
               <div className="">
                 <h2 className="text-base text-gray-700 font-semibold dark:text-gray-300 ms-2">Explore Categories</h2>
                 <div className=' flex flex-col gap-1 mt-2 w-full'>
                   {explore.map((explore) => (
-                    <div key={explore.id} className='text-sm text-gray-500 font-medium line-clamp-1 hover:bg-gray-200 p-2 rounded-md flex gap-2 justify-between  items-center w-full'>
+                    <div key={explore.id} className='text-sm text-gray-500 font-medium line-clamp-1 hover:bg-gray-200 p-2 rounded-md flex justify-between  items-center w-full group'>
                       <span>{explore.title}</span>
                       <GoChevronRight className='w-10 h-5' />
                     </div>
+                    
                   ))}
+                      <div className={`${isHovered ? "absolute top-0  -right-[17rem] border p-6 bg-[#f5f5f5] w-[15vw] h-[110vh] z-50 " : "hidden"}`}>
+                      <h2 className="text-base text-gray-700 font-semibold dark:text-gray-300 ms-2">Popular Courses</h2>
+                      {explore.map((explore) => (
+                    <div key={explore.id} className='text-sm text-gray-500 font-medium line-clamp-1 hover:bg-gray-200 p-2 rounded-md flex gap-2 justify-between  items-center w-full group'>
+                      <span>{explore.title}</span>
+                    </div>
+                    
+                  ))}
+                    </div>
                 </div>
-
               </div>
             </div>
           </a>
