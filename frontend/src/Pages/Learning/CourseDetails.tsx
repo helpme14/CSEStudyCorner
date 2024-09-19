@@ -1,9 +1,6 @@
 import { useState } from "react";
 import Navbar from "../Navbar";
 import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Typography,
   Button,
   IconButton,
@@ -17,11 +14,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import Iframe from 'react-iframe';
 import { LiaAngleDoubleLeftSolid, LiaAngleDoubleRightSolid } from "react-icons/lia";
 import CloseIcon from '@mui/icons-material/Close';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { IoVideocamOutline } from "react-icons/io5";
-import { GoDot } from "react-icons/go";
-import { Checkbox } from '@mui/material';
 import { FiBookOpen } from 'react-icons/fi'
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 
 const CourseDetails = () => {
   const [showRightGrid, setShowRightGrid] = useState(true);
@@ -34,7 +28,20 @@ const CourseDetails = () => {
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
   };
-
+  const sections = [
+    {
+      title: "Section 1: Introduction to General Information",
+      content: "This is the content of section 1.",
+    },
+    {
+      title: "Section 2: History of the Philippines",
+      content: "This is the content of section 2.",
+    },
+    {
+      title: "Section 3: Geography and Climate",
+      content: "This is the content of section 3.",
+    },
+  ];
   return (
     <div className="flex flex-col w-full h-full text-gray-900 ">
       <Speed />
@@ -166,10 +173,10 @@ const CourseDetails = () => {
                 item
                 xs={12}
                 md={3}
-                className="fixed top-[4.5rem] right-0 h-screen overflow-y-auto bg-white  sm:pr-8 pr-0"
+                className="fixed top-[4.5rem] right-0 w-full h-screen overflow-y-auto bg-white  sm:pr-8 pr-0"
                 >
                 <div className="flex justify-between items-center px-4 py-2 bg-gray-100 border-b rounded-s-md rounded-e-md border-gray-300 mt-3">
-                    <Typography variant="h6" fontWeight="bold">Course Details</Typography>
+                    <Typography fontWeight="bold">Course Details</Typography>
                     <IconButton
                     onClick={toggleRightGrid}
                     className="md:hidden"
@@ -179,161 +186,13 @@ const CourseDetails = () => {
                 </div>
                 <Divider />
                 <ScrollArea className="">
-                    <Accordion className="border border-gray-200 rounded-lg mb-2 mt-2">
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1-content"
-                        id="panel1-header"
-                    >
-                        <div className="flex flex-col">
-                            <Typography variant="body2" fontWeight="bold">
-                                Section 1: Introduction to General Information
-                            </Typography>
-                            <Typography variant="caption" color="textSecondary">
-                                0 / 5 | 25mins
-                            </Typography>
-                        </div>
-                    </AccordionSummary>
-                        <AccordionDetails>
-                            {/* First item with checkbox */}
-                            <div className="flex items-center gap-2 mb-2">
-                                <Checkbox />
-                                <div className="bg-gray-200 p-2 rounded-full">
-                                    <IoVideocamOutline className="text-gray-600" />
-                                </div>
-                                <div className="flex flex-col">
-                                    <span className="text-base font-semibold"> Overview of the Philippines</span>
-                                    <div className="flex items-center">
-                                        <GoDot />
-                                        <span className="text-xs">5mins</span>
-                                    </div>
-                                </div>
-                            </div>
-                            {[
-                                { title: "History of the Philippines", duration: "5mins" },
-                                { title: "Geography and Climate", duration: "4mins" },
-                                { title: "Culture and Traditions", duration: "6mins" },
-                                { title: "Economic Overview", duration: "5mins" },
-                            ].map((item, index) => (
-                                <div key={index} className="flex items-center gap-2 mb-2">
-                                    <Checkbox />
-                                    <div className="bg-gray-200 p-2 rounded-full">
-                                        <IoVideocamOutline className="text-gray-600" />
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <span className="text-base font-semibold">{item.title}</span>
-                                        <div className="flex items-center">
-                                            <GoDot />
-                                            <span className="text-xs">{item.duration}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </AccordionDetails>
-                    </Accordion>
-                    <Accordion className="border border-gray-200 rounded-lg mb-2 mt-2">
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1-content"
-                        id="panel1-header"
-                    >
-                        <div className="flex flex-col">
-                            <Typography variant="body2" fontWeight="bold">
-                                Section 2: Introduction to General Information
-                            </Typography>
-                            <Typography variant="caption" color="textSecondary">
-                                0 / 5 | 25mins
-                            </Typography>
-                        </div>
-                    </AccordionSummary>
-                        <AccordionDetails>
-                            {/* First item with checkbox */}
-                            <div className="flex items-center gap-2 mb-2">
-                                <Checkbox />
-                                <div className="bg-gray-200 p-2 rounded-full">
-                                    <IoVideocamOutline className="text-gray-600" />
-                                </div>
-                                <div className="flex flex-col">
-                                    <span className="text-base font-semibold"> Overview of the Philippines</span>
-                                    <div className="flex items-center">
-                                        <GoDot />
-                                        <span className="text-xs">5mins</span>
-                                    </div>
-                                </div>
-                            </div>
-                            {[
-                                { title: "History of the Philippines", duration: "5mins" },
-                                { title: "Geography and Climate", duration: "4mins" },
-                                { title: "Culture and Traditions", duration: "6mins" },
-                                { title: "Economic Overview", duration: "5mins" },
-                            ].map((item, index) => (
-                                <div key={index} className="flex items-center gap-2 mb-2">
-                                    <Checkbox />
-                                    <div className="bg-gray-200 p-2 rounded-full">
-                                        <IoVideocamOutline className="text-gray-600" />
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <span className="text-base font-semibold">{item.title}</span>
-                                        <div className="flex items-center">
-                                            <GoDot />
-                                            <span className="text-xs">{item.duration}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </AccordionDetails>
-                    </Accordion>
-                    <Accordion className="border border-gray-200 rounded-lg mb-2 mt-2">
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1-content"
-                        id="panel1-header"
-                    >
-                        <div className="flex flex-col">
-                            <Typography variant="body2" fontWeight="bold">
-                                Section 3: Introduction to General Information
-                            </Typography>
-                            <Typography variant="caption" color="textSecondary">
-                                0 / 5 | 25mins
-                            </Typography>
-                        </div>
-                    </AccordionSummary>
-                        <AccordionDetails>
-                            {/* First item with checkbox */}
-                            <div className="flex items-center gap-2 mb-2">
-                                <Checkbox />
-                                <div className="bg-gray-200 p-2 rounded-full">
-                                    <IoVideocamOutline className="text-gray-600" />
-                                </div>
-                                <div className="flex flex-col">
-                                    <span className="text-base font-semibold"> Overview of the Philippines</span>
-                                    <div className="flex items-center">
-                                        <GoDot />
-                                        <span className="text-xs">5mins</span>
-                                    </div>
-                                </div>
-                            </div>
-                            {[
-                                { title: "History of the Philippines", duration: "5mins" },
-                                { title: "Geography and Climate", duration: "4mins" },
-                                { title: "Culture and Traditions", duration: "6mins" },
-                                { title: "Economic Overview", duration: "5mins" },
-                            ].map((item, index) => (
-                                <div key={index} className="flex items-center gap-2 mb-2">
-                                    <Checkbox />
-                                    <div className="bg-gray-200 p-2 rounded-full">
-                                        <IoVideocamOutline className="text-gray-600" />
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <span className="text-base font-semibold">{item.title}</span>
-                                        <div className="flex items-center">
-                                            <GoDot />
-                                            <span className="text-xs">{item.duration}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </AccordionDetails>
+                <Accordion type="single" collapsible className="w-full p-2 flex items-start justify-start text-start flex-col">
+                    {sections.map((section, index) => (
+                        <AccordionItem className="border rounded-md px-4 no-underline w-full mt-2" key={index} value={`section-${index}`}>
+                        <AccordionTrigger className="text-gray-500">{section.title}</AccordionTrigger>
+                        <AccordionContent>{section.content}</AccordionContent>
+                        </AccordionItem>
+                    ))}
                     </Accordion>
                 </ScrollArea>
                 </Grid>
