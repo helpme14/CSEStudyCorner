@@ -13,5 +13,6 @@ urlpatterns = [
     path('verify-otp/', views.verify_otp, name='verify-otp'),
     path('user/update/', views.UserProfileUpdateView.as_view(), name='user-update'),
     path('user/', views.UserProfileView.as_view(), name='user-profile'),
+    path('user/profile-picture/', views.UserProfileImageUpdateView.as_view(), name='profile_picture_update'),
 
 ]

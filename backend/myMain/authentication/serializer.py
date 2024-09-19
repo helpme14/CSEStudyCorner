@@ -33,7 +33,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['username'] = user.username
         token['email'] = user.email
         token['bio'] = user.profile.bio
-        token['image'] = str(user.profile.image)
+        token['profile_image'] = str(user.profile.profile_image)
         # token['verified'] = user.profile.verified
         
         return token
@@ -44,9 +44,10 @@ User = get_user_model()
 class ProfileSerializer(serializers.ModelSerializer):
     age_bracket = serializers.CharField( required=False)
     bio = serializers.CharField(allow_blank=True, required=False)
+    profile_image = serializers.URLField(allow_blank=True, required=False)  
     class Meta:
         model = Profile
-        fields = [ 'age_bracket','bio']
+        fields = [ 'age_bracket','bio','profile_image']
 
 class RegisterSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True, required=True)

@@ -30,7 +30,8 @@ const PublicProfile = () => {
     last_name: '',
     profile: {
       age_bracket: '',
-      bio: ''
+      bio: '',
+      
     }
   });
   // Using the loading state from the useFetchWithLoading hook
@@ -95,7 +96,7 @@ const PublicProfile = () => {
       console.error('Error updating profile', error);
     }
   };
-  // console.log(user)
+  console.log(user)
   return (
     <div className="flex w-full h-full sm:h-screen">
       <Sidebar />

@@ -20,6 +20,7 @@ interface AuthContextType {
   logoutUser: () => void;
   fetchProfileData: () => Promise<void>;
   updateProfile: (updatedProfile: Partial<CustomJwtPayload>) => Promise<void>;
+  updateProfilePicture: (imageUrl: string) => Promise<void>;
   registerUser: (
     email: string,
     regFname: string,
@@ -36,6 +37,7 @@ interface AuthContextType {
 interface Profile {
   age_bracket?: string;
   bio?: string;
+  profile_image?:string;
   // Add other profile fields to update if meron
 }
 interface AuthTokens {
@@ -248,7 +250,6 @@ const getExpiryTime = (token: string) => {
   return decodedToken.exp ? decodedToken.exp * 1000 : null;
 };
 
-// Efficiently handle token refreshing based on access token expiry
 useEffect(() => {
   if (authTokens?.access) {
     const accessExpiryTime = getExpiryTime(authTokens.access);
@@ -257,11 +258,10 @@ useEffect(() => {
     const currentTime = Date.now();
     const timeUntilExpiry = accessExpiryTime - currentTime;
 
-    // Set refresh interval to trigger before the token expires ( sample ay : 1 minute before)
     const refreshBeforeExpiry = Math.max(timeUntilExpiry - 60 * 1000, 0);
 
     const interval = setTimeout(refreshToken, refreshBeforeExpiry);
-
+    
     return () => clearTimeout(interval);
   }
 }, [authTokens?.access, refreshToken]);
@@ -322,8 +322,10 @@ useEffect(() => {
         },
       });
 
+
       if (response.ok) {
         const updatedUser = await response.json();
+        console.log('Fetched profile data:', updatedUser);
         setUser(updatedUser); // Update the context or state with new user profile data
       } else {
         console.error("Failed to fetch user profile");
@@ -333,13 +335,12 @@ useEffect(() => {
     }
   }, [authTokens]);
 
-  useEffect(() => {
-    if (authTokens) {
-      fetchProfileData(); // Fetch user profile when tokens are available
-    }
-  }, [authTokens, fetchProfileData]);
+  // useEffect(() => {
+  //   if (authTokens) {
+  //     fetchProfileData(); // Fetch user profile when tokens are available
+  //   }
+  // }, [authTokens, fetchProfileData]);
 
-  //UPDATE
   const updateProfile = async (updatedProfile: Partial<CustomJwtPayload>) => {
     if (!authTokens) {
       console.error("No authentication tokens available.");
@@ -360,6 +361,7 @@ useEffect(() => {
       profile: {
         age_bracket: updatedProfile.profile?.age_bracket,
         bio: updatedProfile.profile?.bio,
+      
       },
     };
   
@@ -376,6 +378,8 @@ useEffect(() => {
       });
   
       if (response.ok) {
+        await refreshToken();
+
         const updatedUser = await response.json();
         setUser(prevUser => ({
           ...prevUser,
@@ -398,6 +402,53 @@ useEffect(() => {
       showAlert("Update Failed", "error", "An unexpected error occurred. Please try again.");
     }
   };
+
+  const updateProfilePicture = async (imageUrl: string): Promise<void> => {
+    if (!authTokens) return;
+
+    const payload = {
+        profile: {
+            profile_image: imageUrl,
+        },
+    };
+
+    console.log('Payload being sent:', payload);
+    const apiUrl = import.meta.env.VITE_UPDATE_PROFILE_API;
+    if (!apiUrl) {
+      console.error("API URL for updating profile is not defined.");
+      return;
+    }
+
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'PUT',
+            headers: {
+                Authorization: `Bearer ${authTokens.access}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        });
+
+     
+        const responseBody = await response.text();
+        
+
+        if (response.ok) {
+            const updatedUser = JSON.parse(responseBody);
+            setUser(updatedUser); // Update the user profile with the new image URL
+            // fetchProfileData();
+        } else {
+            console.error('Error updating profile picture');
+            return Promise.reject('Failed to update profile picture');
+        }
+    } catch (error) {
+        console.error('Error updating profile picture:', error);
+        return Promise.reject(error);
+    }
+};
+  
+  
   
 
   const contextData: AuthContextType = {
@@ -410,6 +461,7 @@ useEffect(() => {
     refreshToken,
     fetchProfileData,
     updateProfile,
+    updateProfilePicture 
   };
 
   return (

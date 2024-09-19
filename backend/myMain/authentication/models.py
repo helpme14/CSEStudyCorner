@@ -41,7 +41,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=300)
     bio = models.CharField(max_length=300, blank=True,null=True,default="")
-    image = models.ImageField(default="default.jpg", upload_to="user_images", blank=True)
+    profile_image = models.URLField(max_length=500, blank=True, null=True)
     # verified = models.BooleanField(default=False)
     age_bracket = models.CharField(max_length=8, choices=AGE_BRACKET_CHOICES, default='U18')
 

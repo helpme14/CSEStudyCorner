@@ -4,14 +4,15 @@ export const useFetchWithLoading = (fetchFunction: () => Promise<void>, minDurat
   const [loading, setLoading] = useState(true);
   const fetchStartTime = useRef<number | null>(null);
 
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        fetchStartTime.current = Date.now(); // Set fetch start time
-        await fetchFunction(); // Call the passed fetch function
-
+        fetchStartTime.current = Date.now(); 
+        await fetchFunction(); 
+  
         const fetchDuration = Date.now() - (fetchStartTime.current || Date.now());
-        // Wait for minDuration if necessary
         if (fetchDuration < minDuration) {
           setTimeout(() => setLoading(false), minDuration - fetchDuration);
         } else {
@@ -22,16 +23,10 @@ export const useFetchWithLoading = (fetchFunction: () => Promise<void>, minDurat
         setLoading(false);
       }
     };
-
-    if (import.meta.env.VITE_NODE_ENV !== 'prod') {
-      fetchData();
-    } else {
-      // Simulate loading delay in development
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000); // 1 second delay for demo
-    }
+    
+    fetchData(); // Always fetch the data
   }, [fetchFunction, minDuration]);
+  
 
   return loading;
 };

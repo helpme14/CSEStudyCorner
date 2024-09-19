@@ -14,7 +14,7 @@ import logging
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from authentication.serializer import UserProfileUpdateSerializer,UserProfileSerializer
-
+from rest_framework.views import APIView
 
 logger = logging.getLogger(__name__)
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -114,3 +114,34 @@ class UserProfileUpdateView(generics.UpdateAPIView):
     def get_object(self):
         # Return the currently authenticated user
         return self.request.user
+# class UserProfileImageUpdateView(APIView):
+#     permission_classes = [IsAuthenticated]
+
+#     def put(self, request):
+#         profile = request.user.profile
+#         profile_image_url = request.data.get('profile_image')
+        
+#         if profile_image_url:
+#             profile.profile_image = profile_image_url
+#             profile.save()
+#             return Response({'image': profile.profile_image}, status=status.HTTP_200_OK)
+        
+#         return Response({'error': 'Profile image URL is required'}, status=status.HTTP_400_BAD_REQUEST)
+class UserProfileImageUpdateView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request):
+        profile = request.user.profile
+        profile_data = request.data.get('profile', {})
+        profile_image_url = profile_data.get('profile_image')
+
+        if profile_image_url:
+            profile.profile_image = profile_image_url
+            profile.save()
+            return Response({
+                'profile': {
+                    'profile_image': profile.profile_image
+                }
+            }, status=status.HTTP_200_OK)
+
+        return Response({'error': 'Profile image URL is required'}, status=status.HTTP_400_BAD_REQUEST)
