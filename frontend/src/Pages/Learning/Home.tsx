@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/carousel";
 import Footer from "../Footer.tsx";
 import { Link } from "react-router-dom";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -25,6 +25,8 @@ import 'aos/dist/aos.css';
 
 
 const Home = () => {
+    const [isSidebarFocused, setIsSidebarFocused] = useState(false);
+
     useEffect(() => {
         AOS.init({
           duration: 1000,
@@ -38,8 +40,8 @@ const Home = () => {
       
     return (
         <div className="w-full flex h-full text-foreground">
-            <Sidebar  />
-            <div className="flex flex-col flex-grow lg:w-[calc(100%-4.5rem)] w-full md:w-full -z-10 ">
+            <Sidebar  setIsSidebarFocused={setIsSidebarFocused} />
+            <div className={`flex flex-col flex-grow lg:w-[calc(100%-4.5rem)] w-full md:w-full ${isSidebarFocused ? 'z-0' : 'z-10'}`}>
                 <Navbar />
                 <section className="py-0 -z-10">
                     <div className="container sm:py-8 py-0">

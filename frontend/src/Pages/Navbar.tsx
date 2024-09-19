@@ -73,7 +73,7 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
   };
   
   return (
-    <nav className={`sticky top-0 z-10 block w-full h-15 ${className} `}>
+    <nav className={`sticky top-0 block z-20 w-full h-15 ${className} `}>
       <div className=" px-8 py-2 w-full  bg-white shadow dark:bg-gray-800">
         <div className="flex items-center justify-between w-full">
           <a href="#">
@@ -105,7 +105,7 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
 
             {showDiv && (
               <div
-                className={`absolute top-7 p-6 bg-white shadow-lg text-gray-700 w-[49.7vw] rounded-b-xl left-1/2 -translate-x-1/2 flex flex-col gap-2 transition-opacity duration-300 ease-in-out dark:bg-gray-900 dark:text-gray-300 ${isFocused ? 'opacity-100 visible z-40' : 'opacity-0 invisible'
+                className={`absolute top-7 p-6 z-40  bg-white shadow-lg text-gray-700 w-[49.7vw] rounded-b-xl left-1/2 -translate-x-1/2 flex flex-col gap-2 transition-opacity duration-300 ease-in-out dark:bg-gray-900 dark:text-gray-300 ${isFocused ? 'opacity-100 visible z-40' : 'opacity-0 invisible'
                   }`}
               >
                 <div className='flex flex-col font-sans mt-5 items-between justify-center gap-5'>

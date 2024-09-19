@@ -4,21 +4,32 @@ import { GoHome, GoStack, GoRepo, GoBookmark, GoGear, GoInfo, GoSearch, GoPerson
 import { explore } from './modules/exploreCategories';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+// import { Skeleton } from "@/components/ui/skeleton"
 
 interface SidebarProps {
-  className?: string; 
+  className?: string;
+  setIsSidebarFocused: (focused: boolean) => void; 
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ className }) => {
+const Sidebar: React.FC<SidebarProps> = ({ className, setIsSidebarFocused}) => {
 
   const [isHovered, setIsHovered ] = useState(false);
 
   return (
-    <div className={`relative ${className}`}>
-      
+    <div 
+    className={`relative ${className} ${isHovered ? "z-50" : "z-10"}`}
+    onMouseEnter={() => {
+      setIsHovered(true);
+      setIsSidebarFocused(true);
+    }}
+    onMouseLeave={() => {
+      setIsHovered(false);
+      setIsSidebarFocused(false);
+    }}
+  >
       {/* Sidebar */}
       <aside
-        className={` sm:hidden md:hidden lg:hidden xl:flex top-0 left-0  hidden flex-col items-center w-[4.5rem] h-full py-3 overflow-y-auto bg-[#f5f5f5] border-r rtl:border-l rtl:border-r-0 dark:bg-gray-800 dark:border-gray-700`}
+        className={`sm:hidden md:hidden lg:hidden xl:flex top-0 left-0  hidden flex-col items-center w-[4.5rem] h-full py-3 overflow-y-auto bg-[#f5f5f5] border-r rtl:border-l rtl:border-r-0 dark:bg-gray-800 dark:border-gray-700`}
       >
         <nav className="flex flex-col flex-1 space-y-3 items-center fixed">
           <a href="#">
@@ -34,17 +45,24 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             </div>
           </Link>
           
-          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300 relative z-50 group">
+          <a href="#" className="p-1.5 text-gray-700 focus:outline-none transition-colors duration-200 rounded-lg dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-300 relative group">
             <div className='flex flex-col gap-1 items-center'>
               <GoStack className='w-5 h-5' />
               <span className='font-medium text-[0.8rem]'>Explore</span>
             </div>
 
             {/* Hover Fullscreen Container */}
-            <div className="absolute -top-40 left-full hidden group-hover:flex  bg-[#f5f5f5] dark:bg-gray-900 w-[13vw] h-[110vh] py-6 pl-6 pr-0 dark:border-gray-700 z-50"    onMouseEnter={() => setIsHovered(true)}
+            <div className="absolute -top-40 left-full hidden group-hover:flex  bg-[#f5f5f5] dark:bg-gray-900 w-[13vw] h-[110vh] py-6 pl-6 pr-0 dark:border-gray-700"    onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)} >
               <div className="">
                 <h2 className="text-base text-gray-700 font-semibold dark:text-gray-300 ms-2">Explore Categories</h2>
+                {/* <div className="flex items-center space-x-4">
+                  <Skeleton className="h-12 w-12 rounded-full bg-black" />
+                  <div className="space-y-2 ">
+                    <Skeleton className="h-4 w-[250px] bg-black"  />
+                    <Skeleton className="h-4 w-[200px] bg-black" />
+                  </div>
+                </div> */}
                 <div className=' flex flex-col gap-1 mt-2 w-full'>
                   {explore.map((explore) => (
                     <div key={explore.id} className='text-sm text-gray-500 font-medium line-clamp-1 hover:bg-gray-200 p-2 rounded-md flex justify-between  items-center w-full group'>
