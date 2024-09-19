@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 interface SidebarProps {
   className?: string;
-  setIsSidebarFocused: (focused: boolean) => void; 
+  setIsSidebarFocused?: (focused: boolean) => void; 
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ className, setIsSidebarFocused}) => {
@@ -20,11 +20,11 @@ const Sidebar: React.FC<SidebarProps> = ({ className, setIsSidebarFocused}) => {
     className={`relative ${className} ${isHovered ? "z-50" : "z-10"}`}
     onMouseEnter={() => {
       setIsHovered(true);
-      setIsSidebarFocused(true);
+      setIsSidebarFocused?.(true);
     }}
     onMouseLeave={() => {
       setIsHovered(false);
-      setIsSidebarFocused(false);
+      setIsSidebarFocused?.(false);
     }}
   >
       {/* Sidebar */}
