@@ -51,7 +51,7 @@ const App = () => {
           position: 'fixed',
           right: '1rem', // Adjusted for responsiveness
           bottom: '1rem', // Adjusted for responsiveness
-          zIndex: 1000
+          zIndex: 40
         }}
         buttonClassName="bg-blue-500 opacity-75 text-white"
         showIcon={<IoMdMenu />} hideIcon="pi pi-times"

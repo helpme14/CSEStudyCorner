@@ -21,10 +21,17 @@ module.exports = {
   		}
   	},
   	extend: {
+		animation: {
+			fadeInOut: 'fadeInOut 2s ease-in-out infinite',
+		  },
   		fontFamily: {
-  			sans: ['Open Sans"', 'sans-serif']
+  			sans: ['Open Sans', 'sans-serif']
   		},
   		keyframes: {
+			fadeInOutArrow: {
+				'0%, 100%': { opacity: '0' },
+				'50%': { opacity: '1' },
+			},
   			'accordion-down': {
   				from: {
   					height: '0'
@@ -56,7 +63,7 @@ module.exports = {
   				to: {
   					height: '0'
   				}
-  			}
+  			},
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
