@@ -16,7 +16,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import Iframe from 'react-iframe';
 import { LiaAngleDoubleLeftSolid, LiaAngleDoubleRightSolid } from "react-icons/lia";
 import CloseIcon from '@mui/icons-material/Close';
-import { FiCheckCircle } from 'react-icons/fi'
 import { IoVideocamOutline } from "react-icons/io5";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Checkbox } from '@mui/material';
@@ -168,9 +167,10 @@ const CourseDetails = () => {
                             "Discover the economic landscape and opportunities in the country"
                         ].map((text, index) => (
                             <div key={index} className="flex items-start space-x-3">
-                            <FiCheckCircle className="h-6 w-6 text-blue-400" />
                             <Typography variant="body1" className="text-gray-700 leading-relaxed">
-                                {text}
+                                <ul className="list-disc pl-5 space-y-2 text-gray-700">
+                                    <li>{text}</li>
+                                </ul>
                             </Typography>
                             </div>
                         ))}
