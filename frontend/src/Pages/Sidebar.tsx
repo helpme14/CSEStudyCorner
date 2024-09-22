@@ -17,7 +17,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className, setIsSidebarFocused}) => {
 
   return (
     <div 
-    className={`relative ${className} ${isHovered ? "z-50" : "z-10"}`}
+    className={`relative ${className} ${isHovered ? "z-50" : "sm:z-10 z-50 xl:z-10 md:z-50"}`}
     onMouseEnter={() => {
       setIsHovered(true);
       setIsSidebarFocused?.(true);
@@ -52,7 +52,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className, setIsSidebarFocused}) => {
             </div>
 
             {/* Hover Fullscreen Container */}
-            <div className="absolute -top-40 left-full hidden group-hover:flex  bg-[#f5f5f5] dark:bg-gray-900 w-[13vw] h-[110vh] py-6 pl-6 pr-0 dark:border-gray-700"    onMouseEnter={() => setIsHovered(true)}
+            <div className="absolute -top-40 left-full hidden group-hover:flex  bg-[#f5f5f5] dark:bg-gray-900 w-[14vw] h-[110vh] py-6 pl-6 pr-0 dark:border-gray-700"    onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)} >
               <div className="">
                 <h2 className="text-base text-gray-700 font-semibold dark:text-gray-300 ms-2">Explore Categories</h2>
@@ -71,7 +71,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className, setIsSidebarFocused}) => {
                     </div>
                     
                   ))}
-                      <div className={`${isHovered ? "absolute top-0  -right-[17rem] border p-6 bg-[#f5f5f5] w-[15vw] h-[110vh] z-50 " : "hidden"}`}>
+                      <div className={`${isHovered ? "absolute top-0  -right-[17rem] border dark:border-gray-800 p-6  dark:bg-gray-900 bg-[#f5f5f5] w-[15vw] h-[110vh] z-50 " : "hidden"}`}>
                       <h2 className="text-base text-gray-700 font-semibold dark:text-gray-300 ms-2">Popular Courses</h2>
                       {explore.map((explore) => (
                     <div key={explore.id} className='text-sm text-gray-500 font-medium line-clamp-1 hover:bg-gray-200 p-2 rounded-md flex gap-2 justify-between  items-center w-full group'>

@@ -15,6 +15,7 @@ import ForgotPassword from "./Pages/RegisterLogin/ForgotPassword";
 import EmailTempalte from "./Pages/RegisterLogin/EmailTemplate";
 import ProfilePicture from "./Pages/Settings/ProfilePicture";
 import CourseDetails from "./Pages/Learning/CourseDetails";
+import ForgotPasswordEmail from "./Pages/RegisterLogin/ForgotPasswordEmail";
 
 
 
@@ -40,6 +41,7 @@ function App() {
             <Route path="/account-settings" element={<AccountSettings />} />
             <Route path="/close-account" element={<CloseAccount />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/forgot-password-email" element={<ForgotPasswordEmail />} />
             <Route path="/email-template" element={<EmailTempalte />} />
             <Route path="/profile-picture" element={<ProfilePicture />} />
             <Route path="/course-details" element={<CourseDetails />} />

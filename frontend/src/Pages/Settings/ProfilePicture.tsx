@@ -29,7 +29,7 @@ const ProfilePicture = () => {
   };
 
   return (
-    <div className="w-full flex h-screen">
+    <div className="w-full flex sm:h-screen h-full">
       <Sidebar />
       <div className="flex flex-col w-full">
         <Navbar />
