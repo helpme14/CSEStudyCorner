@@ -14,17 +14,20 @@ import ForgotPassword from "./Pages/RegisterLogin/ForgotPassword";
 import EmailTemplate from "./Pages/RegisterLogin/EmailTemplate";
 import ProfilePicture from "./Pages/Settings/ProfilePicture";
 import NotFound from "./Pages/NotFound";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthProvider";
 import PrivateRoute from "../components/routes/PrivateRoute";
-
+import Navbar from './Pages/Navbar'
 import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
+   
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-      <Toaster />
+
       <Router>
-        <AuthProvider>
+      <AuthProvider>
+      
+ 
           <div className="mx-auto font-sans dark:bg-gray-900 dark:text-white">
             <Routes>
               {/* Public Routes */}
@@ -89,9 +92,10 @@ function App() {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
-        </AuthProvider>
+          </AuthProvider>
       </Router>
     </ThemeProvider>
+   
   );
 }
 

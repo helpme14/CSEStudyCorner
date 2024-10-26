@@ -1,0 +1,47 @@
+<section style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; color: #333333; font-family: Arial, sans-serif; box-sizing: border-box; border: 1px solid #ddd;">
+    <header style="text-align: center; margin-bottom: 20px;">
+        <a href="#">
+            <img src="{{logo_url}}" alt="Study Corner Logo" style="width: auto; height: 40px;" />
+        </a>
+    </header>
+    <main>
+        <h2 style="font-size: 20px; font-weight: bold; color: #333333; margin: 0;">
+            Hi {{username}},
+        </h2>
+
+        <p style="margin-top: 10px; font-size: 16px; color: #666666;">
+            This is your verification code:
+        </p>
+
+        <div style="display: flex; justify-content: center; margin-top: 20px;">
+            {% for digit in otp_digits %}
+            <p style="width: 40px; height: 40px; font-size: 24px; font-weight: bold; color: #007bff; border: 2px solid #007bff; border-radius: 5px; display: flex; align-items: center; justify-content: center; margin: 0 5px;">
+                {{ digit }}
+            </p>
+            {% endfor %}
+        </div>
+
+        <p style="margin-top: 20px; font-size: 16px; color: #666666;">
+            This code will be valid for the next 5 minutes. If it doesn't work, use this verification link:
+        </p>
+
+        <a href="{{verification_link}}" style="display: block; width: 100%; max-width: 200px; padding: 10px 20px; margin-top: 20px; font-size: 16px; font-weight: bold; color: #ffffff; background-color: #007bff; text-align: center; text-decoration: none; border-radius: 5px;">
+            Verify Email
+        </a>
+
+        <p style="margin-top: 20px; font-size: 16px; color: #666666;">
+            Thanks, <br />
+            Study Corner Team
+        </p>
+    </main>
+
+    <footer style="margin-top: 30px; text-align: center; font-size: 14px; color: #666666;">
+        <p>
+            This email was sent to {{email}}. If you don't want to receive these emails, <a href="#" style="color: #007bff; text-decoration: none;">unsubscribe</a> or <a href="#" style="color: #007bff; text-decoration: none;">manage your preferences</a>.
+        </p>
+
+        <p style="margin-top: 10px;">
+            &copy; {{year}} Study Corner. All Rights Reserved.
+        </p>
+    </footer>
+</section>

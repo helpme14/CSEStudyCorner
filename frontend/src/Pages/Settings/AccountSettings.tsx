@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect ,useCallback} from 'react';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
 import Box from '@mui/material/Box';
@@ -8,17 +8,22 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import SideSettings from './SideSettings';
-import AuthContext from '../../context/AuthContext';
+
+import AuthContext from '../../context/AuthProvider';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useFetchWithLoading } from '../../hooks/useFetchWithLoading';
+import { fetchProfileData } from '../../context/actions/fetchProfileData'; // Import your fetch function
+import {showAlert} from '../../context/utils/showAlert';
+import { CustomJwtPayload } from '../../context/types/AuthTypes';
 
+// import {updateProfile} from '../../context/actions/updateProfile'
 const AccountSettings = () => {
   const authContext = useContext(AuthContext);
   if (!authContext) {
     throw new Error('AuthContext must be used within an AuthProvider');
   }
 
-  const { user, fetchProfileData, updateProfile, refreshToken } = authContext;
+  const { user, refreshToken, authTokens , updateProfile} = authContext;
 
   // State to store form data
   const [formData, setFormData] = useState({
@@ -28,22 +33,26 @@ const AccountSettings = () => {
     currentPassword: '',
     newPassword: ''
   });
+  // Wrap fetchProfileData in useCallback to prevent unnecessary re-fetching
+  const fetchProfileDataCallback = useCallback(() => fetchProfileData(authTokens), [authTokens]);
+  const { loading,  data } = useFetchWithLoading(fetchProfileDataCallback);
 
 
-  const loading = useFetchWithLoading(fetchProfileData);
+  // const loading = useFetchWithLoading(fetchProfileDataCallback);
+  
   useEffect(() => {
     // Update form data only when the `user` data is available and loading is false
-    if (user && !loading) {
-      console.log('User data:', JSON.stringify(user)); // Check if user data is correct
+    if (data && !loading) {
+      console.log('User data:', JSON.stringify(data)); // Check if user data is correct
       setFormData({
-        full_name: user.full_name || '',
-        first_name: user.first_name || '',
-        last_name: user.last_name || '',
+        full_name: data.full_name || '',
+        first_name: data.first_name || '',
+        last_name: data.last_name || '',
         currentPassword: '',
         newPassword: ''
       });
     }
-  }, [user, loading]); // Ensure to include `user` as a dependency
+  }, [data, loading]); // Ensure to include `user` as a dependency
 
   
   const handleChange = (
@@ -56,30 +65,47 @@ const AccountSettings = () => {
     }));
   };
 
-  // Save changes handler (to send updated data to the server)
   const handleSaveChanges = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const payload = {
+  
+    // Ensure current password is provided when updating profile details
+    if (!formData.currentPassword) {
+      console.error('Current password is required to update profile.');
+      showAlert("Update Failed", "error", "Current password is required to update your profile.");
+      return;
+    }
+  
+    
+    const updatedProfile: Partial<CustomJwtPayload> = {
       first_name: formData.first_name,
       last_name: formData.last_name,
-      ...(formData.currentPassword && { currentPassword: formData.currentPassword }),
-      ...(formData.newPassword && { newPassword: formData.newPassword })
+      bio: formData.bio, // optional
+      // Include any other fields that may be updated
     };
-    
-    console.log('Updating profile with payload:', payload); // Log payload
+  
+    console.log('Updating profile with payload:', updatedProfile);
   
     try {
-      await updateProfile(payload);
+      // Call the updateProfile function from AuthProvider
+      await updateProfile(
+        updatedProfile, 
+        formData.currentPassword, 
+        formData.newPassword
+      );
+  
       console.log('Profile updated successfully');
-      refreshToken(); // Refresh the token after successful update
+  
+      // Reset password fields after update
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        currentPassword: '',
+        newPassword: ''
+      }));
     } catch (error) {
       console.error('Error updating profile', error);
     }
   };
   
-
- 
-
   
   return (
     <div className="flex w-full h-screen">

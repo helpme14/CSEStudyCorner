@@ -14,6 +14,7 @@ import swal from "sweetalert2";
 // Define the shape of the AuthContext
 interface AuthContextType {
   user: CustomJwtPayload | null;
+  setUser: Dispatch<SetStateAction<CustomJwtPayload | null>>;
   authTokens: AuthTokens | null;
   setAuthTokens: Dispatch<SetStateAction<AuthTokens | null>>;
   loginUser: (email: string, password: string) => Promise<void>;
@@ -21,6 +22,7 @@ interface AuthContextType {
   fetchProfileData: () => Promise<void>;
   updateProfile: (updatedProfile: Partial<CustomJwtPayload>) => Promise<void>;
   updateProfilePicture: (imageUrl: string) => Promise<void>;
+  changedPasswordAuthenticatedUser:(current_password: string, new_password: string)=> Promise<void>;
   registerUser: (
     email: string,
     regFname: string,
@@ -46,7 +48,7 @@ interface AuthTokens {
 }
 
 interface CustomJwtPayload extends JwtPayload {
-  id: number;
+  id?: number;
   username: string;
   email: string;
   bio: string;
@@ -73,6 +75,20 @@ const showAlert = (title: string, icon: "success" | "error", text?: string) => {
     showConfirmButton: false,
   });
 };
+
+interface ProfileUpdatePayload {
+  username?: string;
+  email?: string;
+  first_name?: string;
+  last_name?: string;
+  profile?: {
+    age_bracket?: string;
+    bio?: string;
+  };
+  current_password?: string;
+  new_password?: string;
+}
+
 // AuthProvider component
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [authTokens, setAuthTokens] = useState<AuthTokens | null>(() =>
@@ -276,7 +292,7 @@ useEffect(() => {
 
 // User inactivity handler (Auto-logout)
 useEffect(() => {
-  const excludedPaths = ["/", "/register"];
+  const excludedPaths = ["/", "/registration"];
   let logoutTimer: NodeJS.Timeout;
 
   const handleActivity = () => {
@@ -335,13 +351,12 @@ useEffect(() => {
     }
   }, [authTokens]);
 
-  // useEffect(() => {
-  //   if (authTokens) {
-  //     fetchProfileData(); // Fetch user profile when tokens are available
-  //   }
-  // }, [authTokens, fetchProfileData]);
 
-  const updateProfile = async (updatedProfile: Partial<CustomJwtPayload>) => {
+  const updateProfile = async (
+    updatedProfile: Partial<CustomJwtPayload>, 
+    currentPassword?: string, 
+    newPassword?: string
+  ) => {
     if (!authTokens) {
       console.error("No authentication tokens available.");
       return;
@@ -353,7 +368,8 @@ useEffect(() => {
       return;
     }
   
-    const payload = {
+    // Construct payload
+    const payload: ProfileUpdatePayload = {
       username: updatedProfile.username,
       email: updatedProfile.email,
       first_name: updatedProfile.first_name,
@@ -361,9 +377,14 @@ useEffect(() => {
       profile: {
         age_bracket: updatedProfile.profile?.age_bracket,
         bio: updatedProfile.profile?.bio,
-      
-      },
+      }
     };
+  
+    // Only add password fields if both current and new passwords are provided
+    if (currentPassword && newPassword) {
+      payload.current_password = currentPassword;
+      payload.new_password = newPassword;
+    }
   
     console.log("Payload being sent:", payload);
   
@@ -378,23 +399,37 @@ useEffect(() => {
       });
   
       if (response.ok) {
-        await refreshToken();
-
+        await refreshToken(); // Refresh token on success
+  
         const updatedUser = await response.json();
         setUser(prevUser => ({
           ...prevUser,
-          ...updatedUser,
+          ...updatedUser, // Update user context with new data
         }));
         showAlert("Profile Updated", "success");
       } else {
         let errorMessage = 'Failed to update profile';
+  
         try {
           const errorData = await response.json();
-          errorMessage = errorData.message || 'Unknown error occurred';
+  
+          // If password is being updated and the server returns an error related to it
+          if (currentPassword && newPassword) {
+            if (errorData?.non_field_errors) {
+              errorMessage = errorData.non_field_errors[0];
+            } else if (errorData?.current_password) {
+              errorMessage = errorData.current_password[0];
+            } else if (errorData?.new_password) {
+              errorMessage = errorData.new_password[0];
+            }
+          }
+  
+          errorMessage = errorData.message || errorMessage;
         } catch {
           errorMessage = 'Failed to parse error response';
         }
-        console.error(errorMessage);
+  
+        console.error('Update error:', errorMessage);
         showAlert("Update Failed", "error", errorMessage);
       }
     } catch (error) {
@@ -402,6 +437,9 @@ useEffect(() => {
       showAlert("Update Failed", "error", "An unexpected error occurred. Please try again.");
     }
   };
+  
+
+  
 
   const updateProfilePicture = async (imageUrl: string): Promise<void> => {
     if (!authTokens) return;
@@ -429,8 +467,6 @@ useEffect(() => {
             },
             body: JSON.stringify(payload),
         });
-
-     
         const responseBody = await response.text();
         
 
@@ -448,7 +484,54 @@ useEffect(() => {
     }
 };
   
-  
+
+const changedPasswordAuthenticatedUser = async (
+  current_password: string,
+  new_password: string,
+) => {
+  const apiUrl = import.meta.env.VITE_USER_AUTHE_CHANGE_PASSWORD;
+
+  if (!authTokens) {
+    console.error("User is not authenticated.");
+    return;
+  }
+
+  const payload = {
+   current_password,
+   new_password};
+
+  if (!apiUrl) {
+    console.error("API URL is not defined");
+    return;
+  }
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${authTokens.access}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (response.ok) {
+      showAlert("Password Changed Successfully", "success");
+    } else if (response.status === 400) {
+      const errorData = await response.json();
+      console.log("Validation errors:", errorData);
+      showAlert(errorData?.message || "Password change failed", "error");
+    } else if (response.status === 401) {
+      showAlert("Unauthorized. Please log in again.", "error");
+      logoutUser(); // Force logout if the token is expired
+    } else {
+      showAlert("An unexpected error occurred", "error");
+    }
+  } catch (error) {
+    console.error("Password change failed:", error);
+    showAlert("An error occurred while changing password.", "error");
+  }
+};
   
 
   const contextData: AuthContextType = {
@@ -457,11 +540,14 @@ useEffect(() => {
     setAuthTokens,
     loginUser,
     logoutUser,
+    setUser,
     registerUser,
     refreshToken,
     fetchProfileData,
     updateProfile,
-    updateProfilePicture 
+    updateProfilePicture ,
+    changedPasswordAuthenticatedUser
+
   };
 
   return (

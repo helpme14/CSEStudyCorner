@@ -1,15 +1,15 @@
-import React, {useContext, useState} from 'react'
-import Secondlogo from '../assets/Light-corner.png'
-import darkSecondlogo from '../assets/Dark-corner.png'
-import {FaSearch} from 'react-icons/fa'
-import {GoXCircle, GoSearch} from 'react-icons/go'
-import {Link} from 'react-router-dom'
-import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
-import Chip from '@mui/material/Chip'
-import Stack from '@mui/material/Stack'
-import {searches as searchData} from './modules/searchData'
-import {Card} from '@/components/ui/card'
-import {categories, Categories, courses, Course} from './modules/courseData'
+import React, {useContext, useState,useEffect,useCallback} from 'react';
+import Secondlogo from '../assets/Light-corner.png';
+import darkSecondlogo from '../assets/Dark-corner.png';
+import {FaSearch} from 'react-icons/fa';
+import {GoXCircle, GoSearch} from 'react-icons/go';
+import {Link} from 'react-router-dom';
+import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import {searches as searchData} from './modules/searchData';
+import {Card} from '@/components/ui/card';
+import {categories, Categories, courses, Course} from './modules/courseData';
 import {
   Cloud,
   CreditCard,
@@ -25,7 +25,7 @@ import {
   User,
   UserPlus,
   Users
-} from 'lucide-react'
+} from 'lucide-react';
 
 import {
   DropdownMenu,
@@ -40,42 +40,64 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import AuthContext from '../context/AuthContext'
+} from '@/components/ui/dropdown-menu';
+import AuthContext from '../context/AuthProvider';
 interface NavbarProps {
-  className?: string
+  className?: string;
 }
+import { fetchProfileData } from '../context/actions/fetchProfileData'; 
 
 const Navbar: React.FC<NavbarProps> = ({className}) => {
-  const [isFocused, setIsFocused] = useState(false)
-  const authContext = useContext(AuthContext)
-  const [showDiv, setShowDiv] = useState(false)
-  const [searches, setSearches] = useState(searchData)
-
+  const [isFocused, setIsFocused] = useState(false);
+  const authContext = useContext(AuthContext);
+  const [showDiv, setShowDiv] = useState(false);
+  const [searches, setSearches] = useState(searchData);
+  // const [profileImage, setProfileImage] = useState<string | null>(null);
   if (!authContext) {
-    throw new Error('AuthContext must be used within an AuthProvider')
+    throw new Error('AuthContext must be used within an AuthProvider');
   }
 
-  const {logoutUser} = authContext
+  const {logoutUser,user,authTokens,fetchProfileData } = authContext;
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [initials, setInitials] = useState<string>('');
 
+  
+
+
+  
   const handleFocus = () => {
-    setIsFocused(true)
+    setIsFocused(true);
     setTimeout(() => {
-      setShowDiv(true)
-    }, 300)
-  }
+      setShowDiv(true);
+    }, 300);
+  };
 
   const handleBlur = () => {
-    setIsFocused(false)
-    setShowDiv(false)
-  }
+    setIsFocused(false);
+    setShowDiv(false);
+  };
 
   const handleDelete = (id: number) => {
     setSearches((prevSearches) =>
       prevSearches.filter((search) => search.id !== id)
-    )
-  }
+    );
+  };
+  
+  useEffect(() => {
+    const fetchUpdatedProfile = async () => {
+      const userData = await fetchProfileData();
+      if (userData) {
+        setProfileImage(userData.profile?.profile_image ?? null);
+        setInitials(getInitials(`${userData.first_name} ${userData.last_name}`));
+      }
+    };
+    fetchUpdatedProfile();
+  }, [fetchProfileData]); // Now fetchProfileData is safe in the dependency array
 
+  const getInitials = (name: string) => {
+    const nameParts = name.split(' ');
+    return nameParts.map(part => part.charAt(0)).join('').toUpperCase();
+  };
   return (
     <nav className={`sticky top-0 z-50 block w-full h-15 ${className}`}>
       <div className="w-full px-8 py-2 bg-white shadow dark:bg-gray-800">
@@ -230,8 +252,12 @@ const Navbar: React.FC<NavbarProps> = ({className}) => {
                   aria-label="toggle profile dropdown">
                   <div className="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full">
                     <Avatar className="w-8 h-8">
-                      <AvatarImage src="https://github.com/shadcn.png" />
-                      <AvatarFallback>CN</AvatarFallback>
+                      {profileImage ? (
+                        <AvatarImage src={profileImage} alt="Profile" />
+                      ) : (
+                        <AvatarFallback>{initials || 'CN'}</AvatarFallback>
+                      )}
+                    
                     </Avatar>
                   </div>
                 </button>
@@ -323,7 +349,7 @@ const Navbar: React.FC<NavbarProps> = ({className}) => {
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

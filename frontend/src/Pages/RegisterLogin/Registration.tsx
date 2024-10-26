@@ -1,28 +1,34 @@
-import React, { useState, useContext, useEffect } from 'react';
-import DynamicBackground from "../Bacground";
-import Nav from "../Header";
+import React, {useState, useContext, useEffect} from 'react';
+import DynamicBackground from '../Bacground';
+import Nav from '../Header';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from 'react-router-dom';
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+  CardTitle
+} from '@/components/ui/card';
+import {Input} from '@/components/ui/input';
+import {Label} from '@/components/ui/label';
+import {Button} from '@/components/ui/button';
 import swal from 'sweetalert2';
-import AuthContext from '../../context/AuthContext';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Link } from 'react-router-dom';
-
+import AuthContext from '../../context/AuthProvider';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
+import {Link} from 'react-router-dom';
+import {showAlert} from '../../context/utils/showAlert';
 const Registration = () => {
   const [value, setValue] = useState('1');
   const authContext = useContext(AuthContext);
@@ -32,11 +38,11 @@ const Registration = () => {
     throw new Error('AuthContext must be used within an AuthProvider');
   }
 
-  const { user, registerUser, loginUser } = authContext;
+  const {user, registerUser, loginUser} = authContext;
   useEffect(() => {
     // If user is logged in, redirect to home
     if (user) {
-      navigate("/home");
+      navigate('/home');
     }
   }, [user, navigate]);
 
@@ -52,7 +58,7 @@ const Registration = () => {
   const [regPassword, setRegPassword] = useState('');
   const [regConfirmPassword, setRegConfirmPassword] = useState('');
   const [ageBracket, setAgeBracket] = useState('');
-  
+
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -60,57 +66,74 @@ const Registration = () => {
       await loginUser(loginEmail.toLowerCase(), loginPassword);
       // Handle successful login
     } catch (error) {
-      console.error("Login failed:", error);
+      console.error('Login failed:', error);
     }
   };
 
-  const handleRegistration = async (event: React.FormEvent<HTMLFormElement>) => {
+  interface CustomError {
+    response?: {
+      data: {
+        email?: string[];
+      };
+    };
+  }
+
+  const handleRegistration = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
-    
-    if (!regFname || !regLname || !regUsername || !regEmail || !regPassword || !regConfirmPassword) {
+
+    if (
+      !regFname ||
+      !regLname ||
+      !regUsername ||
+      !regEmail ||
+      !regPassword ||
+      !regConfirmPassword
+    ) {
       swal.fire({
-        title: "All fields are required",
-        icon: "error",
+        title: 'All fields are required',
+        icon: 'error',
         toast: true,
         timer: 3000,
-        position: "top-right",
-        showConfirmButton: false,
+        position: 'top-right',
+        showConfirmButton: false
       });
       return;
     }
 
     if (!/\S+@\S+\.\S+/.test(regEmail)) {
       swal.fire({
-        title: "Invalid email format",
-        icon: "error",
+        title: 'Invalid email format',
+        icon: 'error',
         toast: true,
         timer: 3000,
-        position: "top-right",
-        showConfirmButton: false,
+        position: 'top-right',
+        showConfirmButton: false
       });
       return;
     }
 
     if (regPassword.length < 8) {
       swal.fire({
-        title: "Password must be at least 8 characters",
-        icon: "error",
+        title: 'Password must be at least 8 characters',
+        icon: 'error',
         toast: true,
         timer: 3000,
-        position: "top-right",
-        showConfirmButton: false,
+        position: 'top-right',
+        showConfirmButton: false
       });
       return;
     }
 
     if (regPassword !== regConfirmPassword) {
       swal.fire({
-        title: "Passwords do not match",
-        icon: "error",
+        title: 'Passwords do not match',
+        icon: 'error',
         toast: true,
         timer: 3000,
-        position: "top-right",
-        showConfirmButton: false,
+        position: 'top-right',
+        showConfirmButton: false
       });
       return;
     }
@@ -123,11 +146,20 @@ const Registration = () => {
         regUsername,
         regPassword,
         regConfirmPassword,
-        { age_bracket: ageBracket }
+        {age_bracket: ageBracket},
+        showAlert,
+        navigate
       );
-      setValue("1"); // Switch to login tab
+      console.log('Registration successful, age:', ageBracket);
+      setValue('1'); // Switch to login tab
     } catch (error) {
-      console.error("Registration failed:", error);
+      const customError = error as CustomError; // Type assertion here
+      console.error('Registration failed:', customError);
+      if (customError.response?.data?.email?.[0]) {
+        showAlert('Email already exists. Please try another one.', 'error');
+      } else {
+        showAlert('Registration failed. Please try again.', 'error');
+      }
     }
 
     setRegEmail('');
@@ -147,22 +179,31 @@ const Registration = () => {
     <section className="h-screen">
       <Nav />
       <DynamicBackground gradient1="#ff80b5" gradient2="#9089fc" />
-      <Box sx={{ width: '100%', typography: 'body1' }} className="z-50 flex flex-col items-center justify-center">
+      <Box
+        sx={{width: '100%', typography: 'body1'}}
+        className="z-50 flex flex-col items-center justify-center">
         <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }} className="flex justify-center ">
-            <TabList onChange={handleChange} aria-label="lab API tabs example" sx={{ width: "100%", maxWidth: "md" }}>
-              <Tab label="Log In" value="1" className='dark:text-white' />
-              <Tab label="Register" value="2" className='dark:text-white'  />
+          <Box
+            sx={{borderBottom: 1, borderColor: 'divider'}}
+            className="flex justify-center ">
+            <TabList
+              onChange={handleChange}
+              aria-label="lab API tabs example"
+              sx={{width: '100%', maxWidth: 'md'}}>
+              <Tab label="Log In" value="1" className="dark:text-white" />
+              <Tab label="Register" value="2" className="dark:text-white" />
             </TabList>
           </Box>
-           {/* Login Tab */}
-           <TabPanel value="1" className="w-full">
+          {/* Login Tab */}
+          <TabPanel value="1" className="w-full">
             <div className="flex items-center justify-center w-full">
               <Card className="flex flex-col items-center w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 md:w-1/3">
                 <form onSubmit={handleLogin} className="w-full">
                   <CardHeader className="text-center">
                     <CardTitle>Welcome back!</CardTitle>
-                    <CardDescription>Enter your email and password to log in.</CardDescription>
+                    <CardDescription>
+                      Enter your email and password to log in.
+                    </CardDescription>
                   </CardHeader>
                   <CardContent className="w-full">
                     <div className="grid w-full gap-4">
@@ -176,7 +217,7 @@ const Registration = () => {
                           onChange={(e) => setLoginEmail(e.target.value)}
                           autoComplete="email"
                           required
-                          className='z-50'
+                          className="z-50"
                         />
                       </div>
                       <div className="grid items-center gap-1.5">
@@ -189,131 +230,157 @@ const Registration = () => {
                           onChange={(e) => setLoginPassword(e.target.value)}
                           autoComplete="current-password"
                           required
-                          className='z-50'
+                          className="z-50"
                         />
                       </div>
                       <div>
-                      <Link to="/forgot-password" className='z-50 mt-1 text-sm text-blue-500 underline'>
-  Forgot your password?
-</Link>
-                  </div>
+                        <Link
+                          to="/forgot-password"
+                          className="z-50 mt-1 text-sm text-blue-500 underline">
+                          Forgot your password?
+                        </Link>
+                      </div>
                     </div>
                   </CardContent>
                   <CardFooter className="w-full">
-                    <Button className="w-full bg-[#4F46E5] text-white" type="submit">Login</Button>
+                    <Button
+                      className="w-full bg-[#4F46E5] text-white"
+                      type="submit">
+                      Login
+                    </Button>
                   </CardFooter>
                 </form>
               </Card>
             </div>
           </TabPanel>
-           {/* Register Tab */}
-           <TabPanel value="2" className="flex items-center justify-center w-full mt-0">
-            
-              <Card className="flex flex-col items-center w-full sm:w-1/2 lg:w-1/3 xl:w-1/3 md:w-1/2">
-                <form onSubmit={handleRegistration} className="w-full">
-                  <CardHeader className="text-center">
-                    <CardTitle>Register</CardTitle>
-                    <CardDescription>Fill out the form to create an account.</CardDescription>
-                  </CardHeader>
-                  <CardContent className="w-full">
-                    <div className="grid w-full gap-4">
-                      <div className="grid items-center gap-1.5">
-                        <Label htmlFor="reg-firstname">First Name</Label>
-                        <Input
-                          type="text"
-                          id="reg-firstname"
-                          placeholder="Enter your First Name"
-                          value={regFname}
-                          onChange={(e) => setFname(e.target.value)}
-                          autoComplete="given-name"
-                          required
-                        />
-                      </div>
-                      <div className="grid items-center gap-1.5">
-                        <Label htmlFor="reg-lastname">Last Name</Label>
-                        <Input
-                          type="text"
-                          id="reg-lastname"
-                          placeholder="Enter your Last Name"
-                          value={regLname}
-                          onChange={(e) => setLname(e.target.value)}
-                          autoComplete="family-name"
-                          required
-                        />
-                      </div>
-                      <div className="grid items-center gap-1.5">
-                        <Label htmlFor="reg-username">Username</Label>
-                        <Input
-                          type="text"
-                          id="reg-username"
-                          placeholder="Enter your Username"
-                          value={regUsername}
-                          onChange={(e) => setRegUsername(e.target.value)}
-                          autoComplete="username"
-                          required
-                           className='z-50'
-                        />
-                      </div>
-                      <div className="grid items-center gap-1.5">
-                        <Label htmlFor="reg-email">Email</Label>
-                        <Input
-                          type="email"
-                          id="reg-email"
-                          placeholder="Enter your Email"
-                          value={regEmail}
-                          onChange={(e) => setRegEmail(e.target.value)}
-                          autoComplete="email"
-                          required
-                        />
-                      </div>
-                      <div className="grid items-center gap-1.5">
-                        <Label htmlFor="reg-password">Password</Label>
-                        <Input
-                          type="password"
-                          id="reg-password"
-                          placeholder="Enter your Password"
-                          value={regPassword}
-                          onChange={(e) => setRegPassword(e.target.value)}
-                          autoComplete="new-password"
-                          required
-                        />
-                      </div>
-                      <div className="grid items-center gap-1.5">
-                        <Label htmlFor="reg-confirm-password">Confirm Password</Label>
-                        <Input
-                          type="password"
-                          id="reg-confirm-password"
-                          placeholder="Confirm your Password"
-                          value={regConfirmPassword}
-                          onChange={(e) => setRegConfirmPassword(e.target.value)}
-                          autoComplete="new-password"
-                          required
-                        />
-                      </div>
-                      <div className="grid items-center gap-1.5">
-                        <Label htmlFor="age-bracket">Age Bracket</Label>
-                        <Select onValueChange={(value) => setAgeBracket(value)} required>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select your age bracket"  className='z-50'/>
-                          </SelectTrigger>
-                          <SelectContent  className="w-full" >
-                          <SelectItem value="U18">18yrs old and below</SelectItem>
-                            <SelectItem value="18-24">18-24</SelectItem>
-                            <SelectItem value="25-30">25-30</SelectItem>
-                            <SelectItem value="31-40">31-40</SelectItem>
-                            <SelectItem value="41+">41+</SelectItem>
-                          </SelectContent>
-                        </Select>
-                       
-                      </div>
+          {/* Register Tab */}
+          <TabPanel
+            value="2"
+            className="flex items-center justify-center w-full mt-0">
+            <Card className="flex flex-col items-center w-full sm:w-1/2 lg:w-1/3 xl:w-1/3 md:w-1/2">
+              <form onSubmit={handleRegistration} className="w-full">
+                <CardHeader className="text-center">
+                  <CardTitle>Register</CardTitle>
+                  <CardDescription>
+                    Fill out the form to create an account.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="w-full">
+                  <div className="grid w-full gap-4">
+                    <div className="grid items-center gap-1.5">
+                      <Label htmlFor="reg-firstname">First Name</Label>
+                      <Input
+                        type="text"
+                        id="reg-firstname"
+                        placeholder="Enter your First Name"
+                        value={regFname}
+                        onChange={(e) => setFname(e.target.value)}
+                        autoComplete="given-name"
+                        required
+                        className="z-50"
+                      />
                     </div>
-                  </CardContent>
-                  <CardFooter className="w-full">
-                    <Button className="w-full bg-[#4F46E5] text-white" type="submit">Register</Button>
-                  </CardFooter>
-                </form>
-              </Card>
-           
+                    <div className="grid items-center gap-1.5">
+                      <Label htmlFor="reg-lastname">Last Name</Label>
+                      <Input
+                        type="text"
+                        id="reg-lastname"
+                        placeholder="Enter your Last Name"
+                        value={regLname}
+                        onChange={(e) => setLname(e.target.value)}
+                        autoComplete="family-name"
+                        required
+                        className="z-50"
+                      />
+                    </div>
+                    <div className="grid items-center gap-1.5">
+                      <Label htmlFor="reg-username">Username</Label>
+                      <Input
+                        type="text"
+                        id="reg-username"
+                        placeholder="Enter your Username"
+                        value={regUsername}
+                        onChange={(e) => setRegUsername(e.target.value)}
+                        autoComplete="username"
+                        required
+                        className="z-50"
+                      />
+                    </div>
+                    <div className="grid items-center gap-1.5">
+                      <Label htmlFor="reg-email">Email</Label>
+                      <Input
+                        type="email"
+                        id="reg-email"
+                        placeholder="Enter your Email"
+                        value={regEmail}
+                        onChange={(e) => setRegEmail(e.target.value)}
+                        autoComplete="email"
+                        required
+                      />
+                    </div>
+                    <div className="grid items-center gap-1.5">
+                      <Label htmlFor="reg-password">Password</Label>
+                      <Input
+                        type="password"
+                        id="reg-password"
+                        placeholder="Enter your Password"
+                        value={regPassword}
+                        onChange={(e) => setRegPassword(e.target.value)}
+                        autoComplete="new-password"
+                        required
+                      />
+                    </div>
+                    <div className="grid items-center gap-1.5">
+                      <Label htmlFor="reg-confirm-password">
+                        Confirm Password
+                      </Label>
+                      <Input
+                        type="password"
+                        id="reg-confirm-password"
+                        placeholder="Confirm your Password"
+                        value={regConfirmPassword}
+                        onChange={(e) => setRegConfirmPassword(e.target.value)}
+                        autoComplete="new-password"
+                        required
+                      />
+                    </div>
+                    <div className="grid items-center gap-1.5">
+                      <Label htmlFor="age-bracket">Age Bracket</Label>
+                      <Select
+                        value={ageBracket}
+                        onValueChange={(value) => {
+                          console.log('Selected age bracket:', value); // Log the selected value
+                          setAgeBracket(value);
+                        }}
+                        required>
+                        <SelectTrigger className="w-full">
+                          <SelectValue
+                            placeholder="Select your age bracket"
+                            className="z-50"
+                          />
+                        </SelectTrigger>
+                        <SelectContent className="w-full">
+                          <SelectItem value="U18">
+                            18yrs old and below
+                          </SelectItem>
+                          <SelectItem value="18-24">18-24</SelectItem>
+                          <SelectItem value="25-30">25-30</SelectItem>
+                          <SelectItem value="31-40">31-40</SelectItem>
+                          <SelectItem value="41+">41+</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter className="w-full">
+                  <Button
+                    className="w-full bg-[#4F46E5] text-white"
+                    type="submit">
+                    Register
+                  </Button>
+                </CardFooter>
+              </form>
+            </Card>
           </TabPanel>
         </TabContext>
       </Box>

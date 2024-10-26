@@ -46,13 +46,16 @@ class Profile(models.Model):
     age_bracket = models.CharField(max_length=8, choices=AGE_BRACKET_CHOICES, default='U18')
 
 
-
     def __str__(self):
         return self.full_name
 
 # Signals to automatically create or update the Profile when User is created or updated
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
+
+    # if not hasattr(instance, 'profile'):
+    #     Profile.objects.create(user=instance, full_name=f"{instance.first_name} {instance.last_name}".strip())
+    
     if created:
         # Create a profile for a newly created user
         Profile.objects.create(user=instance, full_name=f"{instance.first_name} {instance.last_name}".strip(), bio="")
@@ -65,3 +68,4 @@ def create_user_profile(sender, instance, created, **kwargs):
         if profile.full_name != new_full_name:
             profile.full_name = new_full_name
             profile.save()
+

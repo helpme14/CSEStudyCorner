@@ -1,6 +1,6 @@
 import React, { ReactNode, useContext } from "react";
 import { Navigate } from "react-router-dom";
-import AuthContext from "../../src/context/AuthContext";
+import  { AuthContext } from "../../src/context/AuthProvider";
 
 // Define the type for the props
 interface PrivateRouteProps {
