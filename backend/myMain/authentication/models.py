@@ -40,11 +40,10 @@ class Profile(models.Model):
     
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=300)
-    bio = models.CharField(max_length=300, blank=True)
-    image = models.ImageField(default="default.jpg", upload_to="user_images", blank=True)
+    bio = models.CharField(max_length=300, blank=True,null=True,default="")
+    profile_image = models.URLField(max_length=500, blank=True, null=True)
     # verified = models.BooleanField(default=False)
     age_bracket = models.CharField(max_length=8, choices=AGE_BRACKET_CHOICES, default='U18')
-
 
 
     def __str__(self):
@@ -53,9 +52,13 @@ class Profile(models.Model):
 # Signals to automatically create or update the Profile when User is created or updated
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
+
+    # if not hasattr(instance, 'profile'):
+    #     Profile.objects.create(user=instance, full_name=f"{instance.first_name} {instance.last_name}".strip())
+    
     if created:
         # Create a profile for a newly created user
-        Profile.objects.create(user=instance)
+        Profile.objects.create(user=instance, full_name=f"{instance.first_name} {instance.last_name}".strip(), bio="")
     else:
         # Update the full_name in Profile when User's first_name or last_name changes
         profile = instance.profile
@@ -65,3 +68,4 @@ def create_user_profile(sender, instance, created, **kwargs):
         if profile.full_name != new_full_name:
             profile.full_name = new_full_name
             profile.save()
+

@@ -2,19 +2,19 @@
 
 import Navbar from "../Navbar"
 import Sidebar from "../Sidebar"
-import Box from '@mui/material/Box';
 
 
 import Grid from '@mui/material/Grid';
 import SideSettings from "./SideSettings";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { Divider } from "@mui/material";
+import Box from '@mui/material/Box';
 
 
 
 const Settings = () => {
   return (
-    <div className="w-full flex h-screen ">
+    <div className="w-full flex sm:h-screen h-full ">
         <Sidebar />
         <div className="flex flex-col w-full">
             <Navbar />

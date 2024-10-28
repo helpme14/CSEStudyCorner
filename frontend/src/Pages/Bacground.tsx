@@ -7,9 +7,9 @@ interface DynamicBackgroundProps {
 
 const DynamicBackground: React.FC<DynamicBackgroundProps> = ({ gradient1, gradient2 }) => {
   return (
-    <div className="relative isolate px-6 pt-14 lg:px-8">
+    <div className="relative px-6 isolate pt-14 lg:px-8">
       <div
-        className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+        className="absolute inset-x-0 overflow-hidden -top-40 -z-10 transform-gpu blur-3xl sm:-top-60"
         aria-hidden="true"
       >
         <div

@@ -1,71 +1,114 @@
-import { useState, useContext, useEffect } from 'react';
-import Navbar from "../Navbar";
-import Sidebar from "../Sidebar";
-import Box from '@mui/material/Box';
+import { useState, useContext, useEffect ,useCallback} from 'react';
+import Navbar from '../Navbar';
+import Sidebar from '../Sidebar';
 import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import SideSettings from './SideSettings';
-import AuthContext from "../../context/AuthContext";
 
+import AuthContext from '../../context/AuthProvider';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useFetchWithLoading } from '../../hooks/useFetchWithLoading';
+import { fetchProfileData } from '../../context/actions/fetchProfileData'; // Import your fetch function
+import {showAlert} from '../../context/utils/showAlert';
+import { CustomJwtPayload } from '../../context/types/AuthTypes';
+
+// import {updateProfile} from '../../context/actions/updateProfile'
 const AccountSettings = () => {
   const authContext = useContext(AuthContext);
   if (!authContext) {
-    throw new Error("AuthContext must be used within an AuthProvider");
+    throw new Error('AuthContext must be used within an AuthProvider');
   }
 
-  const { user, fetchProfileData } = authContext;
+  const { user, refreshToken, authTokens , updateProfile} = authContext;
 
   // State to store form data
   const [formData, setFormData] = useState({
-    username: user?.username || "",
-    email: user?.email || "",
-    bio: user?.bio || "",
-    full_name: user?.full_name || "",
-    first_name: user?.first_name || "",
-    last_name: user?.last_name || "",
+    full_name: '',
+    first_name: '',
+    last_name: '',
+    currentPassword: '',
+    newPassword: ''
   });
+  // Wrap fetchProfileData in useCallback to prevent unnecessary re-fetching
+  const fetchProfileDataCallback = useCallback(() => fetchProfileData(authTokens), [authTokens]);
+  const { loading,  data } = useFetchWithLoading(fetchProfileDataCallback);
 
-  const [currentPassword, setCurrentPassword] = useState<string>('');
-  const [newPassword, setNewPassword] = useState<string>('');
 
-  // Update form data when user changes
+  // const loading = useFetchWithLoading(fetchProfileDataCallback);
+  
   useEffect(() => {
-    setFormData({
-      username: user?.username || "",
-      email: user?.email || "",
-      bio: user?.bio || "",
-      full_name: user?.full_name || "",
-      first_name: user?.first_name || "",
-      last_name: user?.last_name || "",
-    });
-  }, [user]);
-  useEffect(() => {
-    fetchProfileData();
-  }, [fetchProfileData]);
+    // Update form data only when the `user` data is available and loading is false
+    if (data && !loading) {
+      console.log('User data:', JSON.stringify(data)); // Check if user data is correct
+      setFormData({
+        full_name: data.full_name || '',
+        first_name: data.first_name || '',
+        last_name: data.last_name || '',
+        currentPassword: '',
+        newPassword: ''
+      });
+    }
+  }, [data, loading]); // Ensure to include `user` as a dependency
 
-  // Handle input change for form fields
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = event.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: value
     }));
   };
 
-  // Save changes handler (if you want to send updated data to the server)
-  const handleSaveChanges = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Add  API call here to update the user profile (e.g., PATCH /api/user/profile/)
-    // After successfully updating, I can re-fetch the profile data
-    // await fetchProfileData(); // Refetch updated profile data
+  const handleSaveChanges = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  
+    // Ensure current password is provided when updating profile details
+    if (!formData.currentPassword) {
+      console.error('Current password is required to update profile.');
+      showAlert("Update Failed", "error", "Current password is required to update your profile.");
+      return;
+    }
+  
+    
+    const updatedProfile: Partial<CustomJwtPayload> = {
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      bio: formData.bio, // optional
+      // Include any other fields that may be updated
+    };
+  
+    console.log('Updating profile with payload:', updatedProfile);
+  
+    try {
+      // Call the updateProfile function from AuthProvider
+      await updateProfile(
+        updatedProfile, 
+        formData.currentPassword, 
+        formData.newPassword
+      );
+  
+      console.log('Profile updated successfully');
+  
+      // Reset password fields after update
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        currentPassword: '',
+        newPassword: ''
+      }));
+    } catch (error) {
+      console.error('Error updating profile', error);
+    }
   };
-
+  
+  
   return (
-    <div className="flex w-full h-screen overflow-hidden">
+    <div className="flex w-full h-full sm:h-screen">
       <Sidebar />
       <div className="flex flex-col w-full">
         <Navbar />
@@ -90,69 +133,92 @@ const AccountSettings = () => {
                       Manage your personal information and update your password.
                     </p>
                     <Divider className="pt-4" />
+                    <div className="relative flex flex-col gap-3">
+                      {loading ? (
+                        <>
+                          <div className="flex flex-col justify-between gap-5 sm:flex-row">
+                            <div className="flex flex-col w-full gap-3 pt-4">
+                              <Skeleton width="w-1/4" height="h-6" className="mb-1" />
+                              <Skeleton width="w-full" height="h-10" className="mb-1" />
+                            </div>
+                            <div className="flex flex-col w-full gap-3 pt-4">
+                              <Skeleton width="w-1/4" height="h-6" className="mb-1" />
+                              <Skeleton width="w-full" height="h-10" className="mb-2" />
+                            </div>
+                          </div>
+                          <Skeleton width="w-1/6" height="h-10" className="mb-1" />
+                        </>
+                      ) : (
+                        <form className="flex flex-col gap-3" onSubmit={handleSaveChanges}>
+                          <div className="flex flex-col justify-between gap-5 sm:flex-row">
+                            <div className="flex flex-col w-full gap-3 pt-4">
+                              <Label htmlFor="first_name" className="font-medium text-medium">
+                                First Name
+                              </Label>
+                              <Input
+                                type="text"
+                                id="first_name"
+                                name="first_name"
+                                value={formData.first_name}
+                                onChange={handleChange}
+                                placeholder="First Name"
+                                autoComplete="first_name"
+                              />
+                            </div>
+                            <div className="flex flex-col w-full gap-3 pt-4">
+                              <Label htmlFor="last_name" className="font-medium text-medium">
+                                Last Name
+                              </Label>
+                              <Input
+                                type="text"
+                                id="last_name"
+                                name="last_name"
+                                value={formData.last_name}
+                                onChange={handleChange}
+                                placeholder="Last Name"
+                                autoComplete="last_name"
+                              />
+                            </div>
+                          </div>
 
-                    <form className="flex flex-col gap-3" onSubmit={handleSaveChanges}>
-                      <div className="flex flex-col justify-between gap-5 sm:flex-row">
-                        <div className="flex flex-col w-full gap-3 pt-4">
-                          <Label htmlFor="first_name" className="font-medium text-medium">
-                            First Name
-                          </Label>
-                          <Input
-                            type="text"
-                            id="first_name"
-                            name="first_name"
-                            value={formData.first_name}
-                            onChange={handleChange}
-                            placeholder="First Name"
-                          />
-                        </div>
-                        <div className="flex flex-col w-full gap-3 pt-4">
-                          <Label htmlFor="lastName" className="font-medium text-medium">
-                            Last Name
-                          </Label>
-                          <Input
-                            type="text"
-                            id="lastName"
-                            name="last_name"
-                            value={formData.last_name}
-                            onChange={handleChange}
-                            placeholder="Last Name"
-                          />
-                        </div>
-                      </div>
+                          {/* Additional fields for password */}
+                          <div className="flex flex-col justify-between gap-5 sm:flex-row">
+                            <div className="flex flex-col w-full gap-3 pt-4">
+                              <Label htmlFor="currentPassword" className="font-medium text-medium">
+                                Current Password
+                              </Label>
+                              <Input
+                                type="password"
+                                id="currentPassword"
+                                name="currentPassword"
+                                value={formData.currentPassword}
+                                onChange={handleChange}
+                                placeholder="Current Password"
+                                autoComplete="current-password"
+                              />
+                            </div>
+                            <div className="flex flex-col w-full gap-3 pt-4">
+                              <Label htmlFor="newPassword" className="font-medium text-medium">
+                                New Password
+                              </Label>
+                              <Input
+                                type="password"
+                                id="newPassword"
+                                name="newPassword"
+                                value={formData.newPassword}
+                                onChange={handleChange}
+                                placeholder="New Password"
+                                autoComplete="new-password"
+                              />
+                            </div>
+                          </div>
 
-                      {/* Additional fields for password */}
-                      <div className="flex flex-col justify-between gap-5 sm:flex-row">
-                        <div className="flex flex-col w-full gap-3 pt-4">
-                          <Label htmlFor="currentPassword" className="font-medium text-medium">
-                            Current Password
-                          </Label>
-                          <Input
-                            type="password"
-                            id="currentPassword"
-                            value={currentPassword}
-                            onChange={(e) => setCurrentPassword(e.target.value)}
-                            placeholder="Current Password"
-                          />
-                        </div>
-                        <div className="flex flex-col w-full gap-3 pt-4">
-                          <Label htmlFor="newPassword" className="font-medium text-medium">
-                            New Password
-                          </Label>
-                          <Input
-                            type="password"
-                            id="newPassword"
-                            value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                            placeholder="New Password"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="pt-4">
-                        <Button type="submit">Save Changes</Button>
-                      </div>
-                    </form>
+                          <div className="pt-4">
+                            <Button type="submit">Save Changes</Button>
+                          </div>
+                        </form>
+                      )}
+                    </div>
                   </div>
                 </Grid>
               </Grid>

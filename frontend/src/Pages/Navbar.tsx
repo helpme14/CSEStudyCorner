@@ -1,15 +1,24 @@
-import React,{useContext} from 'react';
+import React, {useContext, useState,useEffect,useCallback} from 'react';
 import Secondlogo from '../assets/Light-corner.png';
 import darkSecondlogo from '../assets/Dark-corner.png';
-import { FaSearch } from "react-icons/fa"; 
+import { GoXCircle, GoSearch, GoMoon  } from "react-icons/go";
 import { Link } from "react-router-dom";
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import { searches as searchData } from "./modules/searchData";
+import { Card } from "@/components/ui/card";
+import {categories, Categories, courses, Course } from "./modules/courseData";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar"
 
 import {
   Cloud,
   CreditCard,
   Github,
   Keyboard,
-  LifeBuoy,
   LogOut,
   Mail,
   MessageSquare,
@@ -18,9 +27,9 @@ import {
   Settings,
   User,
   UserPlus,
-  Users,
-} from "lucide-react"
- 
+  Users
+} from 'lucide-react';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,56 +42,181 @@ import {
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import AuthContext from "../context/AuthContext";
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
+import AuthContext from '../context/AuthProvider';
 interface NavbarProps {
   className?: string;
 }
 
 
-const Navbar: React.FC <NavbarProps> = ({ className }) => {
-  
-  const authContext = useContext(AuthContext)
-  
+const Navbar: React.FC<NavbarProps> = ({className}) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const authContext = useContext(AuthContext);
+  const [showDiv, setShowDiv] = useState(false);
+  const [searches, setSearches] = useState(searchData);
   if (!authContext) {
-      throw new Error('AuthContext must be used within an AuthProvider');
-    }
+    throw new Error('AuthContext must be used within an AuthProvider');
+  }
+
+  const {logoutUser,fetchProfileData, initials, profileImage } = authContext;
   
-  const {logoutUser} = authContext
+
+  const handleFocus = () => {
+    setIsFocused(true);
+    setTimeout(() => {
+      setShowDiv(true);
+    }, 300);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    setShowDiv(false);
+  };
+
+  const handleDelete = (id: number) => {
+    setSearches((prevSearches) =>
+      prevSearches.filter((search) => search.id !== id)
+    );
+  };
+  
+  useEffect(() => {
+    const fetchUpdatedProfile = async () => {
+      const userData = await fetchProfileData();
+      if (userData) {
+        // setProfileImage(userData.profile?.profile_image ?? null);
+        // setInitials(getInitials(`${userData?.first_name} ${userData?.last_name}`));
+      }
+    };
+    fetchUpdatedProfile();
+  }, [fetchProfileData]); // Now fetchProfileData is safe in the dependency array
+
   
   return (
-    <nav className={`sticky top-0 z-50 block w-full h-15 ${className} `}>
-      <div className="w-full px-8 py-2 bg-white shadow dark:bg-gray-800">
-        <div className="flex items-center justify-between">
-          <a href="#">
-            
-            <img className="h-8 w-28 sm:w-36 sm:h-10 dark:hidden" src={Secondlogo} alt="Logo" />
-            <img className="hidden h-8 w-28 sm:w-36 sm:h-10 dark:block" src={darkSecondlogo} alt="Logo" />
-          </a>
+    <nav className={`sticky top-0 z-50 block w-full h-15 ${className}`}>
+    <div className="w-full px-8 py-2 bg-white shadow dark:bg-gray-800">
+      <div className="flex items-center justify-between w-full">
+        <a href="#">
+          <img
+            className="h-8 w-28 sm:w-36 sm:h-10 dark:hidden"
+            src={Secondlogo}
+            alt="Logo"
+          />
+          <img
+            className="hidden h-8 w-28 sm:w-36 sm:h-10 dark:block"
+            src={darkSecondlogo}
+            alt="Logo"
+          />
+        </a>
+        {/* Search */}
+        <form className="relative">
+          {showDiv && (
+            <div
+              className="fixed inset-0 z-20 bg-black bg-opacity-50"
+              onClick={handleBlur}></div>
+          )}
 
-          <div className="flex items-center">
-            {/* Search Bar */}
-            <div className="relative items-center hidden sm:flex">
-              <FaSearch className="absolute text-gray-500 left-3" />
-              <input
-                type="text"
-                className="w-32 py-2 pl-10 pr-4 text-gray-700 transition-all duration-300 ease-in-out bg-gray-200 rounded-md dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-gray-600 focus:w-64"
-                placeholder="Search..."
-              />
+          <div
+            className={` ${
+              isFocused
+                ? ' z-50 relative sm:flex hidden items-center'
+                : 'relative sm:flex hidden items-center'
+            }`}>
+            <GoSearch className="absolute text-gray-500 cursor-pointer left-3" />
+            <input
+              type="text"
+              className="px-10 py-2 text-gray-700  bg-gray-50 rounded-full dark dark:bg-gray-700 dark:text-gray-300 focus:outline-none border-2 dark:border-gray-500 transition-all duration-300 ease-in-out w-[30vw] focus:w-[50vw] ${isFocused ? 'z-50 border-gray-400' : 'border-gray-500'"
+              placeholder="Search courses"
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+              {isFocused && (
+                <GoXCircle className="absolute text-gray-500 cursor-pointer right-4" />
+              )}
             </div>
 
+
+            {showDiv && (
+              <div
+                className={`absolute top-7 p-6 z-40  bg-white shadow-lg text-gray-700 w-[49.7vw] rounded-b-xl left-1/2 -translate-x-1/2 flex flex-col gap-2 transition-opacity duration-300 ease-in-out dark:bg-gray-900 dark:text-gray-300 ${isFocused ? 'opacity-100 visible z-40' : 'opacity-0 invisible'
+                  }`}
+              >
+                <div className='flex flex-col justify-center gap-5 mt-5 font-sans items-between'>
+                  <div>
+                    <span className='font-semibold'>Recent searches</span>
+                      <div className='mt-2'>
+                      <Stack direction="row" spacing={2}>
+                        {searches.map((search) => (
+                          <Chip
+                            key={search.id}
+                            label={search.title}
+                            className='dark:text-white dark:bg-dark-200'
+                            onDelete={() => handleDelete(search.id)}
+                          />
+                        ))}
+                      </Stack>
+                      </div>
+                  </div>
+                  <div>
+                    <span className='font-semibold'>Recommended for you</span>
+                      <div className='mt-2'>
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+                            {categories.map((category: Categories) => (
+                                <Card key={category.id} className="p-3 relative dark:bg-[#1F2937]"  data-aos-anchor-placement="top-bottom">
+                                    <div className="flex gap-5">
+                                        <img
+                                            src={category.imageUrl}
+                                            alt={category.title}
+                                            className="object-cover rounded-md h-14 w-14"
+                                        />
+                                        <div className="flex flex-col col-span-2">
+                                            <h3 className="text-base font-semibold">{category.title}</h3>
+                                            <p className="text-sm text-gray-600">{category.total_course} Courses</p>
+                                        </div>
+                                    </div>
+                            
+                                </Card>
+                            ))}
+                        </div>
+                      </div>
+                  </div>
+                  <div>
+                    <span className='font-semibold'>Popular on CSE Study Corner</span>
+                    <div className="grid grid-cols-1 gap-4 mt-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+                      {courses.slice(0, 3).map((course: Course) => (
+                          <Card key={course.id} className=" bg-white border rounded-lg hover:shadow-lg transition-shadow duration-300 ease-in-out cursor-pointer dark:bg-[#1F2937]">
+                              <div className="flex flex-col">
+                                  <div className="relative">
+                                      <img
+                                          src={course.imageUrl}
+                                          alt={course.title}
+                                          className="object-cover w-full h-32 rounded-lg"
+                                      />
+                                  </div>
+                                  <div className="flex flex-col gap-1 p-4">
+                                      <h3 className="text-lg font-semibold text-gray-800 dark:text-white">{course.title}</h3>
+                                      <p className="text-sm text-gray-600">{course.description}</p>
+                                  </div>
+                              </div>
+                          </Card>
+                      ))}
+                  </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </form>
+          
+          <div className="flex items-center">
             {/* Notifications */}
             <button
               className="mx-4 text-gray-600 transition-colors duration-300 transform dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-400 focus:text-gray-700 dark:focus:text-gray-400 focus:outline-none"
-              aria-label="show notifications"
-            >
+              aria-label="show notifications">
               <svg
                 className="w-6 h-6"
                 viewBox="0 0 24 24"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+                xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M15 17H20L18.5951 15.5951C18.2141 15.2141 18 14.6973 18 14.1585V11C18 8.38757 16.3304 6.16509 14 5.34142V5C14 3.89543 13.1046 3 12 3C10.8954 3 10 3.89543 10 5V5.34142C7.66962 6.16509 6 8.38757 6 11V14.1585C6 14.6973 5.78595 15.2141 5.40493 15.5951L4 17H9M15 17V18C15 19.6569 13.6569 21 12 21C10.3431 21 9 19.6569 9 18V17M15 17H9"
                   stroke="currentColor"
@@ -93,18 +227,25 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
               </svg>
             </button>
             <DropdownMenu>
-              <DropdownMenuTrigger asChild >
-                <button type="button" className="flex items-center focus:outline-none" aria-label="toggle profile dropdown">
+              <DropdownMenuTrigger asChild>
+                <button
+                  type="button"
+                  className="flex items-center focus:outline-none"
+                  aria-label="toggle profile dropdown">
                   <div className="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full">
-                    <img
-                      src='https://i.pinimg.com/originals/a9/da/3d/a9da3df52d836a48a091afb99134cfd6.jpg'
-                      className="object-cover w-full h-full"
-                      alt="Profile"
-                    />
+                  {/* {console.log("initials :",initials)} */}
+                    <Avatar className="w-8 h-8">
+                    {profileImage ? (
+                        <AvatarImage src={profileImage} alt="Profile" />
+                      ) : (
+                        <AvatarFallback>{initials || 'PF'}</AvatarFallback>
+                      )}
+                    
+                    </Avatar>
                   </div>
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 mr-10"  >
+              <DropdownMenuContent className="w-56 mr-10">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
@@ -117,14 +258,14 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
                     <CreditCard className="w-4 h-4 mr-2" />
                     <span>Billing</span>
                     <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                  <Link to="/home/profile">
+                    <DropdownMenuItem>
+                      <Settings className="w-4 h-4 mr-2" />
+                      <span>Settings</span>
+                      <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                     </DropdownMenuItem>
-                    <Link  to="/home/profile">
-                      <DropdownMenuItem>
-                        <Settings className="w-4 h-4 mr-2" />
-                        <span>Settings</span>
-                        <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                      </DropdownMenuItem>
-                    </Link>
+                  </Link>
                   <DropdownMenuItem>
                     <Keyboard className="w-4 h-4 mr-2" />
                     <span>Keyboard shortcuts</span>
@@ -171,10 +312,13 @@ const Navbar: React.FC <NavbarProps> = ({ className }) => {
                   <Github className="w-4 h-4 mr-2" />
                   <span>GitHub</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <LifeBuoy className="w-4 h-4 mr-2" />
-                  <span>Support</span>
-                </DropdownMenuItem>
+                <Link to="/home/theme">
+                  <DropdownMenuItem>
+                    <GoMoon className="w-4 h-4 mr-2" />
+                    <span>Dark Mode</span>
+                  </DropdownMenuItem>
+                </Link>
+                
                 <DropdownMenuItem disabled>
                   <Cloud className="w-4 h-4 mr-2" />
                   <span>API</span>

@@ -17,9 +17,20 @@ env_config = RepositoryEnv(BASE_DIR / env_file)
 config = Config(env_config)
 
 # Specify the path for .env.local file
-env_file_3 = RepositoryEnv(BASE_DIR_2 / '.env.local')
-config2 = Config(env_file_3)
+# env_file_3 = RepositoryEnv(BASE_DIR_2 / '.env.local')
+# config2 = Config(env_file_3)
 
+# Database configuration using environment variables from .env.dev
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
+    }
+}
 
 # Read secrets from .env fileg
 SECRET_KEY = config('SECRET_KEY', default='your-default-secret-key')
@@ -113,14 +124,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myMain.wsgi.application'
 
-# Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -157,13 +160,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.mailgun.org'  # Replace with your SMTP server
 EMAIL_PORT = 587  # Port for TLS
 EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = config2('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = config2('EMAIL_HOST_PASSWORD')
-# DEFAULT_FROM_EMAIL = config2('DEFAULT_FROM_EMAIL')
-EMAIL_HOST_USER = config2('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config2('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = config2('DEFAULT_FROM_EMAIL')
-MAILGUN_API_KEY = config2('MAILGUN_API_KEY')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
+MAILGUN_API_KEY = config('MAILGUN_API_KEY')
 
 CORS_ALLOW_ALL_ORIGINS = True
 

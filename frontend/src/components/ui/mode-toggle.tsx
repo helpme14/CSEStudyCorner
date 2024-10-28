@@ -5,6 +5,8 @@ import { useTheme } from "./theme-provider";
 export function ModeToggle() {
   const { setTheme, theme } = useTheme(); 
 
+  
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
       <div>
@@ -78,6 +80,9 @@ export function ModeToggle() {
           </div>
         </label>
       </div>
+
+  
+
 
       <div>
         <input
