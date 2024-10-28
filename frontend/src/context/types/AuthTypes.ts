@@ -30,6 +30,7 @@ export interface AuthContextType {
   refreshToken: () => Promise<void>;
   profileImage: string | null; 
   handleAccountClosure: () => Promise<void>;
+  initials: string | "DP";
 }
 
 export interface Profile {
