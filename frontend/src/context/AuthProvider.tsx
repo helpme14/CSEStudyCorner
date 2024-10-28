@@ -26,6 +26,10 @@ interface AuthProviderProps {
 // Create the AuthProvider component
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
+
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [initials, setInitials] = useState<string>('');
+
   const location = useLocation(); // Use useLocation to get current pathname
   const [authTokens, setAuthTokens] = useState<AuthTokens | null>(() =>
     localStorage.getItem('authTokens')
@@ -54,6 +58,8 @@ const logoutUser = useCallback(() => {
     const user = await fetchProfileDataAction(authTokens); // Only pass authTokens now
     if (user) {
       setUser(user); // Now set the user in state
+      setProfileImage(user.profile?.profile_image || null); 
+      setInitials(getInitials(`${user.first_name} ${user.last_name}`));
       return user;
     } else {
       console.error('Failed to fetch profile data');
@@ -75,7 +81,13 @@ const logoutUser = useCallback(() => {
     await updateProfileAction(updatedProfile,authTokens, setUser,refreshToken, currentPassword, newPassword  );
   };
 
-
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(part => part.charAt(0))
+      .join('')
+      .toUpperCase();
+  };
 
 
 
@@ -184,7 +196,7 @@ const updateProfileWithoutPassword = async (
     }
   }, [location.pathname, logoutUser]);
 
-  const profileImage = user?.profile_image || null;
+  // const profileImage = user?.profile_image || null;
 
 
   const { handleAccountClosure } = useAccountClosure({ authTokens, logoutUser });
@@ -206,6 +218,7 @@ const updateProfileWithoutPassword = async (
     refreshToken,
     profileImage,
     handleAccountClosure,
+    initials
   };
 
   return (
