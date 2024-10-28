@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/carousel";
 import Footer from "../Footer.tsx";
 import { Link } from "react-router-dom";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -25,6 +25,8 @@ import 'aos/dist/aos.css';
 
 
 const Home = () => {
+    const [isSidebarFocused, setIsSidebarFocused] = useState(false);
+
     useEffect(() => {
         AOS.init({
           duration: 1000,
@@ -38,12 +40,12 @@ const Home = () => {
       
     return (
         <div className="flex w-full h-full text-foreground">
-            <Sidebar />
-            <div className="flex flex-col flex-grow lg:w-[calc(100%-4.5rem)] w-full md:w-full ">
+            <Sidebar  setIsSidebarFocused={setIsSidebarFocused} />
+            <div className={`flex flex-col flex-grow lg:w-[calc(100%-4.5rem)] w-full md:w-full ${isSidebarFocused ? 'z-0' : 'z-10'}`}>
                 <Navbar />
-                <section className="py-0">
+                <section className="py-0 -z-10">
                     <div className="container py-0 sm:py-8">
-                        <div className="w-full bg-[#F0F7FF] dark:bg-gray-800/60 sm:mt-20 mt-10 relative rounded-md p-6 sm:p-10">
+                        <div className="w-full bg-[#F0F7FF] dark:bg-gray-900 sm:mt-20 mt-10 relative rounded-md p-6 sm:p-10">
                         <div className="w-full sm:w-full md:w-full xl:w-1/2">
                             <div className="flex flex-col text-left">
                             <h4 className="font-sans text-xl font-semibold text-gray-900 font-roboto md:text-4xl sm:text-3xl lg:text-5xl dark:text-gray-100">
@@ -53,7 +55,8 @@ const Home = () => {
                                 Use our Civil Service Reviewer to get ready for your exams. Practice with easy-to-follow modules, answer practice questions, and get clear explanations to help you pass the exam.
                             </p>
                             </div>
-                            <Button className="px-4 py-2 mt-4 text-sm bg-blue-500 rounded-full hover:bg-blue-600 dark:bg-gray-50 dark:hover:bg-gray-200 md:text-base lg:text-lg">
+                          
+                            <Button className="px-4 py-2 mt-4 text-sm font-semibold bg-blue-500 rounded-full hover:bg-blue-600 dark:bg-gray-50 dark:hover:bg-gray-200 md:text-base lg:text-lg xl:text-sm">
                             Learn More
                             </Button>
                         </div>
@@ -62,7 +65,7 @@ const Home = () => {
                     </div>
                     </section>
 
-                <section>
+                    <section className="-z-10">
                     <div className="container py-10 mx-auto">
                         <div className="flex flex-col gap-5">
                             <div className="flex gap-5 overflow-x-auto">
@@ -73,13 +76,13 @@ const Home = () => {
                                 <Button variant="secondary" className="rounded-full">Completed</Button>
                             </div>
                             <div className="w-full mt-5">
-                                <span className="text-3xl font-semibold">Let's start Learning</span>
-                                <Carousel className="relative w-full mt-5 " data-aos="fade-up" data-aos-duration="1000">
+                            <span className="text-xl font-semibold xl:text-3xl sm:text-base md:text-xl lg:text-2xl">Let's start Learning</span>
+                            <Carousel className="relative w-full mt-5 " data-aos="fade-up" data-aos-duration="1000">
                                     <CarouselContent className="-ml-1">
                                         {courses.map((course: Course) => (
-                                            <CarouselItem key={course.id} className="pl-1 md:basis-1/2 lg:basis-1/3 ">
-                                                <div className="relative p-1">
-                                                    <Card className="h-[8rem] sm:h-full flex">
+                                              <CarouselItem key={course.id} className="pl-1 md:basis-1/2 lg:basis-1/3">
+                                              <div className="relative p-1">
+                                                  <Card className="h-[8rem] sm:h-full flex dark:bg-[#1F2937]">
                                                         <div
                                                             className="w-[9rem] bg-cover bg-center bg-no-repeat"
                                                             style={{ backgroundImage: `url(${course.imageUrl})` }}
@@ -89,7 +92,7 @@ const Home = () => {
                                                             <h4 className="text-sm font-semibold md:text-base lg:text-lg md:truncate">
                                                                 {course.title}
                                                             </h4>
-                                                            <p className="text-xs text-gray-600 md:text-sm lg:text-base truncate-multiline">
+                                                            <p className="text-xs text-gray-500 md:text-sm sm:text-xs lg:text-base xl:text-sm truncate-multiline">
                                                                 {course.description}
                                                             </p>
                                                         </div>
@@ -121,12 +124,12 @@ const Home = () => {
                     </div>
                 </section>
 
-                <section>
+                <section className="-z-10">
                     <div className="container py-4 mx-auto sm:py-2">
-                        <span className="text-3xl font-semibold">Civil Service Categories</span>
+                        <span className="text-xl font-semibold xl:text-3xl sm:text-base md:text-xl lg:text-2xl">Civil Service Categories</span>
                         <div className="grid grid-cols-1 gap-4 py-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
                             {categories.map((category: Categories) => (
-                                <Card key={category.id} className="relative p-3" data-aos="fade-up" data-aos-duration="1500"  data-aos-anchor-placement="top-bottom">
+                                <Card key={category.id} className="p-3 relative dark:bg-[#1F2937]" data-aos="fade-up" data-aos-duration="1500"  data-aos-anchor-placement="top-bottom">
                                     <div className="flex gap-5">
                                         <img
                                             src={category.imageUrl}
@@ -159,9 +162,9 @@ const Home = () => {
                     </div>
                 </section>
 
-                <section>
+                <section className="-z-10">
                     <div className="container mx-auto">
-                        <div className="flex flex-col items-center justify-between w-full p-6 mt-5 bg-gray-800 sm:flex-row dark:bg-slate-950">
+                    <div className="w-full flex flex-col sm:flex-row justify-between bg-gray-800 p-6 mt-5 items-center dark:bg-[#1F2937]">
                                     <span className="font-semibold text-center text-white sm:text-left">
                                         Do you want to study offline? Download our Civil Service Reviewer!
                                     </span>
@@ -175,17 +178,17 @@ const Home = () => {
                     </div>
                 </section>
 
-                <section>
+                <section className="-z-10">
                     <div className="container py-10 mx-auto sm:pt-10">
                            <div className="flex flex-col gap-2">
-                            <span className="text-3xl font-semibold">What to learn next</span>                     
-                            <span className="text-2xl font-semibold">Because you viewed "<span className="text-gray-500">General Information 101</span>"</span>
+                            <span className="text-xl font-semibold xl:text-3xl sm:text-base md:text-xl lg:text-2xl">What to learn next</span>                     
+                            <span className="text-lg font-semibold xl:text-2xl sm:text-sm md:text-lg lg:text-xl">Because you viewed "<span className="text-gray-500">General Information 101</span>"</span>
                             </div>
                         <Carousel className="relative w-full mt-5">
                             <CarouselContent className="flex">
                                 {courses.map((course: Course) => (
                                     <CarouselItem key={course.id} className="md:basis-1/2 lg:basis-1/4">
-                                                <Card className="relative flex flex-col h-75" data-aos="fade-up" data-aos-duration="1000"  data-aos-anchor-placement="top-bottom" >
+                                                 <Card className="relative h-75 flex flex-col dark:bg-[#1F2937]" data-aos="fade-up" data-aos-duration="1000"  data-aos-anchor-placement="top-bottom" >
                                                     <img
                                                         src={course.imageUrl}
                                                         alt={course.title}
@@ -245,14 +248,14 @@ const Home = () => {
                     </div>
                 </section>
 
-                <section>
+                <section className="-z-10">
                     <div className="container py-10 mx-auto sm:pt-10">
-                        <span className="text-3xl font-semibold">Recommended for you</span>
+                        <span className="text-xl font-semibold xl:text-3xl sm:text-base md:text-xl lg:text-2xl">Recommended for you</span>
                         <Carousel className="relative w-full mt-5">
                             <CarouselContent className="flex">
                                 {courses.map((course: Course) => (
                                     <CarouselItem key={course.id} className="md:basis-1/2 lg:basis-1/4">
-                                                <Card className="relative flex flex-col h-75" data-aos="fade-up" data-aos-duration="1500"  data-aos-anchor-placement="top-bottom">
+                                                  <Card className="relative h-75 flex flex-col dark:bg-[#1F2937]" data-aos="fade-up" data-aos-duration="1500"  data-aos-anchor-placement="top-bottom">
                                                     <img
                                                         src={course.imageUrl}
                                                         alt={course.title}
@@ -312,14 +315,14 @@ const Home = () => {
                     </div>
                 </section>
 
-                <section>
+                <section  className="-z-10">
                     <div className="container py-10 mx-auto sm:pt-10">
-                        <span className="text-3xl font-semibold">Learners are viewing</span>
+                        <span className="text-xl font-semibold xl:text-3xl sm:text-base md:text-xl lg:text-2xl">Learners are viewing</span>
                         <Carousel className="relative w-full mt-5">
                             <CarouselContent className="flex">
                                 {courses.map((course: Course) => (
                                     <CarouselItem key={course.id} className="md:basis-1/2 lg:basis-1/4">
-                                                <Card className="relative flex flex-col h-75" data-aos="fade-up" data-aos-duration="1500"  data-aos-anchor-placement="top-bottom">
+                                                 <Card className="relative h-75 flex flex-col dark:bg-[#1F2937] cursor-pointer" data-aos="fade-up" data-aos-duration="1500"  data-aos-anchor-placement="top-bottom">
                                                     <img
                                                         src={course.imageUrl}
                                                         alt={course.title}

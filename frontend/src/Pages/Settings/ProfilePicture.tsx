@@ -1,7 +1,7 @@
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import SideSettings from './SideSettings';
 import { Divider } from '@mui/material';
 import React, { useState, useContext, useEffect,useCallback } from 'react';
@@ -158,7 +158,7 @@ const ProfilePicture = () => {
   };
 
   return (
-    <div className="flex w-full h-screen">
+    <div className="flex w-full h-full sm:h-screen">
       <Sidebar />
       <div className="flex flex-col w-full">
         <Navbar />

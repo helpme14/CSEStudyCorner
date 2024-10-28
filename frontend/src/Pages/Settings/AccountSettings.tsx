@@ -1,8 +1,8 @@
 import { useState, useContext, useEffect ,useCallback} from 'react';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
-import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -108,7 +108,7 @@ const AccountSettings = () => {
   
   
   return (
-    <div className="flex w-full h-screen">
+    <div className="flex w-full h-full sm:h-screen">
       <Sidebar />
       <div className="flex flex-col w-full">
         <Navbar />

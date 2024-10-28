@@ -18,6 +18,11 @@ import { AuthProvider } from "./context/AuthProvider";
 import PrivateRoute from "../components/routes/PrivateRoute";
 import Navbar from './Pages/Navbar'
 import { Toaster } from "react-hot-toast";
+import CourseDetails from "./Pages/Learning/CourseDetails";
+import ForgotPasswordEmail from "./Pages/RegisterLogin/ForgotPasswordEmail";
+
+
+
 
 function App() {
   return (
@@ -83,8 +88,17 @@ function App() {
                   <PrivateRoute>
                     <ProfilePicture />
                   </PrivateRoute>
-                }
-              />
+                }/>
+
+<Route
+                path="/home/course-details"
+                element={
+                  <PrivateRoute>
+                    <CourseDetails />
+                  </PrivateRoute>
+                }/>
+               
+
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/email-template" element={<EmailTemplate />} />
 
@@ -99,4 +113,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 
