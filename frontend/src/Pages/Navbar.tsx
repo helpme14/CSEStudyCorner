@@ -48,26 +48,20 @@ import AuthContext from '../context/AuthProvider';
 interface NavbarProps {
   className?: string;
 }
-import { fetchProfileData } from '../context/actions/fetchProfileData'; 
+
 
 const Navbar: React.FC<NavbarProps> = ({className}) => {
   const [isFocused, setIsFocused] = useState(false);
   const authContext = useContext(AuthContext);
   const [showDiv, setShowDiv] = useState(false);
   const [searches, setSearches] = useState(searchData);
-  // const [profileImage, setProfileImage] = useState<string | null>(null);
   if (!authContext) {
     throw new Error('AuthContext must be used within an AuthProvider');
   }
 
-  const {logoutUser,user,authTokens,fetchProfileData } = authContext;
-  const [profileImage, setProfileImage] = useState<string | null>(null);
-  const [initials, setInitials] = useState<string>('');
-
+  const {logoutUser,fetchProfileData, initials, profileImage } = authContext;
   
 
-
-  
   const handleFocus = () => {
     setIsFocused(true);
     setTimeout(() => {
@@ -90,17 +84,14 @@ const Navbar: React.FC<NavbarProps> = ({className}) => {
     const fetchUpdatedProfile = async () => {
       const userData = await fetchProfileData();
       if (userData) {
-        setProfileImage(userData.profile?.profile_image ?? null);
-        setInitials(getInitials(`${userData.first_name} ${userData.last_name}`));
+        // setProfileImage(userData.profile?.profile_image ?? null);
+        // setInitials(getInitials(`${userData?.first_name} ${userData?.last_name}`));
       }
     };
     fetchUpdatedProfile();
   }, [fetchProfileData]); // Now fetchProfileData is safe in the dependency array
 
-  const getInitials = (name: string) => {
-    const nameParts = name.split(' ');
-    return nameParts.map(part => part.charAt(0)).join('').toUpperCase();
-  };
+  
   return (
     <nav className={`sticky top-0 z-50 block w-full h-15 ${className}`}>
     <div className="w-full px-8 py-2 bg-white shadow dark:bg-gray-800">
@@ -242,11 +233,12 @@ const Navbar: React.FC<NavbarProps> = ({className}) => {
                   className="flex items-center focus:outline-none"
                   aria-label="toggle profile dropdown">
                   <div className="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full">
+                  {/* {console.log("initials :",initials)} */}
                     <Avatar className="w-8 h-8">
-                      {profileImage ? (
+                    {profileImage ? (
                         <AvatarImage src={profileImage} alt="Profile" />
                       ) : (
-                        <AvatarFallback>{initials || 'CN'}</AvatarFallback>
+                        <AvatarFallback>{initials || 'PF'}</AvatarFallback>
                       )}
                     
                     </Avatar>
